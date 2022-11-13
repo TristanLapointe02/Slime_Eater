@@ -32,7 +32,6 @@ public class ZoneDegats : MonoBehaviour
         if (Physics.Raycast(joueur.transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerSol))
         {
             Debug.DrawRay(joueur.transform.position, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-            Debug.Log("Did Hit");
 
             if(plusGrandeDistance < hit.distance)
             {

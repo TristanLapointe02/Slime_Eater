@@ -7,7 +7,6 @@ public class ControleJoueur : MonoBehaviour
     [Header("Valeurs")]
     public float vitesse; //Vitesse du joueur
     public float forceSaut; //Force de saut du joueur
-    public float distanceSol; //Distance check avec le sol
     int jumpCounter; //Counter du jump
     public int maxJump; //Nombre de sauts maximals du joueur
     float xInput; //Inputs sur l'axe des x
@@ -16,6 +15,7 @@ public class ControleJoueur : MonoBehaviour
     [Header("Sons")]
     public AudioClip sonJump; //Son lorsque le joueur saute
     public AudioClip sonAtterir; //Son lorsque le joueur atterit
+    public AudioClip sonMangerSlime; //Son lorsque le joueur mange un slime
 
     [Header("References")]
     Rigidbody rb; //Rigidbody du joueur
@@ -82,13 +82,30 @@ public class ControleJoueur : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //Lorsque le joueur atterit sur le sol
-        if(collision.gameObject.tag == "Sol")
+        if(collision.gameObject.tag == "Sol" && zone.plusGrandeDistance >= 1.5f)
         {
             //Jouer un son
             GetComponent<AudioSource>().PlayOneShot(sonAtterir);
 
             //Reset l'explosion
             zone.plusGrandeDistance = 0;
+        }
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        //Si le joueur entre en collision avec un slime
+        if (collision.gameObject.tag == "Slime")
+        {
+            //Grossir le joueur
+            float valeurSlimeSize = collision.GetComponent<SlimeLoot>().sizeValue;
+            gameObject.transform.localScale += new Vector3(valeurSlimeSize, valeurSlimeSize, valeurSlimeSize);
+
+            //Jouer un son de pickup
+            GetComponent<AudioSource>().PlayOneShot(sonMangerSlime);
+
+            //Detruire le slime touché
+            Destroy(collision.gameObject);
         }
     }
 
@@ -103,7 +120,7 @@ public class ControleJoueur : MonoBehaviour
     //Fonction permettant de verifier si le joueur touche le sol
     bool isGrounded()
     {
-        return Physics.Raycast(transform.position, Vector3.down, distanceSol);
+        return Physics.Raycast(transform.position, Vector3.down, GetComponent<Collider>().bounds.size.y);
     }
 
     //Fonction permettant de reset le jump
