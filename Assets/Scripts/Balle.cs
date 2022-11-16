@@ -34,9 +34,15 @@ public class Balle : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Si nous touchons un ennemi
-        //Lui faire des degats
-        //[FONCTION POUR FAIRE DEGATS]
+        if (collision.gameObject.tag == "Ennemi")
+        {
+            //Si nous touchons un ennemi
+            //Lui faire des degats
+            //[FONCTION POUR FAIRE DEGATS]
+            collision.gameObject.GetComponent<EnemyController>().TakeDamage(degats);
+
+        }
+
         DetruireBalle();
     }
 }

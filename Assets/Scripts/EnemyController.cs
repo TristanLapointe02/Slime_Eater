@@ -60,4 +60,13 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public void TakeDamage(float damage)
+    {
+        vie -= damage;
+        if (vie <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
 }
