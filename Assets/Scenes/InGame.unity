@@ -859,7 +859,6 @@ MonoBehaviour:
   vieJoueur: 100
   vieMax: 100
   menuFin: {fileID: 1568122982}
-  fillImage: {fileID: 15285459}
   sliderVie: {fileID: 413975115}
 --- !u!1 &232436854
 GameObject:
@@ -2309,7 +2308,7 @@ GameObject:
   - component: {fileID: 771773928}
   m_Layer: 0
   m_Name: --JOUEUR--
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

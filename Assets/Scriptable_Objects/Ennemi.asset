@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3665f582a021ff4bbe41a58282c4388, type: 3}
   m_Name: Ennemi
   m_EditorClassIdentifier: 
-  nomEnnemi: 
-  descriptionEnnemi: 
-  vieMax: 0
+  nomEnnemi: EnemyMelee
+  descriptionEnnemi: an enemy that moves towards the player and attacks him with
+    melee attacks
+  vieMax: 3
   degats: 0
-  vitesse: 0
-  tailleEnnemi: 3
+  vitesse: 5
+  tailleEnnemi: 1
   valeurLoot: 0
   nombreLootSpawn: 0
   ranged: 0
   couleur:
     serializedVersion: 2
-    rgba: 0
+    rgba: 12987870
   etage: 0
