@@ -13,28 +13,17 @@ public class ControleTir : MonoBehaviour
     public int nombreBalles; //Nombre de balles a tirer
     public float forceTir; //Force du tir
     public float valeurPerteTir; //Scale que le joueur perd en tirant
+    public bool tropPetit; //Variable indiquant que nous somme trop petit ou non
 
     [Header("Autres références")]
     public AudioClip sonTir; //Son de tir
-    Camera cam; //Ref a la camera
-    Vector3 mousePos; //Position de la souris
     public GameObject gun; //Position du "gun"
-
-    void Start()
-    {
-        //Assigner les références
-        cam = Camera.main;
-    }
 
 
     void Update()
     {
-
-        //Position du curseur
-
-
         //Si le joueur appuie sur clicque gauche
-        if (Input.GetButtonDown("Fire1") && peutTirer)
+        if (Input.GetButtonDown("Fire1") && peutTirer && tropPetit == false)
         {
             //Indiquer qu'il ne peut plus tirer, et appeler une fonction
             peutTirer = false;
@@ -55,6 +44,17 @@ public class ControleTir : MonoBehaviour
                 //Diminuer la taille du joueur
                 gameObject.transform.localScale -= new Vector3(valeurPerteTir, valeurPerteTir, valeurPerteTir);
             }
+        }
+
+        //Si nous sommes trop petit, empêcher la possibilite de tirer
+        if(gameObject.transform.localScale.magnitude <= 1)
+        {
+            Debug.Log("TROP PETIT - PEUT PAS TIRER");
+            tropPetit = true;
+        }
+        else
+        {
+            tropPetit = false;
         }
     }
 
