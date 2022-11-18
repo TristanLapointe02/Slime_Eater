@@ -87,6 +87,9 @@ public class ControleJoueur : MonoBehaviour
             //Jouer un son
             GetComponent<AudioSource>().PlayOneShot(sonAtterir);
 
+            //Appeler la fonction pour faire des dégâts aux ennemis
+            Explosion();
+
             //Reset l'explosion
             zone.plusGrandeDistance = 0;
         }
@@ -127,5 +130,31 @@ public class ControleJoueur : MonoBehaviour
     public void ResetJump()
     {
         fixJump = false;
+    }
+
+    //Fonction permettant de faire l'explosion
+    public void Explosion()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 100 / 2, 9);
+
+        //Faire des degats aux ennemis dans la zone
+        foreach(var collider in hitColliders)
+        {
+            if(TryGetComponent(out EnemyController ennemy))
+            {
+                ennemy.TakeDamage(5);
+                print(collider.gameObject.name);
+            }
+        }
+    }
+
+
+    //TEST POUR VOIR LA ZONE DE DEGATS
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+
+        //Draw a cube where the OverlapBox is (positioned where your GameObject is as well as a size)
+        Gizmos.DrawWireSphere(transform.position, zone.rayonActuel/2);
     }
 }

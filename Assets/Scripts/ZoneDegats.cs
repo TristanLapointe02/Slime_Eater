@@ -8,19 +8,13 @@ public class ZoneDegats : MonoBehaviour
     public GameObject joueur; //Reference au joueur
     public LayerMask layerSol; //Layer du sol
     public float plusGrandeDistance; //Plus grande distance
-
+    public float rayonActuel; //Rayon actuel de la zone
 
     //DEBUG
     public TextMeshProUGUI texteDistance; //Distance entre joueur et sol
     public TextMeshProUGUI texteDistanceMax; //Distance max entre joueur et sol
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
         //Changer la position du cercle selon le joueur
@@ -39,7 +33,8 @@ public class ZoneDegats : MonoBehaviour
             }
 
             //Mettre a jour la taille de la zone
-            transform.localScale = new Vector3(plusGrandeDistance, transform.localScale.y, plusGrandeDistance);
+            rayonActuel = plusGrandeDistance + joueur.transform.localScale.x;
+            transform.localScale = new Vector3(rayonActuel, transform.localScale.y, rayonActuel);
 
             //DEBUG
             texteDistance.text = "Distance:" + Mathf.Round(hit.distance - 0.5f).ToString();

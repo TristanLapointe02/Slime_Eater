@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3665f582a021ff4bbe41a58282c4388, type: 3}
+  m_Name: Ennemi4
+  m_EditorClassIdentifier: 
+  nomEnnemi: EnemyMelee
+  descriptionEnnemi: an enemy that moves towards the player and attacks him with
+    melee attacks
+  vieMax: 3
+  degats: 10
+  vitesse: 15
+  tailleEnnemi: 2
+  valeurLoot: 1.25
+  nombreLootSpawn: 2
+  ranged: 0
+  couleur:
+    serializedVersion: 2
+    rgba: 2987998
+  etage: 4

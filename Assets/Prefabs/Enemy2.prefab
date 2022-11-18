@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 764406708150644972}
   - component: {fileID: 4369069176308775734}
   - component: {fileID: 5357408745197276164}
-  m_Layer: 0
-  m_Name: Enemy
+  m_Layer: 9
+  m_Name: Enemy2
   m_TagString: Ennemi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115,7 +115,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &5357408745197276164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,6 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cda6f1cfe787974a869d5b55b71fc8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 11400000, guid: c86b7b3618e7c0e40ad77e762e922c70, type: 2}
+  enemy: {fileID: 11400000, guid: df6c685e98cb1c2499bc3ee69e82fe42, type: 2}
   joueur: {fileID: 0}
   vie: 0
+  slimeLoot: {fileID: 6973327156890209381, guid: 65011b37b0d31ed4c99f69329726b4e7,
+    type: 3}
