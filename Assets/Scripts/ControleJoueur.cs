@@ -6,6 +6,9 @@ public class ControleJoueur : MonoBehaviour
 {
     [Header("Valeurs")]
     public float vitesse; //Vitesse du joueur
+    public float dashVitesse; //Vitesse du dash
+    public float dashTimer; //Timer du dash
+    public float dashCooldown; //Cooldown du dash
     public float forceSaut; //Force de saut du joueur
     int jumpCounter; //Counter du jump
     public int maxJump; //Nombre de sauts maximals du joueur
@@ -65,6 +68,13 @@ public class ControleJoueur : MonoBehaviour
             Invoke("ResetJump", 0.15f);
         }
 
+        // Si on appuie sur left shift
+        if (Input.GetButtonDown("Fire3") && dashTimer >= dashCooldown)
+        {
+            dashTimer = 0;
+            Move(dashVitesse);
+        }
+
         if (isGrounded() && fixJump == false)
         {
             jumpCounter = maxJump;
@@ -74,8 +84,14 @@ public class ControleJoueur : MonoBehaviour
     //Pour le mouvement, c'est mieux d'utiliser fixedUpdate
     private void FixedUpdate()
     {
+        // Incrémenter le timer pour le cooldown du dash
+        if (dashTimer < dashCooldown)
+        {
+            dashTimer += Time.deltaTime;
+        }
+
         //Appeler la fonction de mouvement
-        Move();
+        Move(vitesse);
     }
 
     //Fonction de collision
@@ -113,7 +129,7 @@ public class ControleJoueur : MonoBehaviour
     }
 
     //Fonction permettant de bouger le joueur
-    private void Move()
+    private void Move(float vitesse)
     {
         //Ajouter de la force à la balle
         Vector3 deplacement = new Vector3(xInput, 0f, zInput);

@@ -1028,7 +1028,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1043461881}
   smoothSpeed: 0.05
-  offset: {x: 0, y: 15, z: -15}
+  offset: {x: 0, y: 15, z: 0}
+  distanceJoueur: {x: 0, y: 0, z: 0}
 --- !u!114 &526184460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1786,6 +1787,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vitesse: 50
+  dashVitesse: 2000
+  dashTimer: 0
+  dashCooldown: 1
   forceSaut: 1.5
   maxJump: 1
   sonJump: {fileID: 8300000, guid: ce56c48d366bbb444ba1a423a84bf33b, type: 3}
