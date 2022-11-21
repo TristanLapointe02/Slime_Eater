@@ -1029,7 +1029,6 @@ MonoBehaviour:
   target: {fileID: 1043461881}
   smoothSpeed: 0.05
   offset: {x: 0, y: 15, z: 0}
-  distanceJoueur: {x: 0, y: 0, z: 0}
 --- !u!114 &526184460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1787,7 +1786,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vitesse: 50
-  dashVitesse: 2000
+  dashVitesse: 1500
   dashTimer: 0
   dashCooldown: 1
   forceSaut: 1.5
