@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     private Vector3 directionJoueur; // distance et direction entre ennemi et joueur
     public float vie; //Vie de l'ennemi
     public GameObject slimeLoot; //Reference au loot de slime
+    public AudioClip sonSuction; //Son de suction lorsque l'ennemi touche le joueur
 
     private void Start()
     {
@@ -22,7 +23,7 @@ public class EnemyController : MonoBehaviour
         gameObject.transform.localScale =  new Vector3(enemy.tailleEnnemi, enemy.tailleEnnemi, enemy.tailleEnnemi);
 
         //Couleur
-        gameObject.GetComponent<MeshRenderer>().material.color = enemy.couleur;
+        AppliquerMat();
 
 
         //Trouver le joueur lorsqu'on est spawn
@@ -76,6 +77,7 @@ public class EnemyController : MonoBehaviour
             //Ajouter animation de mort éventuellement
 
             //Faire jouer un son
+            collision.gameObject.GetComponent<AudioSource>().PlayOneShot(sonSuction);
 
             //Mourir
             MortEnnemi();
@@ -94,6 +96,10 @@ public class EnemyController : MonoBehaviour
             //Mourir
             MortEnnemi();
         }
+
+        //Changer le matériel pendant 0.15 secondes
+        GetComponent<MeshRenderer>().material.color = Color.red;
+        Invoke("AppliquerMat", 0.15f);
     }
 
     //Fonction de mort de l'ennemi
@@ -111,5 +117,11 @@ public class EnemyController : MonoBehaviour
 
         //Se detruire
         Destroy(gameObject);
+    }
+
+    //Fonction permettant de remettre a la normale le matériel de l'ennemi
+    public void AppliquerMat()
+    {
+        gameObject.GetComponent<MeshRenderer>().material.color = enemy.couleur;
     }
 }

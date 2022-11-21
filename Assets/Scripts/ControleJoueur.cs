@@ -12,6 +12,8 @@ public class ControleJoueur : MonoBehaviour
     public float forceSaut; //Force de saut du joueur
     int jumpCounter; //Counter du jump
     public int maxJump; //Nombre de sauts maximals du joueur
+    public float degatsZone; //Degats de la zone de saut
+    public float forceExplosion; //Force de l'explosion de zone
     float xInput; //Inputs sur l'axe des x
     float zInput; //Inputs sur l'axe des x
 
@@ -66,6 +68,9 @@ public class ControleJoueur : MonoBehaviour
 
             //Permettre au joueur de sauter après un petit delai
             Invoke("ResetJump", 0.15f);
+
+            //Enable les visuels de la zone
+            zone.gameObject.GetComponent<MeshRenderer>().enabled = true;
         }
 
         // Si on appuie sur left shift
@@ -79,6 +84,8 @@ public class ControleJoueur : MonoBehaviour
         {
             jumpCounter = maxJump;
         }
+
+        print(isGrounded());
     }
 
     //Pour le mouvement, c'est mieux d'utiliser fixedUpdate
@@ -98,7 +105,7 @@ public class ControleJoueur : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //Lorsque le joueur atterit sur le sol
-        if(collision.gameObject.tag == "Sol" && zone.plusGrandeDistance >= 1.5f)
+        if(collision.gameObject.tag == "Sol" && zone.plusGrandeDistance - transform.position.y >= 2f)
         {
             //Jouer un son
             GetComponent<AudioSource>().PlayOneShot(sonAtterir);
@@ -108,6 +115,9 @@ public class ControleJoueur : MonoBehaviour
 
             //Reset l'explosion
             zone.plusGrandeDistance = 0;
+
+            //Disable les visuels de la zone
+            zone.gameObject.GetComponent<MeshRenderer>().enabled = false;
         }
     }
 
@@ -139,7 +149,7 @@ public class ControleJoueur : MonoBehaviour
     //Fonction permettant de verifier si le joueur touche le sol
     bool isGrounded()
     {
-        return Physics.Raycast(transform.position, Vector3.down, GetComponent<Collider>().bounds.size.y);
+        return Physics.Raycast(transform.position, Vector3.down, GetComponent<Collider>().bounds.extents.y, 10);
     }
 
     //Fonction permettant de reset le jump
@@ -151,15 +161,19 @@ public class ControleJoueur : MonoBehaviour
     //Fonction permettant de faire l'explosion
     public void Explosion()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, 100 / 2, 9);
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, zone.rayonActuel / 2);
 
-        //Faire des degats aux ennemis dans la zone
+        //Pour tous les collider touchés
         foreach(var collider in hitColliders)
         {
-            if(TryGetComponent(out EnemyController ennemy))
+            //Trouver les ennemis
+            if(collider.gameObject.TryGetComponent(out EnemyController ennemy))
             {
-                ennemy.TakeDamage(5);
-                print(collider.gameObject.name);
+                //Leur faire des degats
+                ennemy.TakeDamage(degatsZone);
+
+                //Faire une explosion
+                ennemy.GetComponent<Rigidbody>().AddExplosionForce(forceExplosion, transform.position, zone.rayonActuel / 2);
             }
         }
     }

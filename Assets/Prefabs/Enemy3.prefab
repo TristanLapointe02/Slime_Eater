@@ -133,3 +133,4 @@ MonoBehaviour:
   vie: 0
   slimeLoot: {fileID: 6973327156890209381, guid: 65011b37b0d31ed4c99f69329726b4e7,
     type: 3}
+  sonSuction: {fileID: 8300000, guid: b231e1c1eff8da84badd88c8397e0a39, type: 3}

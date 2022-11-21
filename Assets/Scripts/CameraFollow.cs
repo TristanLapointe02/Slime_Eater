@@ -6,14 +6,16 @@ public class CameraFollow : MonoBehaviour
 {
     public Transform target; //Target de la camera
     public float smoothSpeed; //Vitesse a laquelle la camera smooth
-    public Vector3 offset; //Offset de la caméra
+    private Vector3 offset; //Offset de la caméra
+    public float forceZoomOutCam; //Force a laquelle la cam s'eloigne selon le scale du joueur
 
     private void FixedUpdate()
     {
+        // Changer distance entre caméra et joueur selon sa taille
+        offset.z = (target.localScale.magnitude * -forceZoomOutCam) - forceZoomOutCam; 
+        offset.y = (target.localScale.magnitude * forceZoomOutCam) + forceZoomOutCam;
+
         //Changer la position de la camera
-        //Trouver la position
-        offset.z = (target.localScale.magnitude * -2.5f); // Changer distance entre caméra et joueur selon sa taille
-        offset.y = target.localScale.magnitude * 5f;
         Vector3 positionCam = target.position + offset;
 
         //Smooth avec un lerp

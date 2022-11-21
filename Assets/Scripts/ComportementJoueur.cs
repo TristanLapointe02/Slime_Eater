@@ -11,6 +11,8 @@ public class ComportementJoueur : MonoBehaviour
     public static bool mortJoueur; //Detecte si nous sommes mort ou non
     public GameObject menuFin; //Reference au menu de fin
     public Slider sliderVie; //Slider de barre de vie
+    public TextMeshProUGUI texteVie; //Ref au texte de vie
+    public AudioClip sonHit; //Son lorsque le joueur prend des degats
 
     void Start()
     {
@@ -22,6 +24,7 @@ public class ComportementJoueur : MonoBehaviour
         //Mettre a jour la valeur du slider de vie
         float fillValue = vieJoueur / vieMax;
         sliderVie.value = fillValue;
+        texteVie.text = Mathf.RoundToInt(vieJoueur).ToString();
 
         if (Input.GetKeyDown(KeyCode.K))
         {

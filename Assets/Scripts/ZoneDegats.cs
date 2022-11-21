@@ -25,8 +25,7 @@ public class ZoneDegats : MonoBehaviour
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(joueur.transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerSol))
         {
-            Debug.DrawRay(joueur.transform.position, transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-
+            //Mettre a jour la lus grande valeur
             if(plusGrandeDistance < hit.distance)
             {
                 plusGrandeDistance = hit.distance;
@@ -40,5 +39,15 @@ public class ZoneDegats : MonoBehaviour
             texteDistance.text = "Distance:" + Mathf.Round(hit.distance - 0.5f).ToString();
             texteDistanceMax.text = "Max:" + Mathf.Round(plusGrandeDistance - 0.5f).ToString();
         }
+
+        /*//Disable la zone si nous avons pas sauté
+        if (plusGrandeDistance - joueur.transform.position.y < 0.5f)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }*/
     }
 }
