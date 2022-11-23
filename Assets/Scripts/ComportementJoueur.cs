@@ -16,6 +16,7 @@ public class ComportementJoueur : MonoBehaviour
     public int levelActuel; //Ref au niveau actuel du joueur
     public float xpActuel; //Xp actuel du joueur
     public float xpMax; //Xp max du niveau actuel
+    public float xpMaxLvl1; //Xp max de départ
     public Slider sliderXp; //Slider de barre de vie
     public TextMeshProUGUI texteXp; //Ref au texte de vie
     public TextMeshProUGUI texteLevelActuel; //Texte du level actuel du joueur
@@ -31,6 +32,8 @@ public class ComportementJoueur : MonoBehaviour
     {
         //Assigner quelques valeurs
         vieJoueur = vieMax;
+        xpMax = xpMaxLvl1;
+        xpActuel = 0;
         velocity = 0;
     }
 
@@ -38,10 +41,19 @@ public class ComportementJoueur : MonoBehaviour
     {
         //Mettre a jour la valeur du slider de vie
         sliderVie.maxValue = vieMax;
-        sliderVie.value = Mathf.SmoothDamp(sliderVie.value, vieJoueur, ref velocity, 150 * Time.deltaTime);
+        sliderVie.value = Mathf.SmoothDamp(sliderVie.value, vieJoueur, ref velocity, 10 * Time.deltaTime);
 
         //Mettre a jour le texte de vie
         texteVie.text = Mathf.RoundToInt(vieJoueur).ToString();
+
+        //Mettre a jour la valeuyr du slider d'xp
+        sliderXp.maxValue = xpMax;
+        sliderXp.value = Mathf.SmoothDamp(sliderXp.value, xpActuel, ref velocity, 10 * Time.deltaTime);
+
+        //Mettre a jour le texte d'xp
+        texteXp.text = Mathf.RoundToInt(xpActuel).ToString() + " / " + Mathf.RoundToInt(xpMax).ToString();
+        texteLevelActuel.text = levelActuel.ToString();
+
 
         //TEST, PRENDRE DEGATS
         if (Input.GetKeyDown(KeyCode.K))
@@ -52,7 +64,7 @@ public class ComportementJoueur : MonoBehaviour
         //TEST, AUGMENTER XP
         if (Input.GetKeyDown(KeyCode.M))
         {
-
+            IncreaseXp(5);
         }
     }
 
@@ -102,11 +114,23 @@ public class ComportementJoueur : MonoBehaviour
         //Si jamais on dépasse l'xp max
         if(xpActuel >= xpMax)
         {
+            //Trouver la difference si on depasse l'xp max
+            float difference = xpActuel - xpMax;
+
+            //Reset l'xp actuel
+            xpActuel = 0;
+
+            //Ajouter la difference
+            if (difference > 0)
+            {
+                xpActuel += difference;
+            }
+
             //Augmenter de niveau
             levelActuel++;
 
-            //Reset l'xp actuel et l'xp max
-            xpActuel = 0;
+            //Augmenter l'xp max
+            xpMax += xpMax / 3;
         }
     }
 

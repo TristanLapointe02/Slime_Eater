@@ -883,9 +883,10 @@ MonoBehaviour:
   levelActuel: 0
   xpActuel: 0
   xpMax: 0
-  sliderXp: {fileID: 0}
-  texteXp: {fileID: 0}
-  texteLevelActuel: {fileID: 0}
+  xpMaxLvl1: 8
+  sliderXp: {fileID: 1710659846}
+  texteXp: {fileID: 421422709}
+  texteLevelActuel: {fileID: 180807954}
   menuFin: {fileID: 1568122982}
   sonHit: {fileID: 0}
 --- !u!1 &180807952
@@ -1242,7 +1243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3560,7 +3561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3673,7 +3674,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 100
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
