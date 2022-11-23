@@ -84,8 +84,6 @@ public class ControleJoueur : MonoBehaviour
         {
             jumpCounter = maxJump;
         }
-
-        print(isGrounded());
     }
 
     //Pour le mouvement, c'est mieux d'utiliser fixedUpdate
@@ -127,8 +125,7 @@ public class ControleJoueur : MonoBehaviour
         if (collision.gameObject.tag == "Slime")
         {
             //Grossir le joueur
-            float valeurSlimeSize = collision.GetComponent<SlimeLoot>().sizeValue;
-            gameObject.transform.localScale += new Vector3(valeurSlimeSize, valeurSlimeSize, valeurSlimeSize);
+            GetComponent<ComportementJoueur>().Grossir(collision.GetComponent<SlimeLoot>().sizeValue);
 
             //Jouer un son de pickup
             GetComponent<AudioSource>().PlayOneShot(sonMangerSlime);
