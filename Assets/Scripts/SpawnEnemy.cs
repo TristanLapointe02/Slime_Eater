@@ -25,11 +25,7 @@ public class SpawnEnemy : MonoBehaviour
        //TEST
        if (Input.GetKeyDown(KeyCode.E))
        {
-           //Augmenter l'etage actuel
-           etageActuel++;
-
-           //Clear la liste d'ennemis possible de spawn
-           ennemisActuels.Clear();
+            changerEtage();
        }
 
        //Si on peut spawn
@@ -77,5 +73,15 @@ public class SpawnEnemy : MonoBehaviour
         //Attendre un delai
         yield return new WaitForSeconds(delai);
         canSpawn = true;
+    }
+
+    //Fonction induqant qu'on vient de finir un etage
+    public void changerEtage()
+    {
+        //Augmenter l'etage actuel
+        etageActuel++;
+
+        //Clear la liste d'ennemis possible de spawn
+        ennemisActuels.Clear();
     }
 }

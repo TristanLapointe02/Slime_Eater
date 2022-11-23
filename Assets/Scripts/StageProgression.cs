@@ -10,12 +10,14 @@ public class StageProgression : MonoBehaviour
     void Update()
     {
         //Regarder sur quel etage qu'on est
-        /*switch (refSpawn.etageActuel)
+        switch (refSpawn.etageActuel)
         {
             case 1:
-                if (ComportementJoueur.ennemisTues > ennemiesToKillPerStage[0]);
-            default:
-                break;
-        }*/
+                if (ComportementJoueur.ennemisTues > ennemiesToKillPerStage[0])
+                {
+                    refSpawn.changerEtage();
+                };
+            break;
+        }
     }
 }
