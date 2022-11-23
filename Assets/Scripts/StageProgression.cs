@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class StageProgression : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int[] ennemiesToKillPerStage; //Nombre d'ennemis a tuer par stage
+    public SpawnEnemy refSpawn; //Reference au spawn
 
-    // Update is called once per frame
     void Update()
     {
-        
+        //Regarder sur quel etage qu'on est
+        /*switch (refSpawn.etageActuel)
+        {
+            case 1:
+                if (ComportementJoueur.ennemisTues > ennemiesToKillPerStage[0]);
+            default:
+                break;
+        }*/
     }
 }

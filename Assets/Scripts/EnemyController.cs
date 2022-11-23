@@ -115,6 +115,9 @@ public class EnemyController : MonoBehaviour
             loot.GetComponent<SlimeLoot>().sizeValue = Random.Range(0, enemy.valeurLoot);
         }
 
+        //Indiquer qu'on est mort
+        ComportementJoueur.ennemisTues++;
+
         //Se detruire
         Destroy(gameObject);
     }

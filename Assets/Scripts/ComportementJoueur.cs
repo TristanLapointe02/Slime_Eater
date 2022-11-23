@@ -23,10 +23,9 @@ public class ComportementJoueur : MonoBehaviour
 
     public static bool mortJoueur; //Detecte si nous sommes mort ou non
     public GameObject menuFin; //Reference au menu de fin
-    
-    
     public AudioClip sonHit; //Son lorsque le joueur prend des degats
     float velocity; //Velocite pour faire fonctionner le damp
+    public static float ennemisTues; //Nombre d'ennemis tues
 
     void Start()
     {
@@ -35,6 +34,7 @@ public class ComportementJoueur : MonoBehaviour
         xpMax = xpMaxLvl1;
         xpActuel = 0;
         velocity = 0;
+        ennemisTues = 0;
     }
 
     void Update()
