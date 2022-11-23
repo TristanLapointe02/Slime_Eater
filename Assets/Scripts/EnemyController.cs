@@ -112,7 +112,7 @@ public class EnemyController : MonoBehaviour
             GameObject loot = Instantiate(slimeLoot, transform.position, Quaternion.identity);
 
             //Changer la valeur du loot selon celle max qui faut donner
-            loot.GetComponent<SlimeLoot>().sizeValue = Random.Range(0, enemy.valeurLoot);
+            loot.GetComponent<EffetItem>().valeur = Random.Range(0, enemy.valeurLoot);
         }
 
         //Indiquer qu'on est mort

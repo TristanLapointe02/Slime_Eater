@@ -119,21 +119,6 @@ public class ControleJoueur : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider collision)
-    {
-        //Si le joueur entre en collision avec un slime
-        if (collision.gameObject.tag == "Slime")
-        {
-            //Grossir le joueur
-            GetComponent<ComportementJoueur>().Grossir(collision.GetComponent<SlimeLoot>().sizeValue);
-
-            //Jouer un son de pickup
-            GetComponent<AudioSource>().PlayOneShot(sonMangerSlime);
-
-            //Detruire le slime touché
-            Destroy(collision.gameObject);
-        }
-    }
 
     //Fonction permettant de bouger le joueur
     private void Move(float vitesse)

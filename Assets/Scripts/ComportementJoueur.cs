@@ -91,7 +91,7 @@ public class ComportementJoueur : MonoBehaviour
         vieJoueur += valeurVie;
 
         //Si nous avons trop de vie
-        if(vieJoueur > vieMax)
+        if (vieJoueur > vieMax)
         {
             //La mettre a son maximum
             vieJoueur = vieMax;

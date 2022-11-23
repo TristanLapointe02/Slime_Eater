@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 6973327156890209385}
   - component: {fileID: 6973327156890209382}
   - component: {fileID: 6973327156890209380}
-  - component: {fileID: 6973327156890209386}
   - component: {fileID: 2554897664974051079}
+  - component: {fileID: -756895664125243765}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Slime
@@ -116,19 +116,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6973327156890209386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6973327156890209381}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8178e8059992a04ea97f00fafd4ed04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sizeValue: 0.5
 --- !u!65 &2554897664974051079
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -142,3 +129,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-756895664125243765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6973327156890209381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c76a9389628451b43a9673fa97f24684, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 0d29d2c1cf6eb684ab736124637244c2, type: 2}
+  joueur: {fileID: 0}
+  nom: 
+  valeur: 0
+  duree: 0
