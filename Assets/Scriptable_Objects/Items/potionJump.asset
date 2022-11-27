@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: potionJump
   m_EditorClassIdentifier: 
   nomItem: potionJump
-  duree: 10
-  valeur: 0
+  duree: 6
+  valeur: 2
   etage: 3
   couleur:
     serializedVersion: 2
-    rgba: 16758272
+    rgba: 4288610048
+  sonItem: {fileID: 0}

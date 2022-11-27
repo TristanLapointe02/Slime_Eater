@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: potionVitesse
   m_EditorClassIdentifier: 
   nomItem: potionVitesse
-  duree: 10
-  valeur: 50
+  duree: 6
+  valeur: 25
   etage: 1
   couleur:
     serializedVersion: 2
-    rgba: 65309
+    rgba: 4294965248
+  sonItem: {fileID: 0}

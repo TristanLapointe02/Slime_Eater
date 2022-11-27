@@ -42,7 +42,10 @@ public class ControleJoueur : MonoBehaviour
     void Update()
     {
         //Capturer les inputs
-        InputProcess();
+        if(ComportementJoueur.finJeu == false)
+        {
+            InputProcess();
+        }
     }
 
     //Fonction permettant de recevoir les inputs
@@ -68,9 +71,6 @@ public class ControleJoueur : MonoBehaviour
 
             //Permettre au joueur de sauter après un petit delai
             Invoke("ResetJump", 0.15f);
-
-            //Enable les visuels de la zone
-            zone.gameObject.GetComponent<MeshRenderer>().enabled = true;
         }
 
         // Si on appuie sur left shift
@@ -83,6 +83,13 @@ public class ControleJoueur : MonoBehaviour
         if (isGrounded() && fixJump == false)
         {
             jumpCounter = maxJump;
+        }
+        
+        //Enable la zone de degats lorsqu'on "saute"
+        if(zone.distance - GetComponent<Collider>().bounds.extents.y >= 0.5f)
+        {
+            //Enable les visuels de la zone
+            zone.gameObject.GetComponent<MeshRenderer>().enabled = true;
         }
     }
 
@@ -103,7 +110,7 @@ public class ControleJoueur : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //Lorsque le joueur atterit sur le sol
-        if(collision.gameObject.tag == "Sol" && zone.plusGrandeDistance - transform.position.y >= 2f)
+        if(collision.gameObject.tag == "Sol" && zone.plusGrandeDistance - GetComponent<Collider>().bounds.extents.y >= 2f)
         {
             //Jouer un son
             GetComponent<AudioSource>().PlayOneShot(sonAtterir);

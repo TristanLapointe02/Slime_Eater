@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7241731140284625852}
   - component: {fileID: 7241731140284625827}
   - component: {fileID: 7241731140284625849}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: potionVie
   m_TagString: Untagged
   m_Icon: {fileID: 0}

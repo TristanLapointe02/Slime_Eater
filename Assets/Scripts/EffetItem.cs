@@ -9,7 +9,7 @@ public class EffetItem : MonoBehaviour
     public GameObject joueur; // Référence au joueur
     public string nom; // nom de l'item
     public float valeur; // valeu de l'item
-    public float duree; 
+    public float duree; //Duree de l'effet
 
 
     // Start is called before the first frame update
@@ -25,54 +25,54 @@ public class EffetItem : MonoBehaviour
         joueur = GameObject.FindGameObjectWithTag("Player");
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider collision)
     {
-        
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
+        //Lorsqu'on est en collision avec le joueur
+        if (collision.gameObject.tag == "Player")
         {
-                
+            //Selon la potion que nous sommes
             switch (nom)
             {
                 case "potionVie":
-                    other.gameObject.GetComponent<ComportementJoueur>().Heal(valeur);
+                    //Heal le joueur de la valeur associée, donner un bonus selon l'etage
+                    collision.gameObject.GetComponent<ComportementJoueur>().AugmenterVie(valeur * (1 + SpawnEnemy.etageActuel / 5));
                     break;
 
                 case "potionVitesse":
                     //todo: ajouter fonction pour speedBoost dans ComportementJoueur
-                    //other.gameObject.GetComponent<ComportementJoueur>().SpeedBoost(valeur, duree);
+                    StartCoroutine(collision.gameObject.GetComponent<ComportementJoueur>().AugmenterVitesse(valeur, duree));
                     break;
 
                 case "potionDegats":
                     //todo: ajouter fonction DegatsBoost() dans ComportementJoueur
-                    //other.gameObject.GetComponent<ComportementJoueur>().DegatsBoost(valeur, duree);
+                    StartCoroutine(collision.gameObject.GetComponent<ComportementJoueur>().AugmenterDegats(valeur, duree));
                     break;
 
                 case "potionJump":
                     //todo: ajouter fonction JumpBoost() dans ComportementJoueur
-                    //other.gameObject.GetComponent<ComportementJoueur>().JumpBoost(valeur, duree);
+                    StartCoroutine(collision.gameObject.GetComponent<ComportementJoueur>().AugmenterSaut(valeur, duree));
                     break;
 
                 case "potionInvulnerable":
                     //todo: ajouter fonction Invulnerable() dans ComportementJoueur
-                    //other.gameObject.GetComponent<ComportementJoueur>().DegatsBoost(valeur, duree);
+                    StartCoroutine(collision.gameObject.GetComponent<ComportementJoueur>().Invulnerabilite(duree));
                     break;
 
                 case "nuke":
-                    //todo: ajouter fonction Nuke() mais je sais pas trop où
+                    //todo: ajouter fonction Nuke(), eleminer tous les ennemis a lentour du joueur
                     break;
 
                 case "slime":
-                    other.gameObject.GetComponent<ComportementJoueur>().Grossir(valeur);
-                    
+                    //Grossir le joueur
+                    collision.gameObject.GetComponent<ComportementJoueur>().AugmenterGrosseur(valeur);
+
+                    //Ajouter de l'xp au joueur
+                    collision.gameObject.GetComponent<ComportementJoueur>().AugmenterXp(1);
+
                     break;
             }
 
-
+            //Detruire l'item
             DestroyItem(item.sonItem);
 
         }

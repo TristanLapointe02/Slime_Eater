@@ -13,7 +13,9 @@ public class ControleTir : MonoBehaviour
     public int nombreBalles; //Nombre de balles a tirer
     public float forceTir; //Force du tir
     public float valeurPerteTir; //Scale que le joueur perd en tirant
-    public bool tropPetit; //Variable indiquant que nous somme trop petit ou non
+    public float diviseurGrosseurBalle; //Multiplicateur de grosseur de la balle selon le joueur
+    public float degatsJoueur; //Degats du joueur
+    bool tropPetit; //Variable indiquant que nous somme trop petit ou non
 
     [Header("Autres références")]
     public AudioClip sonTir; //Son de tir
@@ -38,8 +40,14 @@ public class ControleTir : MonoBehaviour
                 //Instancier une balle
                 Balle nouvelleBalle = Instantiate(balle, gun.transform.position, gun.transform.rotation);
 
+                //Changer la taille de la balle selon la grosseur du joueur
+                nouvelleBalle.gameObject.transform.localScale += new Vector3(transform.localScale.x / diviseurGrosseurBalle, transform.localScale.y / diviseurGrosseurBalle, transform.localScale.z / diviseurGrosseurBalle);
+
                 //Propulser la balle vers la direction du curseur
                 nouvelleBalle.GetComponent<Rigidbody>().AddForce(gun.transform.forward * forceTir, ForceMode.Impulse);
+
+                //Changer les degats de la balle selon ceux du joueur
+                nouvelleBalle.GetComponent<Balle>().degats = degatsJoueur;
 
                 //Diminuer la taille du joueur
                 gameObject.transform.localScale -= new Vector3(valeurPerteTir, valeurPerteTir, valeurPerteTir);
@@ -58,6 +66,7 @@ public class ControleTir : MonoBehaviour
         }
     }
 
+    //Fonction de cooldown du tir
     public IEnumerator delaiTir(float delai)
     {
         yield return new WaitForSeconds(delai);

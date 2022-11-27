@@ -25,10 +25,8 @@ public class EnemyController : MonoBehaviour
         //Couleur
         AppliquerMat();
 
-
         //Trouver le joueur lorsqu'on est spawn
         joueur = GameObject.FindGameObjectWithTag("Player");
-
     }
 
     private void FixedUpdate()
@@ -56,6 +54,12 @@ public class EnemyController : MonoBehaviour
             {
                 Move();
             }
+        }
+
+        //Si c'est la fin du jeu, mourir
+        if (ComportementJoueur.finJeu)
+        {
+            MortEnnemi();
         }
     }
 

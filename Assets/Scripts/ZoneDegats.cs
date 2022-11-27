@@ -7,6 +7,7 @@ public class ZoneDegats : MonoBehaviour
 {
     public GameObject joueur; //Reference au joueur
     public LayerMask layerSol; //Layer du sol
+    public float distance; //Distance actuelle avec le sol
     public float plusGrandeDistance; //Plus grande distance
     public float rayonActuel; //Rayon actuel de la zone
 
@@ -25,8 +26,11 @@ public class ZoneDegats : MonoBehaviour
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(joueur.transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerSol))
         {
+            //Mettre a jour la distance
+            distance = hit.distance;
+
             //Mettre a jour la lus grande valeur
-            if(plusGrandeDistance < hit.distance)
+            if (plusGrandeDistance < hit.distance)
             {
                 plusGrandeDistance = hit.distance;
             }

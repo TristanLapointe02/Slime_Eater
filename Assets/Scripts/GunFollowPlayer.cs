@@ -17,7 +17,7 @@ public class GunFollowPlayer : MonoBehaviour
         //Suivre la position du joueur, mais toujours se placer à ses pieds, peu importe sa taille
         if(player!= null)
         {
-            transform.position = new Vector3(player.transform.position.x, player.transform.position.y - player.GetComponent<Collider>().bounds.size.y / 2f + 0.35f, player.transform.position.z);
+            transform.position = new Vector3(player.transform.position.x, player.transform.position.y - player.GetComponent<Collider>().bounds.size.y / 2.25f , player.transform.position.z);
         }
 
         //Changer la rotation du gun selon la position de la souris

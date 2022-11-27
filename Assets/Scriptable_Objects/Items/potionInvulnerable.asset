@@ -18,4 +18,5 @@ MonoBehaviour:
   etage: 4
   couleur:
     serializedVersion: 2
-    rgba: 16777215
+    rgba: 4278255610
+  sonItem: {fileID: 0}

@@ -9,15 +9,18 @@ public class SpawnEnemy : MonoBehaviour
     public GameObject[] tableauEnnemis; //Tableau des ennemis
     public List<GameObject> ennemisActuels = new List<GameObject>();
     public Transform[] positionsSpawn; //Positions où les ennemis peuvent spawn
-    public Transform[] positionsYEtages; //Position y des etages
-    public int etageActuel; //Etage actuel où il faut spawn les ennemis
+    public GameObject[] Etages; //Position y des etages
+    public static int etageActuel; //Etage actuel où il faut spawn les ennemis
     private bool canSpawn; //Determine si on peut spawn ou non
-
+    public AudioClip sonChangerEtage; //Son qui joue lorsqu'on change d'etage
 
     void Start()
     {
         //Indiquer que l'on peut spawn au debut
         canSpawn = true;
+
+        //Reset l'etage actuel
+        etageActuel = 1;
     }
 
     void Update()
@@ -53,7 +56,7 @@ public class SpawnEnemy : MonoBehaviour
                 Transform positionAleatoire = positionsSpawn[Random.Range(0, positionsSpawn.Length)];
 
                 //Determiner la position selon l'etage
-                Vector3 positionSpawn = new Vector3(positionAleatoire.position.x, positionsYEtages[etageActuel-1].position.y, positionAleatoire.position.z);
+                Vector3 positionSpawn = new Vector3(positionAleatoire.position.x, Etages[etageActuel-1].transform.position.y, positionAleatoire.position.z);
 
                 //Spawn un ennemi
                 GameObject ennemiChoisi = Instantiate(ennemisActuels[Random.Range(0, ennemisActuels.Count)].gameObject, positionSpawn, Quaternion.identity);
@@ -78,6 +81,12 @@ public class SpawnEnemy : MonoBehaviour
     //Fonction induqant qu'on vient de finir un etage
     public void changerEtage()
     {
+        //Detruire le plancher de l'etage
+        Etages[etageActuel - 1].gameObject.SetActive(false);
+
+        //Jouer un sound effect
+        GameObject.Find("Joueur").gameObject.GetComponent<AudioSource>().PlayOneShot(sonChangerEtage);
+
         //Augmenter l'etage actuel
         etageActuel++;
 

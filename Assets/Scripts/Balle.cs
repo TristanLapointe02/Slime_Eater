@@ -43,6 +43,8 @@ public class Balle : MonoBehaviour
 
         }
 
+        print(collision.gameObject.name);
+
         DetruireBalle();
     }
 }

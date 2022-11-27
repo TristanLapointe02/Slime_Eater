@@ -21,11 +21,12 @@ public class ComportementJoueur : MonoBehaviour
     public TextMeshProUGUI texteXp; //Ref au texte de vie
     public TextMeshProUGUI texteLevelActuel; //Texte du level actuel du joueur
 
+    public bool invulnerable; //Determine si le joueur est invulnérable ou non
     public static bool mortJoueur; //Detecte si nous sommes mort ou non
     public GameObject menuFin; //Reference au menu de fin
     public AudioClip sonHit; //Son lorsque le joueur prend des degats
-    float velocity; //Velocite pour faire fonctionner le damp
     public static float ennemisTues; //Nombre d'ennemis tues
+    public static bool finJeu; //Indiquer que c'est la fin du jeu
 
     void Start()
     {
@@ -33,22 +34,22 @@ public class ComportementJoueur : MonoBehaviour
         vieJoueur = vieMax;
         xpMax = xpMaxLvl1;
         xpActuel = 0;
-        velocity = 0;
         ennemisTues = 0;
+        finJeu = false;
     }
 
     void Update()
     {
         //Mettre a jour la valeur du slider de vie
-        sliderVie.maxValue = vieMax;
-        sliderVie.value = Mathf.SmoothDamp(sliderVie.value, vieJoueur, ref velocity, 10 * Time.deltaTime);
+        float fillValueHp = vieJoueur / vieMax;
+        sliderVie.value = fillValueHp;
 
         //Mettre a jour le texte de vie
         texteVie.text = Mathf.RoundToInt(vieJoueur).ToString();
 
         //Mettre a jour la valeuyr du slider d'xp
-        sliderXp.maxValue = xpMax;
-        sliderXp.value = Mathf.SmoothDamp(sliderXp.value, xpActuel, ref velocity, 10 * Time.deltaTime);
+        float fillValueXp = xpActuel / xpMax;
+        sliderXp.value = fillValueXp;
 
         //Mettre a jour le texte d'xp
         texteXp.text = Mathf.RoundToInt(xpActuel).ToString() + " / " + Mathf.RoundToInt(xpMax).ToString();
@@ -64,7 +65,7 @@ public class ComportementJoueur : MonoBehaviour
         //TEST, AUGMENTER XP
         if (Input.GetKeyDown(KeyCode.M))
         {
-            IncreaseXp(5);
+            AugmenterXp(5);
         }
     }
 
@@ -72,7 +73,10 @@ public class ComportementJoueur : MonoBehaviour
     public void TakeDamage(float valeurDegat)
     {
         //Enlever de la vie au joueur
-        vieJoueur -= valeurDegat;
+        if(vieJoueur > 0 && invulnerable == false)
+        {
+            vieJoueur -= valeurDegat;
+        }
 
         //Si le joueur était pour mourir
         if(vieJoueur <= 0)
@@ -85,7 +89,7 @@ public class ComportementJoueur : MonoBehaviour
     }
 
     //Fonction permettant de heal le joueur
-    public void Heal(float valeurVie)
+    public void AugmenterVie(float valeurVie)
     {
         //Ajouter de la vie au joueur
         vieJoueur += valeurVie;
@@ -99,14 +103,17 @@ public class ComportementJoueur : MonoBehaviour
     }
 
     //Fonction permettant de grossir le joueur
-    public void Grossir(float valeurGrosseur)
+    public void AugmenterGrosseur(float valeurGrosseur)
     {
         //Augmenter le scale du joueur
-        transform.localScale += new Vector3(valeurGrosseur, valeurGrosseur, valeurGrosseur);
+        if(transform.localScale.magnitude < 100)
+        {
+            transform.localScale += new Vector3(valeurGrosseur, valeurGrosseur, valeurGrosseur);
+        }
     }
 
     //Fonction permettant d'augmenter l'xp du joueur
-    public void IncreaseXp(float valeurXp)
+    public void AugmenterXp(float valeurXp)
     {
         //Augmenter l'xp actuel du joueur
         xpActuel += valeurXp;
@@ -134,9 +141,64 @@ public class ComportementJoueur : MonoBehaviour
         }
     }
 
+    //Fonction permettant d'augmenter la vitesse du joueur
+    public IEnumerator AugmenterVitesse(float valeur, float duree)
+    {
+        //Ajouter la vitesse
+        GetComponent<ControleJoueur>().vitesse += valeur;
+
+        //Attendre un certain delai
+        yield return new WaitForSeconds(duree);
+
+        //Enlever la vitesse
+        GetComponent<ControleJoueur>().vitesse -= valeur;
+    }
+
+    //Fonction permettant d'augmenter les degats du joueur
+    public IEnumerator AugmenterDegats(float valeur, float duree)
+    {
+        //Ajouter les degats
+        GetComponent<ControleTir>().degatsJoueur += valeur;
+
+        //Attendre un certain delai
+        yield return new WaitForSeconds(duree);
+
+        //Enlever les degats
+        GetComponent<ControleTir>().degatsJoueur -= valeur;
+    }
+
+    //Fonction permettant d'augmenter la hauteur de saut du joueur
+    public IEnumerator AugmenterSaut(float valeur, float duree)
+    {
+        //Ajouter un jump boost
+        GetComponent<ControleJoueur>().forceSaut += valeur;
+
+        //Attendre un certain delai
+        yield return new WaitForSeconds(duree);
+
+        //Enlever la force de saut
+        GetComponent<ControleJoueur>().forceSaut -= valeur;
+    }
+
+    //Fonction permettant d'augmenter la hauteur de saut du joueur
+    public IEnumerator Invulnerabilite(float duree)
+    {
+        //Indiquer que le joueur est invulnerable
+        GetComponent<ComportementJoueur>().invulnerable = true;
+
+        //Attendre un certain delai
+        yield return new WaitForSeconds(duree);
+
+        //Enlever l'invulnerabilite
+        GetComponent<ComportementJoueur>().invulnerable = false;
+    }
+
     public void FinJeu()
     {
         //Faire apparaitre un menu
         menuFin.SetActive(true);
+
+        //Indiquer que c'est la fin du jeu
+        finJeu = true;
     }
 }

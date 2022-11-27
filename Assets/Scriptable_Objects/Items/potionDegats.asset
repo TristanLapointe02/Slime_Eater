@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nomItem: potionDegats
   duree: 10
-  valeur: 0
+  valeur: 2
   etage: 2
   couleur:
     serializedVersion: 2
-    rgba: 20151
+    rgba: 4278193591
+  sonItem: {fileID: 0}

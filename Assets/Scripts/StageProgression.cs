@@ -1,23 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class StageProgression : MonoBehaviour
 {
     public int[] ennemiesToKillPerStage; //Nombre d'ennemis a tuer par stage
     public SpawnEnemy refSpawn; //Reference au spawn
+    public TextMeshProUGUI texteStage; //Texte affichant le stage actuel
 
     void Update()
     {
-        //Regarder sur quel etage qu'on est
-        switch (refSpawn.etageActuel)
+        VerificationNiveau();
+    }
+
+    //Fonction permettant de vérifier si un etage est terminé
+    public void VerificationNiveau()
+    {
+        //Mettre a jour le texte de niveau
+        texteStage.text = SpawnEnemy.etageActuel.ToString();
+
+        for (int i = 0; i < ennemiesToKillPerStage.Length; i++)
         {
-            case 1:
-                if (ComportementJoueur.ennemisTues > ennemiesToKillPerStage[0])
-                {
-                    refSpawn.changerEtage();
-                };
-            break;
+            if (SpawnEnemy.etageActuel == i + 1 && ComportementJoueur.ennemisTues >= ennemiesToKillPerStage[i])
+            {
+                //Changer d'etage
+                refSpawn.changerEtage();
+
+                //Reset le compteur d'ennemis tues
+                ComportementJoueur.ennemisTues = 0;
+            };
         }
     }
 }
