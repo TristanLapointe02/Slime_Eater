@@ -174,7 +174,8 @@ public class ComportementJoueur : MonoBehaviour
         GetComponent<ControleJoueur>().forceSaut += valeur;
 
         //Attendre un certain delai
-        yield return new WaitForSeconds(duree);
+        yield return new WaitForSeconds(6);
+
 
         //Enlever la force de saut
         GetComponent<ControleJoueur>().forceSaut -= valeur;

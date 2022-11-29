@@ -20,9 +20,8 @@ public class EffetItem : MonoBehaviour
         valeur = item.valeur;
         duree = item.duree;
         gameObject.GetComponent<MeshRenderer>().material.color = item.couleur;
+        
 
-        // Trouver le joueur lorsque l'item spawn;
-        joueur = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -30,32 +29,33 @@ public class EffetItem : MonoBehaviour
         //Lorsqu'on est en collision avec le joueur
         if (collision.gameObject.tag == "Player")
         {
+            ComportementJoueur joueur = collision.gameObject.GetComponent<ComportementJoueur>();
             //Selon la potion que nous sommes
             switch (nom)
             {
                 case "potionVie":
                     //Heal le joueur de la valeur associée, donner un bonus selon l'etage
-                    collision.gameObject.GetComponent<ComportementJoueur>().AugmenterVie(valeur * (1 + SpawnEnemy.etageActuel / 5));
+                    joueur.AugmenterVie(valeur * (1 + SpawnEnemy.etageActuel / 5));
                     break;
 
                 case "potionVitesse":
                     //todo: ajouter fonction pour speedBoost dans ComportementJoueur
-                    StartCoroutine(collision.gameObject.GetComponent<ComportementJoueur>().AugmenterVitesse(valeur, duree));
+                    joueur.StartCoroutine(joueur.AugmenterVitesse(valeur, duree));
                     break;
 
                 case "potionDegats":
                     //todo: ajouter fonction DegatsBoost() dans ComportementJoueur
-                    StartCoroutine(collision.gameObject.GetComponent<ComportementJoueur>().AugmenterDegats(valeur, duree));
+                    joueur.StartCoroutine(joueur.AugmenterDegats(valeur, duree));
                     break;
 
                 case "potionJump":
                     //todo: ajouter fonction JumpBoost() dans ComportementJoueur
-                    StartCoroutine(collision.gameObject.GetComponent<ComportementJoueur>().AugmenterSaut(valeur, duree));
+                    joueur.StartCoroutine(joueur.AugmenterSaut(valeur, duree));
                     break;
 
                 case "potionInvulnerable":
                     //todo: ajouter fonction Invulnerable() dans ComportementJoueur
-                    StartCoroutine(collision.gameObject.GetComponent<ComportementJoueur>().Invulnerabilite(duree));
+                    joueur.StartCoroutine(joueur.Invulnerabilite(duree));
                     break;
 
                 case "nuke":

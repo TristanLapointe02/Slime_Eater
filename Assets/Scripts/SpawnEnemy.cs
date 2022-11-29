@@ -31,43 +31,8 @@ public class SpawnEnemy : MonoBehaviour
             changerEtage();
        }
 
-       //Si on peut spawn
-       if (canSpawn)
-       {
-            canSpawn = false;
-
-            //Clear la liste des ennemis actuels
-            ennemisActuels.Clear();
-
-            //Spawn un ennemi au hasard a une position au hasard
-            foreach (GameObject ennemy in tableauEnnemis)
-            {
-                if(ennemy.GetComponent<EnemyController>().enemy.etage <= etageActuel)
-                {
-                    //Ajouter les ennemis choisis
-                    ennemisActuels.Add(ennemy);
-                }
-            }
-
-            //Si nous avons un etage de choisi et que notre liste d'ennemis a spawn n'est pas vide
-            if(etageActuel > 0 && ennemisActuels.Count > 0)
-            {
-                //Determiner une position sur l'horizontale
-                Transform positionAleatoire = positionsSpawn[Random.Range(0, positionsSpawn.Length)];
-
-                //Determiner la position selon l'etage
-                Vector3 positionSpawn = new Vector3(positionAleatoire.position.x, Etages[etageActuel-1].transform.position.y, positionAleatoire.position.z);
-
-                //Spawn un ennemi
-                GameObject ennemiChoisi = Instantiate(ennemisActuels[Random.Range(0, ennemisActuels.Count)].gameObject, positionSpawn, Quaternion.identity);
-
-                Debug.Log("Spawned " + ennemiChoisi.name + " at" + etageActuel + " floor");
-            }
-
-            //Commencer le cooldown de spawn
-            StartCoroutine(delaiSpawn(spawnDelay));
-
-       }
+        //Spawner les ennemis
+        Spawn();
     }
 
     //Fonction permettant de donner un delai au spawn
@@ -92,5 +57,46 @@ public class SpawnEnemy : MonoBehaviour
 
         //Clear la liste d'ennemis possible de spawn
         ennemisActuels.Clear();
+    }
+
+    public void Spawn()
+    {
+        //Si on peut spawn
+        if (canSpawn)
+        {
+            canSpawn = false;
+
+            //Clear la liste des ennemis actuels
+            ennemisActuels.Clear();
+
+            //Spawn un ennemi au hasard a une position au hasard
+            foreach (GameObject ennemy in tableauEnnemis)
+            {
+                if (ennemy.GetComponent<EnemyController>().enemy.etage <= etageActuel)
+                {
+                    //Ajouter les ennemis choisis
+                    ennemisActuels.Add(ennemy);
+                }
+            }
+
+            //Si nous avons un etage de choisi et que notre liste d'ennemis a spawn n'est pas vide
+            if (etageActuel > 0 && ennemisActuels.Count > 0)
+            {
+                //Determiner une position sur l'horizontale
+                Transform positionAleatoire = positionsSpawn[Random.Range(0, positionsSpawn.Length)];
+
+                //Determiner la position selon l'etage
+                Vector3 positionSpawn = new Vector3(positionAleatoire.position.x, Etages[etageActuel - 1].transform.position.y, positionAleatoire.position.z);
+
+                //Spawn un ennemi
+                GameObject ennemiChoisi = Instantiate(ennemisActuels[Random.Range(0, ennemisActuels.Count)].gameObject, positionSpawn, Quaternion.identity);
+
+                Debug.Log("Spawned " + ennemiChoisi.name + " at" + etageActuel + " floor");
+            }
+
+            //Commencer le cooldown de spawn
+            StartCoroutine(delaiSpawn(spawnDelay));
+
+        }
     }
 }
