@@ -71,7 +71,7 @@ public class SpawnItem : MonoBehaviour
             }
 
             //Si nous avons un etage de choisi et que notre liste d'items a spawn n'est pas vide
-            if (etageActuel > 0 && itemsActuels.Count > 0)
+            if (etageActuel > 0 && etageActuel < Etages.Length && itemsActuels.Count > 0)
             {
                 //Determiner une position aléatoire sur l'horizontale
                 int positionAleatoireX = Random.Range(-100, 100);
@@ -121,8 +121,13 @@ public class SpawnItem : MonoBehaviour
                 //Determiner la position selon l'etage
                 Vector3 positionSpawn = new Vector3(positionAleatoireX, Etages[etageActuel - 1].transform.position.y + 10, positionAleatoireZ);
 
+                //Trouver un item aléatoire
+                GameObject itemAleatoire = itemsActuels[Random.Range(0, itemsActuels.Count)].gameObject;
+
                 //Spawn un item
-                GameObject itemChoisi = Instantiate(itemsActuels[Random.Range(0, itemsActuels.Count)].gameObject, positionSpawn, Quaternion.identity);
+                GameObject itemChoisi = Instantiate(itemAleatoire, positionSpawn, itemAleatoire.transform.rotation);
+
+                itemChoisi.transform.Rotate(-90, 0, 0);
 
                 Debug.Log("Spawned " + itemChoisi.name + " at" + etageActuel + " floor");
             }
