@@ -21,6 +21,8 @@ public class SpawnEnemy : MonoBehaviour
 
         //Reset l'etage actuel
         etageActuel = 1;
+
+        InitialSpawn();
     }
 
     void Update()
@@ -57,6 +59,9 @@ public class SpawnEnemy : MonoBehaviour
 
         //Clear la liste d'ennemis possible de spawn
         ennemisActuels.Clear();
+
+        // Spawner un nombre d'ennemis initial au changement de l'étage
+        InitialSpawn();
     }
 
     public void Spawn()
@@ -98,5 +103,37 @@ public class SpawnEnemy : MonoBehaviour
             StartCoroutine(delaiSpawn(spawnDelay));
 
         }
+    }
+
+    public void InitialSpawn()
+    {
+        ennemisActuels.Clear();
+        for (int i = 0; i < 5; i++)
+        {
+            foreach (GameObject ennemy in tableauEnnemis)
+            {
+                if (ennemy.GetComponent<EnemyController>().enemy.etage <= etageActuel)
+                {
+                    //Ajouter les ennemis choisis
+                    ennemisActuels.Add(ennemy);
+                }
+            }
+            if (etageActuel > 0 && ennemisActuels.Count > 0)
+            {
+                //Determiner une position aléatoire sur l'horizontale
+                int positionAleatoireX = Random.Range(-100, 100);
+                int positionAleatoireY = Random.Range(-100, 100);
+
+                //Determiner la position selon l'etage
+                Vector3 positionSpawn = new Vector3(positionAleatoireX, Etages[etageActuel - 1].transform.position.y, positionAleatoireY);
+
+                //Spawn un ennemi
+                GameObject ennemiChoisi = Instantiate(ennemisActuels[Random.Range(0, ennemisActuels.Count)].gameObject, positionSpawn, Quaternion.identity);
+
+                Debug.Log("Spawned " + ennemiChoisi.name + " at" + etageActuel + " floor");
+            }
+        }
+
+
     }
 }

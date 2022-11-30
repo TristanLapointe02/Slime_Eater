@@ -20,6 +20,8 @@ public class EffetItem : MonoBehaviour
         valeur = item.valeur;
         duree = item.duree;
         gameObject.GetComponent<MeshRenderer>().material.color = item.couleur;
+        joueur = GameObject.FindGameObjectWithTag("Player");
+
         
 
     }
