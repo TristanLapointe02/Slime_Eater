@@ -6,7 +6,8 @@ using TMPro;
 public class StageProgression : MonoBehaviour
 {
     public int[] ennemiesToKillPerStage; //Nombre d'ennemis a tuer par stage
-    public SpawnEnemy refSpawn; //Reference au spawn
+    public SpawnEnemy refSpawnEnnemi; //Reference au spawn d'ennemis
+    public SpawnItem refSpawnItem; //Reference au spawn d'items
     public TextMeshProUGUI texteStage; //Texte affichant le stage actuel
 
     void Update()
@@ -25,7 +26,8 @@ public class StageProgression : MonoBehaviour
             if (SpawnEnemy.etageActuel == i + 1 && ComportementJoueur.ennemisTues >= ennemiesToKillPerStage[i])
             {
                 //Changer d'etage
-                refSpawn.changerEtage();
+                refSpawnEnnemi.changerEtage();
+                refSpawnItem.changerEtage();
 
                 //Reset le compteur d'ennemis tues
                 ComportementJoueur.ennemisTues = 0;

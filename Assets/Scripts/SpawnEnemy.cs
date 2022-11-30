@@ -96,7 +96,7 @@ public class SpawnEnemy : MonoBehaviour
                 //Spawn un ennemi
                 GameObject ennemiChoisi = Instantiate(ennemisActuels[Random.Range(0, ennemisActuels.Count)].gameObject, positionSpawn, Quaternion.identity);
 
-                Debug.Log("Spawned " + ennemiChoisi.name + " at" + etageActuel + " floor");
+                //Debug.Log("Spawned " + ennemiChoisi.name + " at" + etageActuel + " floor");
             }
 
             //Commencer le cooldown de spawn
@@ -120,9 +120,17 @@ public class SpawnEnemy : MonoBehaviour
             }
             if (etageActuel > 0 && ennemisActuels.Count > 0)
             {
-                //Determiner une position aléatoire sur l'horizontale
-                int positionAleatoireX = Random.Range(-100, 100);
-                int positionAleatoireY = Random.Range(-100, 100);
+                //Determiner une position aléatoire sur l'horizontale (mais pas trop proche du centre où le joueur spawn)
+                int positionAleatoireX = 0;
+                while (positionAleatoireX < 25 && positionAleatoireX > -25)
+                {
+                    positionAleatoireX = Random.Range(-100, 100);
+                }
+                int positionAleatoireY = 0;
+                while (positionAleatoireY < 25 && positionAleatoireY > -25)
+                {
+                    positionAleatoireY = Random.Range(-100, 100);
+                }
 
                 //Determiner la position selon l'etage
                 Vector3 positionSpawn = new Vector3(positionAleatoireX, Etages[etageActuel - 1].transform.position.y, positionAleatoireY);
@@ -130,10 +138,8 @@ public class SpawnEnemy : MonoBehaviour
                 //Spawn un ennemi
                 GameObject ennemiChoisi = Instantiate(ennemisActuels[Random.Range(0, ennemisActuels.Count)].gameObject, positionSpawn, Quaternion.identity);
 
-                Debug.Log("Spawned " + ennemiChoisi.name + " at" + etageActuel + " floor");
+                //Debug.Log("Spawned " + ennemiChoisi.name + " at" + etageActuel + " floor");
             }
         }
-
-
     }
 }
