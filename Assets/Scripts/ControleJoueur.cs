@@ -119,7 +119,7 @@ public class ControleJoueur : MonoBehaviour
             GetComponent<AudioSource>().PlayOneShot(sonAtterir);
 
             //Appeler la fonction pour faire des dégâts aux ennemis
-            Explosion();
+            Explosion(forceExplosion, degatsZone);
 
             //Reset l'explosion
             zone.plusGrandeDistance = 0;
@@ -151,7 +151,7 @@ public class ControleJoueur : MonoBehaviour
     }
 
     //Fonction permettant de faire l'explosion
-    public void Explosion()
+    public void Explosion(float forceExplosion, float degatsZone)
     {
         Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, zone.rayonActuel / 2);
 

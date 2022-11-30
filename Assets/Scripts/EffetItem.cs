@@ -6,7 +6,7 @@ public class EffetItem : MonoBehaviour
 
 {
     public StatsItems item; // type d'item
-    public GameObject joueur; // Référence au joueur
+    public GameObject player; // Référence au joueur
     public string nom; // nom de l'item
     public float valeur; // valeu de l'item
     public float duree; //Duree de l'effet
@@ -19,8 +19,7 @@ public class EffetItem : MonoBehaviour
         nom = item.name;
         valeur = item.valeur;
         duree = item.duree;
-        gameObject.GetComponent<MeshRenderer>().material.color = item.couleur;
-        joueur = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -33,7 +32,6 @@ public class EffetItem : MonoBehaviour
             switch (nom)
             {
                 case "potionVie":
-                    //Heal le joueur de la valeur associée, donner un bonus selon l'etage
                     joueur.AugmenterVie(valeur * (1 + SpawnEnemy.etageActuel / 5));
                     break;
 
@@ -58,15 +56,18 @@ public class EffetItem : MonoBehaviour
                     break;
 
                 case "nuke":
-                    //todo: ajouter fonction Nuke(), eleminer tous les ennemis a lentour du joueur
+                    //todo: ajouter fonction Nuke(), eleminer tous les ennemis autour du joueur
+                    GameObject zoneDegats = GameObject.Find("ZoneDegats");
+                    zoneDegats.GetComponent<ZoneDegats>().rayonActuel = 100f;
+                    player.GetComponent<ControleJoueur>().Explosion(valeur, 100f);
                     break;
 
                 case "slime":
                     //Grossir le joueur
-                    collision.gameObject.GetComponent<ComportementJoueur>().AugmenterGrosseur(valeur);
+                    joueur.AugmenterGrosseur(valeur);
 
                     //Ajouter de l'xp au joueur
-                    collision.gameObject.GetComponent<ComportementJoueur>().AugmenterXp(1);
+                    joueur.AugmenterXp(1);
 
                     break;
             }
@@ -81,7 +82,7 @@ public class EffetItem : MonoBehaviour
     {
         if(audioClip != null)
         {
-            joueur.GetComponent<AudioSource>().PlayOneShot(audioClip);
+            player.GetComponent<AudioSource>().PlayOneShot(audioClip);
         }
         Destroy(gameObject);
     }

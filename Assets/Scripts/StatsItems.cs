@@ -10,6 +10,5 @@ public class StatsItems : ScriptableObject
     public float duree; //duree de l'effet de l'item
     public float valeur; //valeur de l'effet
     public int etage; //Premier étage auquel item se drop
-    public Color32 couleur; //Couleur de l'item
     public AudioClip sonItem; //Son qui joue quand on pick up l'item
 }

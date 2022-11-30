@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nomItem: nuke
   duree: 0
-  valeur: 0
+  valeur: 4000
   etage: 5
   couleur:
     serializedVersion: 2
     rgba: 0
+  sonItem: {fileID: 8300000, guid: c68e534cb982a1e4d9fc90f48d621460, type: 3}
