@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour
     public float vie; //Vie de l'ennemi
     public GameObject slimeLoot; //Reference au loot de slime
     public AudioClip sonSuction; //Son de suction lorsque l'ennemi touche le joueur
+    public Color couleurEnnemi; //Couleur de base de l'ennemi
 
     private void Start()
     {
@@ -23,16 +24,22 @@ public class EnemyController : MonoBehaviour
         gameObject.transform.localScale =  new Vector3(enemy.tailleEnnemi, enemy.tailleEnnemi, enemy.tailleEnnemi);
 
         //Couleur
-        AppliquerMat();
+        couleurEnnemi = GetComponentInChildren<Renderer>().material.color;
 
-        //Trouver le joueur lorsqu'on est spawn
-        joueur = GameObject.FindGameObjectWithTag("Player");
+        //Trouver le joueur
+        TrouverJoueur();
     }
 
     private void FixedUpdate()
     {
+        //Trouver le joueur
+        TrouverJoueur();
+
+        //Regarder le joueur
+        gameObject.transform.LookAt(joueur.transform);
+
         //Obtenir la distance et direction avec joueur
-        directionJoueur = joueur.transform.position - transform.position; 
+        directionJoueur = joueur.transform.position - transform.position;
 
         //Si l'ennemi n'est pas ranged
         if (enemy.ranged == false)
@@ -102,7 +109,7 @@ public class EnemyController : MonoBehaviour
         }
 
         //Changer le matériel pendant 0.15 secondes
-        GetComponent<MeshRenderer>().material.color = Color.red;
+        GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.red;
         Invoke("AppliquerMat", 0.15f);
     }
 
@@ -129,6 +136,16 @@ public class EnemyController : MonoBehaviour
     //Fonction permettant de remettre a la normale le matériel de l'ennemi
     public void AppliquerMat()
     {
-        gameObject.GetComponent<MeshRenderer>().material.color = enemy.couleur;
+        gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material.color = couleurEnnemi;
+    }
+
+    //Fonction permettant de trouver le joueur
+    public void TrouverJoueur()
+    {
+        //Trouver le joueur si nous l'avons pas
+        if (joueur == null)
+        {
+            joueur = GameObject.FindGameObjectWithTag("Player");
+        }
     }
 }

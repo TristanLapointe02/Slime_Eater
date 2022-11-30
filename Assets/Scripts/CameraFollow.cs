@@ -12,7 +12,7 @@ public class CameraFollow : MonoBehaviour
     private void FixedUpdate()
     {
         // Changer distance entre caméra et joueur selon sa taille
-        offset.z = (target.localScale.magnitude * -forceZoomOutCam) - forceZoomOutCam; 
+        offset.z = (target.localScale.magnitude * -forceZoomOutCam) - (forceZoomOutCam + 1.5f); 
         offset.y = (target.localScale.magnitude * forceZoomOutCam) + forceZoomOutCam;
 
         //Changer la position de la camera
@@ -23,6 +23,6 @@ public class CameraFollow : MonoBehaviour
         transform.position = smoothPositionCam;
 
         //Dire a la cam de regarder son target
-        transform.LookAt(target);
+        //transform.LookAt(target);
     }
 }

@@ -11,11 +11,6 @@ public class ZoneDegats : MonoBehaviour
     public float plusGrandeDistance; //Plus grande distance
     public float rayonActuel; //Rayon actuel de la zone
 
-    //DEBUG
-    public TextMeshProUGUI texteDistance; //Distance entre joueur et sol
-    public TextMeshProUGUI texteDistanceMax; //Distance max entre joueur et sol
-
-
     void Update()
     {
         //Changer la position du cercle selon le joueur
@@ -23,11 +18,14 @@ public class ZoneDegats : MonoBehaviour
 
         //Raycast avec le sol
         RaycastHit hit;
-        // Does the ray intersect any objects excluding the player layer
+        // Does the ray intersect any objects on the ground
         if (Physics.Raycast(joueur.transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerSol))
         {
             //Mettre a jour la distance
             distance = hit.distance;
+
+            //Mettre a jour la position de la zone
+            gameObject.transform.position = new Vector3(transform.position.x, hit.transform.position.y + 0.5f, transform.position.z);
 
             //Mettre a jour la lus grande valeur
             if (plusGrandeDistance < hit.distance)
@@ -38,20 +36,6 @@ public class ZoneDegats : MonoBehaviour
             //Mettre a jour la taille de la zone
             rayonActuel = plusGrandeDistance + joueur.transform.localScale.x;
             transform.localScale = new Vector3(rayonActuel, transform.localScale.y, rayonActuel);
-
-            //DEBUG
-            texteDistance.text = "Distance:" + Mathf.Round(hit.distance - 0.5f).ToString();
-            texteDistanceMax.text = "Max:" + Mathf.Round(plusGrandeDistance - 0.5f).ToString();
         }
-
-        /*//Disable la zone si nous avons pas sauté
-        if (plusGrandeDistance - joueur.transform.position.y < 0.5f)
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            gameObject.SetActive(true);
-        }*/
     }
 }

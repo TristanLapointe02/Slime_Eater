@@ -6,20 +6,12 @@ public class Balle : MonoBehaviour
 {
     public int lifeTime; //Temps de vie de la balle
     public float degats; //Degats de la balle
+    public AudioClip sonBalleHit; //Son lorsque la balle hit quelquechose
 
-
-    // Start is called before the first frame update
     void Start()
     {
         //Detruire la balle apres x secondes
         Invoke("DetruireBalle", lifeTime);
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     //Fonction permettant de détruire la balle
@@ -28,23 +20,24 @@ public class Balle : MonoBehaviour
         //Destroy la balle
         if(gameObject != null)
         {
+            //Jouer un sound effect
+            AudioSource.PlayClipAtPoint(sonBalleHit, transform.position);
+
+            //Detruire l'objet apres 2 secondes
             Destroy(gameObject);
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        //Si nous touchons un ennemi
         if (collision.gameObject.tag == "Ennemi")
         {
-            //Si nous touchons un ennemi
-            //Lui faire des degats
-            //[FONCTION POUR FAIRE DEGATS]
+            //Faire des degats à l'ennemi
             collision.gameObject.GetComponent<EnemyController>().TakeDamage(degats);
-
         }
 
-        print(collision.gameObject.name);
-
+        //Detruire la balle
         DetruireBalle();
     }
 }

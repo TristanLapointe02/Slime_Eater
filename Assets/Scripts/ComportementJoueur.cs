@@ -21,12 +21,14 @@ public class ComportementJoueur : MonoBehaviour
     public TextMeshProUGUI texteXp; //Ref au texte de vie
     public TextMeshProUGUI texteLevelActuel; //Texte du level actuel du joueur
 
+    //AUTRES
     public bool invulnerable; //Determine si le joueur est invulnérable ou non
     public static bool mortJoueur; //Detecte si nous sommes mort ou non
     public GameObject menuFin; //Reference au menu de fin
     public AudioClip sonHit; //Son lorsque le joueur prend des degats
     public static float ennemisTues; //Nombre d'ennemis tues
     public static bool finJeu; //Indiquer que c'est la fin du jeu
+    public AudioClip sonLevelUp; //Son lorsque le joueur level up
 
     void Start()
     {
@@ -55,7 +57,6 @@ public class ComportementJoueur : MonoBehaviour
         texteXp.text = Mathf.RoundToInt(xpActuel).ToString() + " / " + Mathf.RoundToInt(xpMax).ToString();
         texteLevelActuel.text = levelActuel.ToString();
 
-
         //TEST, PRENDRE DEGATS
         if (Input.GetKeyDown(KeyCode.K))
         {
@@ -72,6 +73,9 @@ public class ComportementJoueur : MonoBehaviour
     //Fonction permettant au joueur de prendre des dégâts
     public void TakeDamage(float valeurDegat)
     {
+        //Jouer un sound effect
+        GetComponent<AudioSource>().PlayOneShot(sonHit);
+
         //Enlever de la vie au joueur
         if(vieJoueur > 0 && invulnerable == false)
         {
@@ -138,6 +142,9 @@ public class ComportementJoueur : MonoBehaviour
 
             //Augmenter l'xp max
             xpMax += xpMax / 3;
+
+            //Jouer un sound effect
+            GetComponent<AudioSource>().PlayOneShot(sonLevelUp);
         }
     }
 

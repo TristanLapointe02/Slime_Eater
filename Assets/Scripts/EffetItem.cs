@@ -21,9 +21,6 @@ public class EffetItem : MonoBehaviour
         duree = item.duree;
         gameObject.GetComponent<MeshRenderer>().material.color = item.couleur;
         joueur = GameObject.FindGameObjectWithTag("Player");
-
-        
-
     }
 
     private void OnTriggerEnter(Collider collision)

@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class StatsEnemy : ScriptableObject
 {
-
     public string nomEnnemi; //Nom de l'ennemi
     public string descriptionEnnemi; //Description de l’ennemi
     public float vieMax; //Vie maximum de l'ennemi
@@ -16,8 +15,5 @@ public class StatsEnemy : ScriptableObject
     public float valeurLoot; //Valeur de loot de l’ennemi
     public int nombreLootSpawn; //Nombre de loot a spawn de l’ennemi
     public bool ranged; //Determine si l’ennemi est ranged ou non
-    public Color32 couleur; //Couleur de l’ennemi
     public int etage; //Etage sur laquelle le mob va spawn
-    // Start is called before the first frame update
-
 }
