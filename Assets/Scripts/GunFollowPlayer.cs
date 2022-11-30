@@ -24,7 +24,7 @@ public class GunFollowPlayer : MonoBehaviour
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if(Physics.Raycast(ray, out hit))
+        if(Physics.Raycast(ray, out hit, Mathf.Infinity, 9))
         {
             transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
         }
