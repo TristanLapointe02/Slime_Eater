@@ -3078,7 +3078,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnAmount: 1
-  spawnDelay: 2
+  spawnDelay: 1.5
   tableauItems:
   - {fileID: 5926759598873703389, guid: b94a3b6a16c2fab40a9fd2c87f8b0037, type: 3}
   - {fileID: 8045336980402031600, guid: 8e06bfffcd32048438d5bbe7622e2ff3, type: 3}

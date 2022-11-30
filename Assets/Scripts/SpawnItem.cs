@@ -80,8 +80,14 @@ public class SpawnItem : MonoBehaviour
                 //Determiner la position selon l'etage
                 Vector3 positionSpawn = new Vector3(positionAleatoireX, Etages[etageActuel - 1].transform.position.y + 10, positionAleatoireY);
 
+                //Trouver un item aléatoire
+                GameObject itemAleatoire = itemsActuels[Random.Range(0, itemsActuels.Count)].gameObject;
+
                 //Spawn un item
-                GameObject itemChoisi = Instantiate(itemsActuels[Random.Range(0, itemsActuels.Count)].gameObject, positionSpawn, Quaternion.identity);
+                GameObject itemChoisi = Instantiate(itemAleatoire, positionSpawn, Quaternion.identity);
+
+                //Appliquer une rotation pour fix un bug
+                itemChoisi.transform.Rotate(-90, 0, 0);
 
                 Debug.Log("Spawned " + itemChoisi.name + " at" + etageActuel + " floor");
             }
@@ -125,8 +131,9 @@ public class SpawnItem : MonoBehaviour
                 GameObject itemAleatoire = itemsActuels[Random.Range(0, itemsActuels.Count)].gameObject;
 
                 //Spawn un item
-                GameObject itemChoisi = Instantiate(itemAleatoire, positionSpawn, itemAleatoire.transform.rotation);
+                GameObject itemChoisi = Instantiate(itemAleatoire, positionSpawn, Quaternion.identity);
 
+                //Appliquer une rotation pour fix un bug
                 itemChoisi.transform.Rotate(-90, 0, 0);
 
                 Debug.Log("Spawned " + itemChoisi.name + " at" + etageActuel + " floor");
