@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EffetItem : MonoBehaviour
-
 {
     public StatsItems item; // type d'item
     public GameObject player; // Référence au joueur
     public string nom; // nom de l'item
     public float valeur; // valeu de l'item
     public float duree; //Duree de l'effet
-
 
     // Start is called before the first frame update
     void Awake()
@@ -25,7 +23,7 @@ public class EffetItem : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         //Lorsqu'on est en collision avec le joueur
-        if (collision.gameObject.tag == "Player")
+        if (collision.tag == "Player")
         {
             ComportementJoueur joueur = collision.gameObject.GetComponent<ComportementJoueur>();
             //Selon la potion que nous sommes

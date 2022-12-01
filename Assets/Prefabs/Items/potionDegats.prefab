@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 8ad1fa1d8b2679243a3b7bb0c1b3627d, type: 2}
-  joueur: {fileID: 0}
+  player: {fileID: 0}
   nom: 
   valeur: 0
   duree: 0

@@ -110,7 +110,7 @@ public class ComportementJoueur : MonoBehaviour
     public void AugmenterGrosseur(float valeurGrosseur)
     {
         //Augmenter le scale du joueur
-        if(transform.localScale.magnitude < 100)
+        if(transform.localScale.magnitude < 50)
         {
             transform.localScale += new Vector3(valeurGrosseur, valeurGrosseur, valeurGrosseur);
         }
