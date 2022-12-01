@@ -30,11 +30,21 @@ public class Balle : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Si nous touchons un ennemi
+        Debug.Log("Collision");
+        //Si la balle est tirée par le joueur et touche un ennemi
         if (collision.gameObject.tag == "Ennemi")
         {
             //Faire des degats à l'ennemi
             collision.gameObject.GetComponent<EnemyController>().TakeDamage(degats);
+        }
+
+        //Si la balle est tirée par un ennemi et touche le joueur
+        if (collision.gameObject.tag == "Player")
+        {
+            Debug.Log("Collision");
+            //Faire des dégats au joueur
+            collision.gameObject.GetComponent<ComportementJoueur>().TakeDamage(degats);
+            
         }
 
         //Detruire la balle

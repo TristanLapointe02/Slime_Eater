@@ -148,4 +148,10 @@ public class EnemyController : MonoBehaviour
             joueur = GameObject.FindGameObjectWithTag("Player");
         }
     }
+
+    //Fonction pour les ranged attacks
+    public void RangedAttack()
+    {
+
+    }
 }

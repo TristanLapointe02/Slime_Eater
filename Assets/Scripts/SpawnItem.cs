@@ -89,7 +89,7 @@ public class SpawnItem : MonoBehaviour
                 //Appliquer une rotation pour fix un bug
                 itemChoisi.transform.Rotate(-90, 0, 0);
 
-                Debug.Log("Spawned " + itemChoisi.name + " at" + etageActuel + " floor");
+                //Debug.Log("Spawned " + itemChoisi.name + " at" + etageActuel + " floor");
             }
 
             //Commencer le cooldown de spawn
@@ -136,7 +136,7 @@ public class SpawnItem : MonoBehaviour
                 //Appliquer une rotation pour fix un bug
                 itemChoisi.transform.Rotate(-90, 0, 0);
 
-                Debug.Log("Spawned " + itemChoisi.name + " at" + etageActuel + " floor");
+                //Debug.Log("Spawned " + itemChoisi.name + " at" + etageActuel + " floor");
             }
         }
     }
