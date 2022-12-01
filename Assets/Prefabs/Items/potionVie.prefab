@@ -104,6 +104,8 @@ MonoBehaviour:
   nom: 
   valeur: 0
   duree: 0
+  effetUI: {fileID: 182527638235650108, guid: ae240c56e6914ee49994509ef9be30c0, type: 3}
+  parentEffetUI: {fileID: 0}
 --- !u!54 &2112599124259631929
 Rigidbody:
   m_ObjectHideFlags: 0

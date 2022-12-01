@@ -32,8 +32,8 @@ public class CameraFollow : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, positionCam, smoothSpeed);*/
 
         //Changer la position de la caméra selon la taille du joueur
-        offset.z = (target.localScale.magnitude * -forceZoomOutCam*1.5f) - (forceZoomOutCam*5);
-        offset.y = (target.localScale.magnitude * forceZoomOutCam) + (forceZoomOutCam*2.5f);
+        offset.z = -(target.localScale.magnitude * forceZoomOutCam*1.5f) - (forceZoomOutCam*20f);
+        offset.y = (target.localScale.magnitude * forceZoomOutCam) + (forceZoomOutCam*10f);
 
         _transposer.m_FollowOffset = new Vector3 (0, offset.y, offset.z);
     }

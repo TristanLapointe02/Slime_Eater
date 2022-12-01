@@ -11,4 +11,5 @@ public class StatsItems : ScriptableObject
     public float valeur; //valeur de l'effet
     public int etage; //Premier étage auquel item se drop
     public AudioClip sonItem; //Son qui joue quand on pick up l'item
+    public Sprite icone; //Icone de l'effet
 }

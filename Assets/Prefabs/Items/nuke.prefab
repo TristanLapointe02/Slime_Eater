@@ -100,10 +100,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 397043ec65ae709438b24c1ce875fb89, type: 2}
-  joueur: {fileID: 0}
+  player: {fileID: 0}
   nom: 
   valeur: 0
   duree: 0
+  effetUI: {fileID: 182527638235650108, guid: ae240c56e6914ee49994509ef9be30c0, type: 3}
+  parentEffetUI: {fileID: 0}
 --- !u!54 &8045336980402031615
 Rigidbody:
   m_ObjectHideFlags: 0

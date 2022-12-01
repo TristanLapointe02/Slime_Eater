@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21259a799e161084eb575d83fd814f13, type: 3}
   m_Name: slime
   m_EditorClassIdentifier: 
-  nomItem: slime
+  nomItem: Slime
   duree: 0
   valeur: 0.5
   etage: 1
-  couleur:
-    serializedVersion: 2
-    rgba: 2524900607
   sonItem: {fileID: 8300000, guid: b231e1c1eff8da84badd88c8397e0a39, type: 3}
+  icone: {fileID: 21300000, guid: f3d8b6473fbaaab49a7cd65ea590a91e, type: 3}

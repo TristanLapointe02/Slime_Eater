@@ -9,6 +9,8 @@ public class EffetItem : MonoBehaviour
     public string nom; // nom de l'item
     public float valeur; // valeu de l'item
     public float duree; //Duree de l'effet
+    public GameObject effetUI; //UI de l'effet
+    public GameObject parentEffetUI; //Parent de la liste d'effets
 
     // Start is called before the first frame update
     void Awake()
@@ -18,6 +20,7 @@ public class EffetItem : MonoBehaviour
         valeur = item.valeur;
         duree = item.duree;
         player = GameObject.FindGameObjectWithTag("Player");
+        parentEffetUI = GameObject.Find("ListeEffets");
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -70,9 +73,11 @@ public class EffetItem : MonoBehaviour
                     break;
             }
 
+            //Creer un UI pour l'effet
+            CreerEffetUI();
+
             //Detruire l'item
             DestroyItem(item.sonItem);
-
         }
     }
 
@@ -83,5 +88,23 @@ public class EffetItem : MonoBehaviour
             player.GetComponent<AudioSource>().PlayOneShot(audioClip);
         }
         Destroy(gameObject);
+    }
+
+    //Fonction permettant d'ajouter un element UI indiquant l'effet
+    public void CreerEffetUI()
+    {
+        //Si l'effet a une duree
+        if(item.duree > 0)
+        {
+            print("boumboum!!!!!!!!!!!");
+            //Faire apparaitre un element UI indiquant l'effet ajouté
+            GameObject nouvelEffetUI = Instantiate(effetUI);
+            nouvelEffetUI.transform.SetParent(parentEffetUI.transform, false);
+
+            //Assigner les valeurs
+            nouvelEffetUI.GetComponent<EffetItemUI>().texteNomEffet.text = item.nomItem;
+            nouvelEffetUI.GetComponent<EffetItemUI>().temps = duree;
+            nouvelEffetUI.GetComponent<EffetItemUI>().imageEffet.sprite = item.icone;
+        }
     }
 }

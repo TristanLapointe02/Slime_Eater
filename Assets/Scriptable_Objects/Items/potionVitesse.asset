@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21259a799e161084eb575d83fd814f13, type: 3}
   m_Name: potionVitesse
   m_EditorClassIdentifier: 
-  nomItem: potionVitesse
+  nomItem: Vitesse+
   duree: 6
   valeur: 25
   etage: 1
-  couleur:
-    serializedVersion: 2
-    rgba: 4294965248
   sonItem: {fileID: 8300000, guid: 77ac016dd10f40442ab9a8e98d755b28, type: 3}
+  icone: {fileID: 21300000, guid: f3d8b6473fbaaab49a7cd65ea590a91e, type: 3}
