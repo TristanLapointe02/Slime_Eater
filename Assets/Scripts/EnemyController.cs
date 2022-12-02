@@ -51,13 +51,8 @@ public class EnemyController : MonoBehaviour
         //Si l'ennemi est ranged
         if (enemy.ranged == true)
         {
-            // Si le joueur est assez proche, l'attaquer
-            if (directionJoueur.magnitude <= 25f + joueur.GetComponent<Collider>().bounds.size.x)
-            {
-                //Attack();
-            }
-            // Sinon bouger vers lui
-            else
+            // Si le joueur est trop loin, bouger vers lui
+            if (InRangeJoueur() == false)
             {
                 Move();
             }
@@ -149,9 +144,9 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    //Fonction pour les ranged attacks
-    public void RangedAttack()
+    //Fonction retournant si nous sommes dans notre range
+    public bool InRangeJoueur()
     {
-
+        return directionJoueur.magnitude <= enemy.range + joueur.GetComponent<Collider>().bounds.size.x;
     }
 }

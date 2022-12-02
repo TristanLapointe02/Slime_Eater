@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5805499353154782828}
   - component: {fileID: -897488023850814506}
   - component: {fileID: 5354228995703158957}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: BalleEnnemi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,6 @@ MonoBehaviour:
   lifeTime: 5
   degats: 10
   sonBalleHit: {fileID: 8300000, guid: 08892c356714f924caa000608f304dc1, type: 3}
-  tireur: {fileID: 5764174327737115379, guid: 89ee4e9b5ee82e1448acce250dbd75f4, type: 3}
 --- !u!54 &-897488023850814506
 Rigidbody:
   m_ObjectHideFlags: 0

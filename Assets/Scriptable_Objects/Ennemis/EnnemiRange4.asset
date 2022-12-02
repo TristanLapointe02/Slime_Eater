@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3665f582a021ff4bbe41a58282c4388, type: 3}
-  m_Name: EnnemiRange
+  m_Name: EnnemiRange4
   m_EditorClassIdentifier: 
-  nomEnnemi: EnemyRange
-  descriptionEnnemi: An ennemi that stays at a certain distance from the player and
+  nomEnnemi: EnemyRange4
+  descriptionEnnemi: an ennemy that stays at a certain distance from the player and
     attacks with projectiles
-  vieMax: 3
+  vieMax: 2
   degats: 5
-  vitesse: 5
+  vitesse: 2
   tailleEnnemi: 1
   valeurLoot: 1.5
   nombreLootSpawn: 2
   ranged: 1
-  etage: 3
+  etage: 2
+  range: 25

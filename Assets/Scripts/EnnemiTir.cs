@@ -14,23 +14,14 @@ public class EnnemiTir : MonoBehaviour
     public float shootDelay; //Délai entre les balles tirées
     public int nombreBalles; //Nombre de balles a tirer
     public float forceTir; //Force du tir
-    public float degatsBalle; //Degats de la balle
 
     [Header("Autres références")]
     public AudioClip sonTir; //Son de tir
     public GameObject gun; //Position du "gun"
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if (peutTirer)
+        if (peutTirer && GetComponent<EnemyController>().InRangeJoueur())
         {
             //Commencer le cooldown après avoir tirer
             peutTirer = false;
@@ -49,7 +40,7 @@ public class EnnemiTir : MonoBehaviour
                 nouvelleBalle.GetComponent<Rigidbody>().AddForce(gun.transform.forward * forceTir, ForceMode.Impulse);
 
                 // Changer les dégats de la balle selon ceux de l'ennemi
-                nouvelleBalle.GetComponent<Balle>().degats = degatsBalle;
+                nouvelleBalle.GetComponent<Balle>().degats = GetComponent<EnemyController>().enemy.degats;
             }
         }
     }
