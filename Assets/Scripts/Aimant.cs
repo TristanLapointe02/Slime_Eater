@@ -25,7 +25,7 @@ public class Aimant : MonoBehaviour
         transform.position = new Vector3(joueur.transform.position.x, joueur.transform.position.y - joueur.GetComponent<Collider>().bounds.extents.y, joueur.transform.position.z);
 
         //Changer le rayon du collider selon la taille du joueur
-        colliderAimant.radius = rayonAimant + (joueur.transform.localScale.magnitude / (rayonAimant * 2));
+        colliderAimant.radius = rayonAimant + (joueur.transform.localScale.magnitude / (rayonAimant * 1.5f));
     }
     private void OnTriggerStay(Collider collision)
     {

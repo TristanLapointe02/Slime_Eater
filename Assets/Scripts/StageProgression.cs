@@ -6,12 +6,27 @@ using TMPro;
 public class StageProgression : MonoBehaviour
 {
     public int[] ennemiesToKillPerStage; //Nombre d'ennemis a tuer par stage
-    public SpawnEnemy refSpawnEnnemi; //Reference au spawn d'ennemis
-    public SpawnItem refSpawnItem; //Reference au spawn d'items
+    public ObjectSpawner refSpawnEnnemi; //Reference au spawn d'ennemis
+    public ObjectSpawner refSpawnItem; //Reference au spawn d'items
     public TextMeshProUGUI texteStage; //Texte affichant le stage actuel
+    public GameObject[] Etages; //Reference aux etages
+    public static int etageActuel; //Etage actuel
+    public AudioClip sonChangerEtage; //Son qui joue lorsqu'on change d'etage
+    public GameObject joueur; //Reference au joueur
+    public AudioClip sonVictoire; //Son de victoire lorsque le joueur fini le jeu
+
+    private void Awake()
+    {
+        //Reset l'etage actuel à 1
+        etageActuel = 1;
+
+        //Trouver le joueur
+        joueur = GameObject.Find("Joueur");
+    }
 
     void Update()
     {
+        //Constamment verifier si nous avons fini un niveau
         VerificationNiveau();
     }
 
@@ -19,19 +34,39 @@ public class StageProgression : MonoBehaviour
     public void VerificationNiveau()
     {
         //Mettre a jour le texte de niveau
-        texteStage.text = SpawnEnemy.etageActuel.ToString();
+        texteStage.text = etageActuel.ToString();
 
-        for (int i = 0; i < ennemiesToKillPerStage.Length; i++)
+        for (int i = 1; i < ennemiesToKillPerStage.Length; i++)
         {
-            if (SpawnEnemy.etageActuel == i + 1 && ComportementJoueur.ennemisTues >= ennemiesToKillPerStage[i])
+            if (etageActuel == i && ComportementJoueur.ennemisTues >= ennemiesToKillPerStage[i-1])
             {
-                //Changer d'etage
-                refSpawnEnnemi.changerEtage();
-                refSpawnItem.changerEtage();
+                //Augmenter d'étage
+                etageActuel++;
 
-                //Reset le compteur d'ennemis tues
-                ComportementJoueur.ennemisTues = 0;
-            };
+                //Si on vient de finir le jeu
+                if (etageActuel == Etages.Length)
+                {
+                    //Faire apparaitre le menu de fin
+                    joueur.GetComponent<ComportementJoueur>().FinJeu("Vous avez gagné!", sonVictoire);
+                }
+
+                //Sinon, pour le restant des étages
+                else
+                {
+                    //Detruire le plancher de l'etage
+                    Etages[etageActuel - 2].gameObject.SetActive(false);
+
+                    //Faire spawn des objets
+                    refSpawnEnnemi.InitialSpawn();
+                    refSpawnItem.InitialSpawn();
+
+                    //Jouer un sound effect
+                    joueur.gameObject.GetComponent<AudioSource>().PlayOneShot(sonChangerEtage);
+
+                    //Reset le compteur d'ennemis tues
+                    ComportementJoueur.ennemisTues = 0;
+                } 
+            }
         }
     }
 }

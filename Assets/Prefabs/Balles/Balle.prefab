@@ -98,7 +98,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5805499353154782828
 MonoBehaviour:
@@ -113,9 +113,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeTime: 5
-  degats: 1
+  degats: 0
   sonBalleHit: {fileID: 8300000, guid: 9abfe3956e44e3d4180342b210f843a1, type: 3}
-  tireur: {fileID: 0}
 --- !u!54 &-897488023850814506
 Rigidbody:
   m_ObjectHideFlags: 0

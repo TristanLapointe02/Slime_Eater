@@ -29,6 +29,7 @@ public class ComportementJoueur : MonoBehaviour
     public static float ennemisTues; //Nombre d'ennemis tues
     public static bool finJeu; //Indiquer que c'est la fin du jeu
     public AudioClip sonLevelUp; //Son lorsque le joueur level up
+    public AudioClip sonPartiePerdue; //Son lorsque le joueur perd la partie
 
     void Start()
     {
@@ -83,12 +84,16 @@ public class ComportementJoueur : MonoBehaviour
         }
 
         //Si le joueur était pour mourir
-        if(vieJoueur <= 0)
+        if(vieJoueur <= 0 && mortJoueur == false)
         {
+            //Indiquer qu'il est mort
             mortJoueur = true;
 
+            //Set sa vie à 0 peu importe
+            vieJoueur = 0;
+
             //Appeler une fonction affichant le menu de fin
-            FinJeu();
+            FinJeu("Vous êtes mort.", sonPartiePerdue);
         }
     }
 
@@ -201,10 +206,17 @@ public class ComportementJoueur : MonoBehaviour
         GetComponent<ComportementJoueur>().invulnerable = false;
     }
 
-    public void FinJeu()
+    //Fonction qui indique que la partie est terminée
+    public void FinJeu(string message, AudioClip son)
     {
         //Faire apparaitre un menu
         menuFin.SetActive(true);
+
+        //Changer le texte s'affichant dans le menu
+        menuFin.transform.Find("MenuFinBg1/Titre").GetComponent<TextMeshProUGUI>().text = message;
+
+        //Jouer un son
+        GetComponent<AudioSource>().PlayOneShot(son);
 
         //Indiquer que c'est la fin du jeu
         finJeu = true;

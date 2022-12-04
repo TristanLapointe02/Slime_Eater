@@ -19,8 +19,8 @@ public class ControleTir : MonoBehaviour
 
     [Header("Autres références")]
     public AudioClip sonTir; //Son de tir
+    public AudioClip sonTirImpossible; //Son indiquant qu'on ne peut pas tirer
     public GameObject gun; //Position du "gun"
-
 
     void Update()
     {
@@ -57,7 +57,10 @@ public class ControleTir : MonoBehaviour
         //Si nous sommes trop petit, empêcher la possibilite de tirer
         if(gameObject.transform.localScale.magnitude <= 1)
         {
-            Debug.Log("TROP PETIT - PEUT PAS TIRER");
+            //Jouer un son indiquant au joueur qu'il ne peut pas tirer
+            GetComponent<AudioSource>().PlayOneShot(sonTirImpossible);
+
+            //Indiquer qu'il est trop petit
             tropPetit = true;
         }
         else

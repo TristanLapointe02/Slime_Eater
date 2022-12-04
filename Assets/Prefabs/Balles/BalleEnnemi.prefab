@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ae1eee27650a7b439d5fad91b07f071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 5
+  lifeTime: 6
   degats: 10
   sonBalleHit: {fileID: 8300000, guid: 08892c356714f924caa000608f304dc1, type: 3}
 --- !u!54 &-897488023850814506

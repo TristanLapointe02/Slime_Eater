@@ -21,6 +21,10 @@ public class EnnemiTir : MonoBehaviour
 
     void Update()
     {
+        //Faire que le gun face le joueur
+        gun.transform.LookAt(GetComponent<EnemyController>().joueur.transform);
+
+        //S'il peut tirer et qu'il est in range
         if (peutTirer && GetComponent<EnemyController>().InRangeJoueur())
         {
             //Commencer le cooldown après avoir tirer
@@ -28,7 +32,7 @@ public class EnnemiTir : MonoBehaviour
             StartCoroutine(delaiTir(shootDelay));
 
             // Jouer un son de tir
-            //GetComponent<AudioSource>().PlayOneShot(sonTir);
+            GetComponent<AudioSource>().PlayOneShot(sonTir);
 
             //Pour le nombre de balles à tirer
             for (int i = 0; i < nombreBalles; i++)

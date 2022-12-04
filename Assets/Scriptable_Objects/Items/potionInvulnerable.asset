@@ -17,4 +17,4 @@ MonoBehaviour:
   valeur: 0
   etage: 4
   sonItem: {fileID: 8300000, guid: 77ac016dd10f40442ab9a8e98d755b28, type: 3}
-  icone: {fileID: 21300000, guid: f3d8b6473fbaaab49a7cd65ea590a91e, type: 3}
+  icone: {fileID: 21300000, guid: ba33fcf149057fd46bb8c66402b94667, type: 3}

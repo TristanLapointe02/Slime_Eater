@@ -33,7 +33,7 @@ public class EffetItem : MonoBehaviour
             switch (nom)
             {
                 case "potionVie":
-                    joueur.AugmenterVie(valeur * (1 + SpawnEnemy.etageActuel / 5));
+                    joueur.AugmenterVie(valeur * (1 + StageProgression.etageActuel / 5));
                     break;
 
                 case "potionVitesse":
@@ -96,7 +96,6 @@ public class EffetItem : MonoBehaviour
         //Si l'effet a une duree
         if(item.duree > 0)
         {
-            print("boumboum!!!!!!!!!!!");
             //Faire apparaitre un element UI indiquant l'effet ajouté
             GameObject nouvelEffetUI = Instantiate(effetUI);
             nouvelEffetUI.transform.SetParent(parentEffetUI.transform, false);
