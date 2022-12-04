@@ -13,7 +13,7 @@ public class TestSlimeMesh : MonoBehaviour
     private MeshRenderer rendererMesh;
     private JellyVertex[] jv;
     private Vector3[] vertexArray;
-    // Start is called before the first frame update
+
     void Start()
     {
         OriginalMesh = GetComponent<MeshFilter>().sharedMesh;
@@ -28,7 +28,6 @@ public class TestSlimeMesh : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         vertexArray = OriginalMesh.vertices;

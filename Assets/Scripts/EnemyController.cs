@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 public class EnemyController : MonoBehaviour
 {
     public StatsEnemy enemy; // type d'ennemi
@@ -68,8 +66,11 @@ public class EnemyController : MonoBehaviour
     //Fonction permettant de bouger vers le joueur
     private void Move()
     {
-        //Modifier la position de l'ennemi selon la vitesse
-        transform.position += directionJoueur.normalized * enemy.vitesse * Time.deltaTime;
+        //Modifier la position de l'ennemi selon la vitesse, si nous sommes pas en pause
+        if(ControleAmeliorations.pause == false)
+        {
+            transform.position += directionJoueur.normalized * enemy.vitesse * Time.deltaTime;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

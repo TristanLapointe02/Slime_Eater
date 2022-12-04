@@ -25,7 +25,7 @@ public class EnnemiTir : MonoBehaviour
         gun.transform.LookAt(GetComponent<EnemyController>().joueur.transform);
 
         //S'il peut tirer et qu'il est in range
-        if (peutTirer && GetComponent<EnemyController>().InRangeJoueur())
+        if (peutTirer && ControleAmeliorations.pause == false && GetComponent<EnemyController>().InRangeJoueur())
         {
             //Commencer le cooldown après avoir tirer
             peutTirer = false;

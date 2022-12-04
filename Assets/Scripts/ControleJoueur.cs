@@ -42,7 +42,7 @@ public class ControleJoueur : MonoBehaviour
     void Update()
     {
         //Capturer les inputs
-        if(ComportementJoueur.finJeu == false)
+        if(ComportementJoueur.finJeu == false && ControleAmeliorations.pause == false)
         {
             InputProcess();
         }

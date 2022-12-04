@@ -14,6 +14,15 @@ public class Balle : MonoBehaviour
         Invoke("DetruireBalle", lifeTime);
     }
 
+    private void Update()
+    {
+        //Si le jeu est en pause, se détruire
+        if (ControleAmeliorations.pause)
+        {
+            DetruireBalle();
+        }
+    }
+
     //Fonction permettant de détruire la balle
     public void DetruireBalle()
     {
@@ -23,7 +32,7 @@ public class Balle : MonoBehaviour
             //Jouer un sound effect
             AudioSource.PlayClipAtPoint(sonBalleHit, transform.position);
 
-            //Detruire l'objet apres 2 secondes
+            //Detruire l'objet
             Destroy(gameObject);
         }
     }

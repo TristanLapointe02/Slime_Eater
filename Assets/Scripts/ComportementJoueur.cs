@@ -128,7 +128,7 @@ public class ComportementJoueur : MonoBehaviour
         xpActuel += valeurXp;
 
         //Si jamais on dépasse l'xp max
-        if(xpActuel >= xpMax)
+        if(Mathf.RoundToInt(xpActuel) >= xpMax)
         {
             //Trouver la difference si on depasse l'xp max
             float difference = xpActuel - xpMax;
@@ -150,6 +150,9 @@ public class ComportementJoueur : MonoBehaviour
 
             //Jouer un sound effect
             GetComponent<AudioSource>().PlayOneShot(sonLevelUp);
+
+            //Proposer une amélioration
+            GetComponent<ControleAmeliorations>().ActiverChoix();
         }
     }
 
@@ -217,6 +220,9 @@ public class ComportementJoueur : MonoBehaviour
 
         //Jouer un son
         GetComponent<AudioSource>().PlayOneShot(son);
+
+        //Enlever la vélocité du joueur
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
         //Indiquer que c'est la fin du jeu
         finJeu = true;

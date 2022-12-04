@@ -25,7 +25,7 @@ public class ControleTir : MonoBehaviour
     void Update()
     {
         //Si le joueur appuie sur clicque gauche
-        if (Input.GetButtonDown("Fire1") && peutTirer && tropPetit == false)
+        if (Input.GetButtonDown("Fire1") && peutTirer && tropPetit == false && ControleAmeliorations.pause == false)
         {
             //Indiquer qu'il ne peut plus tirer, et appeler une fonction
             peutTirer = false;
