@@ -12,7 +12,7 @@ public class JoueurMenu : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce * Random.Range(0.5f, 1.5f));
+        GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce * Random.Range(0.5f, 2f));
         if (sonJump != null)
         {
             GetComponent<AudioSource>().PlayOneShot(sonJump);
