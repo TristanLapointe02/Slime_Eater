@@ -106,6 +106,8 @@ MonoBehaviour:
   duree: 0
   effetUI: {fileID: 182527638235650108, guid: ae240c56e6914ee49994509ef9be30c0, type: 3}
   parentEffetUI: {fileID: 0}
+  objetExplosion: {fileID: 0}
+  sonExplosion: {fileID: 0}
 --- !u!54 &8563214978654581512
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -146,5 +148,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5, z: 1}
-  m_Center: {x: -0.000000059604645, y: 0.0000000074505815, z: 0.05111661}
+  m_Size: {x: 0.75, y: 0.75, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

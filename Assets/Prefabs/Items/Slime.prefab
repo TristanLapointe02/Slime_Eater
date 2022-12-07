@@ -114,7 +114,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 1.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &2554897664974051079
 BoxCollider:
@@ -148,3 +148,5 @@ MonoBehaviour:
   duree: 0
   effetUI: {fileID: 182527638235650108, guid: ae240c56e6914ee49994509ef9be30c0, type: 3}
   parentEffetUI: {fileID: 0}
+  objetExplosion: {fileID: 0}
+  sonExplosion: {fileID: 0}

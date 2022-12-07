@@ -87,7 +87,11 @@ public class ControleAmeliorations : MonoBehaviour
         //Rajouter les choix anciennement proposés
         foreach(Amelioration ameliorationChoisie in ameliorationsSelectionnes)
         {
-            ameliorationsDisponibles.Add(ameliorationChoisie);
+            //Si on peut
+            if (ameliorationChoisie.peutRepiger)
+            {
+                ameliorationsDisponibles.Add(ameliorationChoisie);
+            }
         }
 
         //Clear la liste d'ameliorations selectionees
@@ -101,12 +105,12 @@ public class ControleAmeliorations : MonoBehaviour
             break;
 
             case "test2":
-                StartCoroutine(GetComponent<ComportementJoueur>().AugmenterVitesse(valeur, 5));
+                StartCoroutine(GetComponent<ComportementJoueur>().AugmenterVitesse(valeur, 0, true));
             break;
 
             case "test3":
                 GetComponent<ComportementJoueur>().AugmenterGrosseur(valeur);
-                break;
+            break;
         }
     }
 }

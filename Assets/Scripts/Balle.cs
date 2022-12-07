@@ -7,6 +7,12 @@ public class Balle : MonoBehaviour
     public int lifeTime; //Temps de vie de la balle
     public float degats; //Degats de la balle
     public AudioClip sonBalleHit; //Son lorsque la balle hit quelquechose
+    public bool goThrough; //Indiquer si on peut passer a travers des ennemis
+    public bool explose; //Indiquer si la balle explose au contact
+    public GameObject objetExplosion; //Si on peut exploser, ceci est l'objet d'explosion
+    public AudioClip sonExplosion; //Son de l'explosion
+    public int rayonExplosion; //Rayon de l'explosion
+    public bool slow; //Indiquer si la balle peut slow
 
     void Start()
     {
@@ -21,6 +27,12 @@ public class Balle : MonoBehaviour
         {
             DetruireBalle();
         }
+
+        //Si on peut passer a travers des ennemis, devenir trigger
+        if (goThrough)
+        {
+            GetComponent<Collider>().isTrigger = true;
+        }
     }
 
     //Fonction permettant de détruire la balle
@@ -32,6 +44,12 @@ public class Balle : MonoBehaviour
             //Jouer un sound effect
             AudioSource.PlayClipAtPoint(sonBalleHit, transform.position);
 
+            //Si on peut exploser, le faire
+            if (explose)
+            {
+                Explosion();
+            }
+
             //Detruire l'objet
             Destroy(gameObject);
         }
@@ -42,8 +60,7 @@ public class Balle : MonoBehaviour
         //Si la balle est tirée par le joueur et touche un ennemi
         if (collision.gameObject.tag == "Ennemi")
         {
-            //Faire des degats à l'ennemi
-            collision.gameObject.GetComponent<EnemyController>().TakeDamage(degats);
+            faireDegatsEnnemi(collision.gameObject);
         }
 
         //Si la balle est tirée par un ennemi et touche le joueur
@@ -53,7 +70,72 @@ public class Balle : MonoBehaviour
             collision.gameObject.GetComponent<ComportementJoueur>().TakeDamage(degats);
         }
 
-        //Detruire la balle
-        DetruireBalle();
+        //Si on ne peut pas passer a travers des ennemis
+        if(goThrough == false)
+        {
+            //Detruire la balle
+            DetruireBalle();
+        }
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        //Si la balle est tirée par le joueur et touche un ennemi
+        if (collision.gameObject.tag == "Ennemi" && goThrough)
+        {
+            faireDegatsEnnemi(collision.gameObject);
+        }
+    }
+
+    //Fonction qui permet de faire des dégâts à l'ennemi
+    public void faireDegatsEnnemi(GameObject ennemi)
+    {
+        //Faire des degats à l'ennemi
+        ennemi.gameObject.GetComponent<EnemyController>().TakeDamage(degats);
+
+        //Si on peut exploser, et qu'on est go trough le faire quand même au contact
+        if(goThrough && explose)
+        {
+            Explosion();
+        }
+
+        //Si on peut slow l'ennemi, le faire
+        if (slow)
+        {
+            ennemi.GetComponent<EnemyController>().StartCoroutine(ennemi.GetComponent<EnemyController>().SlowMovement(75, 5));
+        }
+    }
+
+    //Fonction d'explosion
+    public void Explosion()
+    {
+        //Spawn un objet visuel
+        GameObject effet = Instantiate(objetExplosion, gameObject.transform.position, Quaternion.identity);
+
+        //Changer la grosseur de l'effet selon notre rayon
+        effet.transform.localScale = new Vector3(rayonExplosion, rayonExplosion, rayonExplosion);
+
+        //Le detruire tout de suite après
+        Destroy(effet, 0.15f);
+
+        //Jouer un sound effect
+        AudioSource.PlayClipAtPoint(sonExplosion, gameObject.transform.position);
+
+        //Pour tous les colliders dans la zone d'explosion
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, rayonExplosion);
+
+        //Pour tous les collider touchés
+        foreach (var collider in hitColliders)
+        {
+            //Trouver les ennemis
+            if (collider.gameObject.TryGetComponent(out EnemyController ennemy))
+            {
+                //Leur faire des degats
+                ennemy.TakeDamage(degats);
+
+                //Faire une explosion
+                ennemy.GetComponent<Rigidbody>().AddExplosionForce(3500, transform.position, rayonExplosion);
+            }
+        }
     }
 }

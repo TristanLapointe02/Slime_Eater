@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     public GameObject slimeLoot; //Reference au loot de slime
     public AudioClip sonSuction; //Son de suction lorsque l'ennemi touche le joueur
     public Color couleurEnnemi; //Couleur de base de l'ennemi
+    public float vitesse; //Vitesse de l'ennemi
 
     private void Start()
     {
@@ -23,6 +24,9 @@ public class EnemyController : MonoBehaviour
 
         //Couleur
         couleurEnnemi = GetComponentInChildren<Renderer>().material.color;
+
+        //Vitesse
+        vitesse = enemy.vitesse;
 
         //Trouver le joueur
         TrouverJoueur();
@@ -69,7 +73,7 @@ public class EnemyController : MonoBehaviour
         //Modifier la position de l'ennemi selon la vitesse, si nous sommes pas en pause
         if(ControleAmeliorations.pause == false)
         {
-            transform.position += directionJoueur.normalized * enemy.vitesse * Time.deltaTime;
+            transform.position += directionJoueur.normalized * vitesse * Time.deltaTime;
         }
     }
 
@@ -80,8 +84,6 @@ public class EnemyController : MonoBehaviour
         {
             // Faire perdre de la vie au joueur
             collision.gameObject.GetComponent<ComportementJoueur>().TakeDamage(enemy.degats);
-
-            //Ajouter animation de mort éventuellement
 
             //Faire jouer un son
             collision.gameObject.GetComponent<AudioSource>().PlayOneShot(sonSuction);
@@ -107,6 +109,22 @@ public class EnemyController : MonoBehaviour
         //Changer le matériel pendant 0.15 secondes
         GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.red;
         Invoke("AppliquerMat", 0.15f);
+    }
+
+    //Fonction qui slow l'ennemi
+    public IEnumerator SlowMovement(float pourcentage, float duree)
+    {
+        //Calculer le pourcentage
+        float vitesseEnlevee = vitesse * pourcentage / 100;
+
+        //Enlever la vitesse
+        vitesse -= vitesseEnlevee;
+
+        //Attendre un delai
+        yield return new WaitForSeconds(duree);
+
+        //Remettre la vitesse a la normale
+        vitesse += vitesseEnlevee;
     }
 
     //Fonction de mort de l'ennemi

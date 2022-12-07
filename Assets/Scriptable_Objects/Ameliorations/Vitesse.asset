@@ -17,3 +17,4 @@ MonoBehaviour:
   description1: 'Augmentez votre vitesse de '
   valeur: 100
   description2: .
+  peutRepiger: 1

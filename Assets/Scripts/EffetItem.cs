@@ -11,8 +11,9 @@ public class EffetItem : MonoBehaviour
     public float duree; //Duree de l'effet
     public GameObject effetUI; //UI de l'effet
     public GameObject parentEffetUI; //Parent de la liste d'effets
+    public GameObject objetExplosion; //Objet visuel de l'explosion
+    public AudioClip sonExplosion; //Son de l'explosion
 
-    // Start is called before the first frame update
     void Awake()
     {
         // Assigner valeurs du scriptableObject
@@ -58,9 +59,7 @@ public class EffetItem : MonoBehaviour
 
                 case "nuke":
                     //todo: ajouter fonction Nuke(), eleminer tous les ennemis autour du joueur
-                    GameObject zoneDegats = GameObject.Find("ZoneDegats");
-                    zoneDegats.GetComponent<ZoneDegats>().rayonActuel = 100f;
-                    player.GetComponent<ControleJoueur>().Explosion(valeur, 100f);
+                    Explosion();
                     break;
 
                 case "slime":
@@ -81,13 +80,37 @@ public class EffetItem : MonoBehaviour
         }
     }
 
-    private void DestroyItem(AudioClip audioClip)
+    //Fonction d'explosion
+    public void Explosion()
     {
-        if(audioClip != null)
+        //Spawn un objet visuel
+        GameObject effet = Instantiate(objetExplosion, gameObject.transform.position, Quaternion.identity);
+
+        //Changer la grosseur de l'effet selon notre rayon
+        effet.transform.localScale = new Vector3(valeur + player.transform.localScale.magnitude, valeur + player.transform.localScale.magnitude, valeur + player.transform.localScale.magnitude);
+
+        //Le detruire tout de suite après
+        Destroy(effet, 0.15f);
+
+        //Jouer un sound effect
+        AudioSource.PlayClipAtPoint(sonExplosion, gameObject.transform.position);
+
+        //Pour tous les colliders dans la zone d'explosion
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, valeur + player.transform.localScale.magnitude);
+
+        //Pour tous les collider touchés
+        foreach (var collider in hitColliders)
         {
-            player.GetComponent<AudioSource>().PlayOneShot(audioClip);
+            //Trouver les ennemis
+            if (collider.gameObject.TryGetComponent(out EnemyController ennemy) && objetExplosion != null)
+            {
+                //Leur faire des degats
+                ennemy.TakeDamage(valeur * 1000);
+
+                //Faire une explosion
+                ennemy.GetComponent<Rigidbody>().AddExplosionForce(3500, transform.position, valeur + player.transform.localScale.magnitude);
+            }
         }
-        Destroy(gameObject);
     }
 
     //Fonction permettant d'ajouter un element UI indiquant l'effet
@@ -105,5 +128,18 @@ public class EffetItem : MonoBehaviour
             nouvelEffetUI.GetComponent<EffetItemUI>().temps = duree;
             nouvelEffetUI.GetComponent<EffetItemUI>().imageEffet.sprite = item.icone;
         }
+    }
+
+    //Fonction qui détruit l'item
+    private void DestroyItem(AudioClip audioClip)
+    {
+        //Si on peut jouer un son, le faire
+        if (audioClip != null)
+        {
+            player.GetComponent<AudioSource>().PlayOneShot(audioClip);
+        }
+
+        //Detruire l'item
+        Destroy(gameObject);
     }
 }

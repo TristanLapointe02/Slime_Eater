@@ -157,16 +157,20 @@ public class ComportementJoueur : MonoBehaviour
     }
 
     //Fonction permettant d'augmenter la vitesse du joueur
-    public IEnumerator AugmenterVitesse(float valeur, float duree)
+    public IEnumerator AugmenterVitesse(float valeur, float duree = 0f, bool permanent = false)
     {
         //Ajouter la vitesse
         GetComponent<ControleJoueur>().vitesse += valeur;
 
-        //Attendre un certain delai
-        yield return new WaitForSeconds(duree);
+        //Si c'est temporaire
+        if(permanent == false)
+        {
+            //Attendre un certain delai
+            yield return new WaitForSeconds(duree);
 
-        //Enlever la vitesse
-        GetComponent<ControleJoueur>().vitesse -= valeur;
+            //Enlever la vitesse
+            GetComponent<ControleJoueur>().vitesse -= valeur;
+        } 
     }
 
     //Fonction permettant d'augmenter les degats du joueur

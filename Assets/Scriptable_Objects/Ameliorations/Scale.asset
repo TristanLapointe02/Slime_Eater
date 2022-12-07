@@ -17,3 +17,4 @@ MonoBehaviour:
   description1: 'Augmentez votre masse de '
   valeur: 3
   description2: .
+  peutRepiger: 1

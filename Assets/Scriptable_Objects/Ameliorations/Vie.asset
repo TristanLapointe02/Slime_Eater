@@ -17,3 +17,4 @@ MonoBehaviour:
   description1: 'Augmentez votre vie de '
   valeur: 100
   description2: .
+  peutRepiger: 1
