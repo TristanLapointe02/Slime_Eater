@@ -17,14 +17,18 @@ public class ControleAmeliorations : MonoBehaviour
     //Fonction permettant d'appeler la coroutine qui propose les choix
     public void ActiverChoix()
     {
-        //Demarer la coroutine
-        StartCoroutine(ProposerChoix(0.75f));
+        //Si nous sommes pas deja en pause
+        if(pause == false)
+        {
+            //Demarer la coroutine
+            StartCoroutine(ProposerChoix(0.75f));
 
-        //Indiquer que nous sommes en pause;
-        pause = true;
+            //Indiquer que nous sommes en pause;
+            pause = true;
 
-        //Enlever la vélocité du joueur
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            //Enlever la vélocité du joueur
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        }
     }
 
     //Fonction permettant d'offrir des choix aux joueur

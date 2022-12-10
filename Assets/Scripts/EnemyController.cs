@@ -12,6 +12,7 @@ public class EnemyController : MonoBehaviour
     public AudioClip sonSuction; //Son de suction lorsque l'ennemi touche le joueur
     public Color couleurEnnemi; //Couleur de base de l'ennemi
     public float vitesse; //Vitesse de l'ennemi
+    public GameObject zoneEnnemi; //Lumiere de l'ennemi
 
     private void Start()
     {
@@ -22,6 +23,12 @@ public class EnemyController : MonoBehaviour
         //Taille
         gameObject.transform.localScale =  new Vector3(enemy.tailleEnnemi, enemy.tailleEnnemi, enemy.tailleEnnemi);
 
+        //Changer le range de la zone indicatrice de l'ennemi selon la taille de l'ennemi
+        zoneEnnemi.transform.localScale = new Vector3(enemy.tailleEnnemi*2, zoneEnnemi.transform.localScale.y, enemy.tailleEnnemi*2);
+
+        //Changer la teinte de la zone selon la couleur de l'ennemi
+        zoneEnnemi.GetComponent<Renderer>().material.color = enemy.couleur;
+
         //Couleur
         couleurEnnemi = GetComponentInChildren<Renderer>().material.color;
 
@@ -30,6 +37,13 @@ public class EnemyController : MonoBehaviour
 
         //Trouver le joueur
         TrouverJoueur();
+    }
+
+    private void Update()
+    {
+        //Fix la rotation de la zone
+        var rotation = Quaternion.LookRotation(Vector3.right, Vector3.left);
+        zoneEnnemi.transform.rotation = rotation;
     }
 
     private void FixedUpdate()

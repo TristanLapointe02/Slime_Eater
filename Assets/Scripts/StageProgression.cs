@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class StageProgression : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class StageProgression : MonoBehaviour
     public AudioClip sonChangerEtage; //Son qui joue lorsqu'on change d'etage
     public GameObject joueur; //Reference au joueur
     public AudioClip sonVictoire; //Son de victoire lorsque le joueur fini le jeu
+    public Image fillProgression; //Image indiquant la progression du niveau
 
     private void Awake()
     {
@@ -28,6 +30,16 @@ public class StageProgression : MonoBehaviour
     {
         //Constamment verifier si nous avons fini un niveau
         VerificationNiveau();
+
+        //Mettre a jour la progression du niveau
+        fillProgression.fillAmount = ComportementJoueur.ennemisTues / ennemiesToKillPerStage[etageActuel - 1];
+
+        //TEST POUR CHANGER DE NIVEAU IMMEDIATEMENT
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            etageActuel++;
+            ChangerNiveau();
+        }
     }
 
     //Fonction permettant de vérifier si un etage est terminé
@@ -53,20 +65,26 @@ public class StageProgression : MonoBehaviour
                 //Sinon, pour le restant des étages
                 else
                 {
-                    //Detruire le plancher de l'etage
-                    Etages[etageActuel - 2].gameObject.SetActive(false);
-
-                    //Faire spawn des objets
-                    refSpawnEnnemi.InitialSpawn();
-                    refSpawnItem.InitialSpawn();
-
-                    //Jouer un sound effect
-                    joueur.gameObject.GetComponent<AudioSource>().PlayOneShot(sonChangerEtage);
-
-                    //Reset le compteur d'ennemis tues
-                    ComportementJoueur.ennemisTues = 0;
+                    ChangerNiveau();
                 } 
             }
         }
+    }
+
+    //Fonction qui permet de changer de niveau
+    public void ChangerNiveau()
+    {
+        //Detruire le plancher de l'etage
+        Etages[etageActuel - 2].gameObject.SetActive(false);
+
+        //Faire spawn des objets
+        refSpawnEnnemi.InitialSpawn();
+        refSpawnItem.InitialSpawn();
+
+        //Jouer un sound effect
+        joueur.gameObject.GetComponent<AudioSource>().PlayOneShot(sonChangerEtage);
+
+        //Reset le compteur d'ennemis tues
+        ComportementJoueur.ennemisTues = 0;
     }
 }

@@ -11,8 +11,7 @@ public class EffetItem : MonoBehaviour
     public float duree; //Duree de l'effet
     public GameObject effetUI; //UI de l'effet
     public GameObject parentEffetUI; //Parent de la liste d'effets
-    public GameObject objetExplosion; //Objet visuel de l'explosion
-    public AudioClip sonExplosion; //Son de l'explosion
+    
 
     void Awake()
     {
@@ -59,7 +58,8 @@ public class EffetItem : MonoBehaviour
 
                 case "nuke":
                     //todo: ajouter fonction Nuke(), eleminer tous les ennemis autour du joueur
-                    Explosion();
+                    //Demarrer le compteur d'explosion
+                    StartCoroutine(GetComponent<ExplosionBombe>().Explosion());
                     break;
 
                 case "slime":
@@ -77,39 +77,6 @@ public class EffetItem : MonoBehaviour
 
             //Detruire l'item
             DestroyItem(item.sonItem);
-        }
-    }
-
-    //Fonction d'explosion
-    public void Explosion()
-    {
-        //Spawn un objet visuel
-        GameObject effet = Instantiate(objetExplosion, gameObject.transform.position, Quaternion.identity);
-
-        //Changer la grosseur de l'effet selon notre rayon
-        effet.transform.localScale = new Vector3(valeur + player.transform.localScale.magnitude, valeur + player.transform.localScale.magnitude, valeur + player.transform.localScale.magnitude);
-
-        //Le detruire tout de suite après
-        Destroy(effet, 0.15f);
-
-        //Jouer un sound effect
-        AudioSource.PlayClipAtPoint(sonExplosion, gameObject.transform.position);
-
-        //Pour tous les colliders dans la zone d'explosion
-        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, valeur + player.transform.localScale.magnitude);
-
-        //Pour tous les collider touchés
-        foreach (var collider in hitColliders)
-        {
-            //Trouver les ennemis
-            if (collider.gameObject.TryGetComponent(out EnemyController ennemy) && objetExplosion != null)
-            {
-                //Leur faire des degats
-                ennemy.TakeDamage(valeur * 1000);
-
-                //Faire une explosion
-                ennemy.GetComponent<Rigidbody>().AddExplosionForce(3500, transform.position, valeur + player.transform.localScale.magnitude);
-            }
         }
     }
 
@@ -139,7 +106,10 @@ public class EffetItem : MonoBehaviour
             player.GetComponent<AudioSource>().PlayOneShot(audioClip);
         }
 
-        //Detruire l'item
-        Destroy(gameObject);
+        //Detruire l'item, si on est pas la bombe
+        if(item.nomItem != "Nuke")
+        {
+            Destroy(gameObject);
+        }
     }
 }

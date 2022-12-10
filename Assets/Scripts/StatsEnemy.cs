@@ -17,4 +17,5 @@ public class StatsEnemy : ScriptableObject
     public bool ranged; //Determine si l’ennemi est ranged ou non
     public int etage; //Etage sur laquelle le mob va spawn
     public int range; //Range, si on est ranged
+    public Color32 couleur; //Couleur de l'ennemi
 }

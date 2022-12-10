@@ -23,3 +23,7 @@ MonoBehaviour:
   nombreLootSpawn: 1
   ranged: 0
   etage: 1
+  range: 0
+  couleur:
+    serializedVersion: 2
+    rgba: 4478277

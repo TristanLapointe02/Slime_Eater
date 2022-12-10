@@ -24,3 +24,6 @@ MonoBehaviour:
   ranged: 1
   etage: 2
   range: 25
+  couleur:
+    serializedVersion: 2
+    rgba: 3942443

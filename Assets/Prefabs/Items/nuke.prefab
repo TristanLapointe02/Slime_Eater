@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8045336980402031615}
   - component: {fileID: 8045336980402031591}
   - component: {fileID: 8045336980402031608}
+  - component: {fileID: -3554529169274473663}
   m_Layer: 11
   m_Name: nuke
   m_TagString: Untagged
@@ -106,9 +107,6 @@ MonoBehaviour:
   duree: 0
   effetUI: {fileID: 182527638235650108, guid: ae240c56e6914ee49994509ef9be30c0, type: 3}
   parentEffetUI: {fileID: 0}
-  objetExplosion: {fileID: 8591179905180451742, guid: 5534354d8d1877b44a8b3cdc727fe1ab,
-    type: 3}
-  sonExplosion: {fileID: 8300000, guid: b93aec8bd7b80514f85d247ef9737860, type: 3}
 --- !u!54 &8045336980402031615
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -151,3 +149,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.75, y: 0.75, z: 0.75}
   m_Center: {x: 0, y: -0.000000014901165, z: -0.021417668}
+--- !u!114 &-3554529169274473663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8045336980402031600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a63f619fbd67eae48ad0242fbbcc1ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objetExplosion: {fileID: 8591179905180451742, guid: 42eba4dbf50c9694ba9478c8d22e19f2,
+    type: 3}
+  sonExplosion: {fileID: 8300000, guid: b93aec8bd7b80514f85d247ef9737860, type: 3}
+  particuleExplosion: {fileID: 3432958286849152088, guid: 87ee7299dd44ed747af24dbb91bcd33b,
+    type: 3}
+  pickUp: 0
+  activerDecompte: 0
