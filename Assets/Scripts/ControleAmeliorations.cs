@@ -120,8 +120,8 @@ public class ControleAmeliorations : MonoBehaviour
             break;
 
             case "Taille démesurée":
-                GetComponent<ComportementJoueur>().AugmenterGrosseur(transform.localScale.magnitude * 1.75f);
-                GetComponent<ControleTir>().diviseurGrosseurBalle -= GetComponent<ControleTir>().diviseurGrosseurBalle / 2;
+                GetComponent<ComportementJoueur>().AugmenterGrosseur(transform.localScale.magnitude * valeur);
+                GetComponent<ControleTir>().diviseurGrosseurBalle -= GetComponent<ControleTir>().diviseurGrosseurBalle / valeur2;
                 break;
 
             case "Génie":
