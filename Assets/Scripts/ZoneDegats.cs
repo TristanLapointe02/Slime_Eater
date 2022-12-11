@@ -35,8 +35,8 @@ public class ZoneDegats : MonoBehaviour
             }
 
             //Mettre a jour la taille de la zone
-            rayonActuel = plusGrandeDistance + joueur.transform.localScale.x;
-            transform.localScale = new Vector3(rayonActuel * bonusRayon, transform.localScale.y, rayonActuel * bonusRayon);
+            rayonActuel = (plusGrandeDistance + joueur.transform.localScale.x) * bonusRayon;
+            transform.localScale = new Vector3(rayonActuel, transform.localScale.y, rayonActuel);
         }
     }
 }

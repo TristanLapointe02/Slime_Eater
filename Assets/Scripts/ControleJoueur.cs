@@ -150,7 +150,7 @@ public class ControleJoueur : MonoBehaviour
     //Fonction permettant de faire l'explosion
     public void Explosion(float forceExplosion, float degatsZone)
     {
-        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, zone.rayonActuel / 2);
+        Collider[] hitColliders = Physics.OverlapSphere(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - GetComponent<Collider>().bounds.extents.y, gameObject.transform.position.z), zone.rayonActuel / 2);
 
         //Pour tous les collider touchés
         foreach(var collider in hitColliders)
