@@ -19,7 +19,7 @@ MonoBehaviour:
   degats: 8
   vitesse: 5
   tailleEnnemi: 1.75
-  valeurLoot: 1.25
+  valeurLoot: 1
   nombreLootSpawn: 2
   ranged: 0
   etage: 4

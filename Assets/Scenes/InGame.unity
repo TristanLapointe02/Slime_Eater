@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18cb7a7425f5dc142a08d1f292f490e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vitesse: 15
+  vitesse: 12.5
   rayonAimant: 2
 --- !u!135 &44530983
 SphereCollider:
@@ -3122,9 +3122,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objetChoisi: 0
-  SpawnAmount: 1
+  SpawnAmount: 2
   spawnDelay: 1
-  nombreObjetsSpawnPop: 35
+  nombreObjetsSpawnPop: 25
   rayonSpawn: 200
   tableauObjets:
   - {fileID: 2483025033023995390, guid: 4a9d949efa478b842b311f2bf8e042f3, type: 3}
@@ -3434,7 +3434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9047193952a05604ab25e43388907ba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ennemiesToKillPerStage: 0f0000006400000023000000320000004100000064000000
+  ennemiesToKillPerStage: 0f0000001900000023000000320000004100000064000000
   refSpawnEnnemi: {fileID: 608891425}
   refSpawnItem: {fileID: 1208117082}
   texteStage: {fileID: 91351645}
@@ -4494,7 +4494,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetChoisi: 1
   SpawnAmount: 1
-  spawnDelay: 1
+  spawnDelay: 2
   nombreObjetsSpawnPop: 10
   rayonSpawn: 200
   tableauObjets:
