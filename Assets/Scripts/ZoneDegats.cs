@@ -10,6 +10,7 @@ public class ZoneDegats : MonoBehaviour
     public float distance; //Distance actuelle avec le sol
     public float plusGrandeDistance; //Plus grande distance
     public float rayonActuel; //Rayon actuel de la zone
+    public float bonusRayon; //Bonus du rayon de la zone
 
     void Update()
     {
@@ -35,7 +36,7 @@ public class ZoneDegats : MonoBehaviour
 
             //Mettre a jour la taille de la zone
             rayonActuel = plusGrandeDistance + joueur.transform.localScale.x;
-            transform.localScale = new Vector3(rayonActuel, transform.localScale.y, rayonActuel);
+            transform.localScale = new Vector3(rayonActuel * bonusRayon, transform.localScale.y, rayonActuel * bonusRayon);
         }
     }
 }

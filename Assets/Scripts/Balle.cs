@@ -41,9 +41,6 @@ public class Balle : MonoBehaviour
         //Destroy la balle
         if(gameObject != null)
         {
-            //Jouer un sound effect
-            AudioSource.PlayClipAtPoint(sonBalleHit, transform.position);
-
             //Si on peut exploser, le faire
             if (explose)
             {
@@ -93,8 +90,11 @@ public class Balle : MonoBehaviour
         //Faire des degats à l'ennemi
         ennemi.gameObject.GetComponent<EnemyController>().TakeDamage(degats);
 
+        //Jouer un sound effect
+        AudioSource.PlayClipAtPoint(sonBalleHit, transform.position);
+
         //Si on peut exploser, et qu'on est go trough le faire quand même au contact
-        if(goThrough && explose)
+        if (goThrough && explose)
         {
             Explosion();
         }

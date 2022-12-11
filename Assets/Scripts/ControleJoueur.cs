@@ -46,9 +46,6 @@ public class ControleJoueur : MonoBehaviour
         {
             InputProcess();
         }
-
-        //Mettre a jour l'angular drag du joueur selon sa vitesse
-        //GetComponent<Rigidbody>().angularDrag = (vitesse / 5) - 5;
     }
 
     //Fonction permettant de recevoir les inputs

@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 191d4d94244a042428ba679c03167a29, type: 3}
-  m_Name: Vie
+  m_Name: "Slime aimant\xE9"
   m_EditorClassIdentifier: 
-  nom: test1
-  icone: {fileID: 21300000, guid: a11acec8b9308084b9f5ee985a4143f1, type: 3}
-  description1: 'Augmentez votre vie de '
-  valeur: 100
-  description2: .
+  nom: "Slime aimant\xE9"
+  icone: {fileID: 21300000, guid: c730cd2a3eb18494181e8ebd7aedf628, type: 3}
+  description1: "Am\xE9liorez la force de votre aimant de "
+  valeur: 0.5
+  description2: ' et le rayon de '
+  valeur2: 0.5
+  description3: .
   peutRepiger: 1

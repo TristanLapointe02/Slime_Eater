@@ -17,6 +17,7 @@ public class ComportementJoueur : MonoBehaviour
     public float xpActuel; //Xp actuel du joueur
     public float xpMax; //Xp max du niveau actuel
     public float xpMaxLvl1; //Xp max de départ
+    public float multiplicateurXp; //Multiplicateur d'xp après chaque lvl up
     public Slider sliderXp; //Slider de barre de vie
     public TextMeshProUGUI texteXp; //Ref au texte de vie
     public TextMeshProUGUI texteLevelActuel; //Texte du level actuel du joueur
@@ -31,6 +32,11 @@ public class ComportementJoueur : MonoBehaviour
     public AudioClip sonLevelUp; //Son lorsque le joueur level up
     public AudioClip sonPartiePerdue; //Son lorsque le joueur perd la partie
 
+    //BONUS AMÉLIORATIONS
+    public float bonusXp; //Bonus d'xp
+    public float bonusTaille; //Bonus de taille
+    public float armure; //Bonus permettant au joueur de subir moins de dégâts
+
     void Start()
     {
         //Assigner quelques valeurs
@@ -39,6 +45,7 @@ public class ComportementJoueur : MonoBehaviour
         xpActuel = 0;
         ennemisTues = 0;
         finJeu = false;
+        mortJoueur = false;
     }
 
     void Update()
@@ -80,7 +87,7 @@ public class ComportementJoueur : MonoBehaviour
         //Enlever de la vie au joueur
         if(vieJoueur > 0 && invulnerable == false)
         {
-            vieJoueur -= valeurDegat;
+            vieJoueur -= valeurDegat/(1+ armure);
         }
 
         //Si le joueur était pour mourir
@@ -117,7 +124,7 @@ public class ComportementJoueur : MonoBehaviour
         //Augmenter le scale du joueur
         if(transform.localScale.magnitude < 50)
         {
-            transform.localScale += new Vector3(valeurGrosseur, valeurGrosseur, valeurGrosseur);
+            transform.localScale += new Vector3(valeurGrosseur + bonusTaille, valeurGrosseur + bonusTaille, valeurGrosseur + bonusTaille);
         }
     }
 
@@ -125,7 +132,7 @@ public class ComportementJoueur : MonoBehaviour
     public void AugmenterXp(float valeurXp)
     {
         //Augmenter l'xp actuel du joueur
-        xpActuel += valeurXp;
+        xpActuel += valeurXp + bonusXp;
 
         //Si jamais on dépasse l'xp max
         if(Mathf.RoundToInt(xpActuel) >= xpMax)
@@ -146,7 +153,7 @@ public class ComportementJoueur : MonoBehaviour
             levelActuel++;
 
             //Augmenter l'xp max
-            xpMax += xpMax / 3;
+            xpMax += xpMax / multiplicateurXp;
 
             //Jouer un sound effect
             GetComponent<AudioSource>().PlayOneShot(sonLevelUp);

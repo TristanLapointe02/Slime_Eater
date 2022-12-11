@@ -12,10 +12,13 @@ public class JoueurMenu : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce * Random.Range(0.5f, 2f));
+        //Lorsqu'on collide avec le sol, rebondir
+        GetComponent<Rigidbody>().AddForce(Vector3.up * jumpForce * Random.Range(0.5f, 1.75f));
+
+        //Émettre un sound effect
         if (sonJump != null)
         {
-            GetComponent<AudioSource>().PlayOneShot(sonJump);
+            //GetComponent<AudioSource>().PlayOneShot(sonJump);
         }
     }
 }

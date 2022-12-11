@@ -14,6 +14,12 @@ public class ControleAmeliorations : MonoBehaviour
     private List<Amelioration> ameliorationsSelectionnes = new List<Amelioration>(); //Liste des ameliorations choisies
     public static bool pause; //Indiquer si nous sommes en pause pour le choix
 
+    private void Start()
+    {
+        //Reset la pause
+        pause = false;
+    }
+
     //Fonction permettant d'appeler la coroutine qui propose les choix
     public void ActiverChoix()
     {
@@ -68,7 +74,7 @@ public class ControleAmeliorations : MonoBehaviour
     }
 
     //Fonction d'amélioration
-    public void AjoutAmelioration(string nomAmelioration, float valeur)
+    public void AjoutAmelioration(string nomAmelioration, float valeur, float valeur2)
     {
         //Jouer un son de sélection
         GetComponent<AudioSource>().PlayOneShot(sonChoix);
@@ -104,17 +110,98 @@ public class ControleAmeliorations : MonoBehaviour
         //Selon l'amélioration, appeler la fonction
         switch (nomAmelioration)
         {
-            case "test1":
+            case "Soin instantané":
                 GetComponent<ComportementJoueur>().AugmenterVie(valeur);
             break;
 
-            case "test2":
+            case "Slime adhésif":
                 StartCoroutine(GetComponent<ComportementJoueur>().AugmenterVitesse(valeur, 0, true));
             break;
 
-            case "test3":
-                GetComponent<ComportementJoueur>().AugmenterGrosseur(valeur);
+            case "Taille démesurée":
+                GetComponent<ComportementJoueur>().AugmenterGrosseur(transform.localScale.magnitude*2);
             break;
+
+            case "Génie":
+                GetComponent<ComportementJoueur>().bonusXp += valeur;
+            break;
+
+            case "Slime absorbant":
+                GetComponent<ComportementJoueur>().bonusTaille += valeur;
+            break;
+
+            case "Bouclier invisible":
+                GetComponent<ComportementJoueur>().armure += valeur;
+            break;
+
+            case "Boom!":
+                GetComponent<ControleJoueur>().degatsZone += valeur;
+                break;
+
+            case "Explosion nucléaire":
+                GameObject.Find("ZoneDegats").GetComponent<ZoneDegats>().bonusRayon += valeur;
+                break;
+
+            case "En bonne santé":
+                GetComponent<ComportementJoueur>().vieMax += valeur;
+                GetComponent<ComportementJoueur>().vieJoueur += valeur;
+                break;
+
+            case "Slime aimanté":
+                GameObject.Find("Aimant").GetComponent<Aimant>().vitesse += (int)valeur;
+                GameObject.Find("Aimant").GetComponent<Aimant>().rayonAimant += (int)valeur;
+                break;
+
+            case "Vers l'infini":
+                GetComponent<ControleJoueur>().maxJump += (int)valeur;
+                break;
+
+            case "Comme un lapin":
+                GetComponent<ControleJoueur>().forceSaut += valeur;
+                break;
+
+            case "Mitraillette":
+                GetComponent<ControleTir>().shootCooldown -= valeur;
+                break;
+
+            case "Peau épaisse":
+                GetComponent<ControleTir>().valeurPerteTir -= valeur;
+                break;
+
+            case "Tir perçant":
+                GetComponent<ControleTir>().peutTirerATravers = true;
+                break;
+
+            case "Balles gluantes":
+                GetComponent<ControleTir>().peutSlow = true;
+                break;
+
+            case "Slime en bonne santé":
+                GetComponent<ControleTir>().diviseurGrosseurBalle -= GetComponent<ControleTir>().diviseurGrosseurBalle / 2;
+                break;
+
+            case "Vitesse de la lumière":
+                GetComponent<ControleTir>().forceTir += valeur;
+                break;
+
+            case "Pluie de slime":
+                GetComponent<ControleTir>().nombreBalles += (int)valeur;
+                break;
+
+            case "Slime meurtrier":
+                GetComponent<ControleTir>().degatsJoueur += valeur;
+                break;
+
+            case "Tir arrière":
+                GetComponent<ControleTir>().peutTirerArriere = true;
+                break;
+
+            case "Tir latéral":
+                GetComponent<ControleTir>().peutTirerCotes = true;
+                break;
+            case "Balles explosives":
+                GetComponent<ControleTir>().peutExploser = true;
+                break;
         }
     }
 }

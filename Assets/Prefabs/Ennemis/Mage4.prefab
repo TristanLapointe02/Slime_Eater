@@ -122,9 +122,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   balle: {fileID: 5805499353154782828, guid: a4442f22475e50148813978869fe9700, type: 3}
-  shootDelay: 1
+  shootDelay: 2
   nombreBalles: 1
-  forceTir: 20
+  forceTir: 15
   sonTir: {fileID: 8300000, guid: 4988c824ede296d439bba5d66e03a659, type: 3}
   gun: {fileID: 1016614710160677904}
 --- !u!136 &390774333038167578
