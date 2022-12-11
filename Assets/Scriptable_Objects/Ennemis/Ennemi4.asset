@@ -17,7 +17,7 @@ MonoBehaviour:
     melee attacks
   vieMax: 4
   degats: 8
-  vitesse: 6
+  vitesse: 5
   tailleEnnemi: 1.75
   valeurLoot: 1.25
   nombreLootSpawn: 2

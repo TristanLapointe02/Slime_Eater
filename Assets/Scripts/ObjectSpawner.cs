@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour
 {
-    public enum TypesObjet { Ennemi, Item }; //Liste de types d'objets
+    public enum TypesObjet { Ennemi, Item, Zone }; //Liste de types d'objets
     public TypesObjet objetChoisi; //Objet choisi
     public int SpawnAmount; //Nombre d'objets a spawn
     public float spawnDelay; //Delai de spawn
@@ -14,9 +14,13 @@ public class ObjectSpawner : MonoBehaviour
     private List<GameObject> objetsActuels = new List<GameObject>(); //Liste des objets actuels
     public GameObject[] Etages; //Position y des etages
     private bool canSpawn; //Determine si on peut spawn ou non
+    private GameObject joueur; //Ref au joueur
 
     void Start()
     {
+        //Trouver le joueur
+        joueur = GameObject.FindGameObjectWithTag("Player");
+
         //Indiquer que l'on peut spawn au debut
         canSpawn = true;
 
@@ -41,7 +45,7 @@ public class ObjectSpawner : MonoBehaviour
         canSpawn = true;
     }
 
-    //Fonction permettant de spawn un objet à une position aléatoire sur le radius d'un cercle
+    //Fonction permettant de spawn un objet à une position aléatoire sur le radius d'un cercle ou a l'intérieur, selon l'item
     public void Spawn()
     {
         //Si on peut spawn
@@ -53,12 +57,31 @@ public class ObjectSpawner : MonoBehaviour
             //Trouver quel ennemi il est possible de spawn
             AjouterObjets();
 
-            //Determiner une position aleatoire sur le périmètre d'un cercle
-            var cercle = Random.insideUnitCircle.normalized * rayonSpawn;
-            Vector3 positionSurRadiusCercle = new Vector3(cercle.x, 0, cercle.y);
+            //Si on est un ennemi, spawn sur bordure
+            if (objetChoisi == TypesObjet.Ennemi)
+            {
+                //Determiner une position aleatoire sur le périmètre d'un cercle à l'entour du joueur
+                var cercle = Random.insideUnitCircle.normalized * rayonSpawn + new Vector2(joueur.transform.position.x, joueur.transform.position.z);
+                Vector3 positionSurRadiusCercle = new Vector3(cercle.x, 0, cercle.y);
 
-            //Spawn un objet
-            SpawnUnObjet(positionSurRadiusCercle);
+                //Spawn un objet
+                SpawnUnObjet(positionSurRadiusCercle);
+            }
+
+            //Sinon, si on est un item, spawn a l'interieur du cercle
+            if (objetChoisi == TypesObjet.Item)
+            {
+                //Determiner une position aleatoire sur le périmètre d'un cercle
+                var cercle = Random.insideUnitCircle * rayonSpawn + new Vector2(joueur.transform.position.x, joueur.transform.position.z);
+                Vector3 positionDansCercle = new Vector3(cercle.x, 0, cercle.y);
+
+                //Spawn un objet
+                SpawnUnObjet(positionDansCercle);
+            }
+
+            //Sinon, si on est une zone
+            //TODO
+
 
             //Commencer le cooldown de spawn
             StartCoroutine(delaiSpawn(spawnDelay));
@@ -75,7 +98,7 @@ public class ObjectSpawner : MonoBehaviour
         for (int i = 0; i < nombreObjetsSpawnPop; i++)
         {
             //Determiner une position aléatoire dans un cercle
-            var cercle = Random.insideUnitCircle * rayonSpawn;
+            var cercle = Random.insideUnitCircle * rayonSpawn + new Vector2(joueur.transform.position.x, joueur.transform.position.z);
             Vector3 positionDansCercle = new Vector3(cercle.x, 0, cercle.y);
 
             //Spawn un objet
@@ -119,16 +142,20 @@ public class ObjectSpawner : MonoBehaviour
     //Fonction permettant de spawn un objet à une position donnée
     public void SpawnUnObjet(Vector3 position)
     {
-        //Determiner la position selon l'etage
-        Vector3 positionSpawn = new Vector3(position.x, Etages[StageProgression.etageActuel - 1].transform.position.y + 10, position.z);
-
-        //Spawn un objet
-        GameObject nouvelObjet = Instantiate(objetsActuels[Random.Range(0, objetsActuels.Count)].gameObject, positionSpawn, Quaternion.identity);
-
-        //Si nous sommes le spawner d'items, appliquer une rotation (bug fix)
-        if (objetChoisi == TypesObjet.Item)
+        //Si le jeu est pas fini
+        if(StageProgression.etageActuel < Etages.Length && ComportementJoueur.finJeu == false)
         {
-            nouvelObjet.transform.Rotate(-90, 0, 0);
+            //Determiner la position selon l'etage
+            Vector3 positionSpawn = new Vector3(position.x, Etages[StageProgression.etageActuel - 1].transform.position.y + 10, position.z);
+
+            //Spawn un objet
+            GameObject nouvelObjet = Instantiate(objetsActuels[Random.Range(0, objetsActuels.Count)].gameObject, positionSpawn, Quaternion.identity);
+
+            //Si nous sommes le spawner d'items, appliquer une rotation (bug fix)
+            if (objetChoisi == TypesObjet.Item)
+            {
+                nouvelObjet.transform.Rotate(-90, 0, 0);
+            }
         }
     }
 }

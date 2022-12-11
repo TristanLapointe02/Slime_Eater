@@ -104,6 +104,9 @@ public class EnemyController : MonoBehaviour
 
             //Mourir
             MortEnnemi();
+
+            //Spawn du loot
+            SpawnLoot();
         }
     }
 
@@ -118,6 +121,12 @@ public class EnemyController : MonoBehaviour
         {
             //Mourir
             MortEnnemi();
+
+            //Spawn du loot
+            SpawnLoot();
+
+            //Indiquer qu'un ennemi est mort
+            ComportementJoueur.ennemisTues++;
         }
 
         //Changer le matériel pendant 0.15 secondes
@@ -141,8 +150,8 @@ public class EnemyController : MonoBehaviour
         vitesse += vitesseEnlevee;
     }
 
-    //Fonction de mort de l'ennemi
-    public void MortEnnemi()
+    //Fonction permettant de spawn du loot
+    public void SpawnLoot()
     {
         //Spawn du loot selon le nombre a spawn
         for (int i = 0; i < enemy.nombreLootSpawn; i++)
@@ -151,12 +160,13 @@ public class EnemyController : MonoBehaviour
             GameObject loot = Instantiate(slimeLoot, transform.position, Quaternion.identity);
 
             //Changer la valeur du loot selon celle max qui faut donner
-            loot.GetComponent<EffetItem>().valeur = Random.Range(0, enemy.valeurLoot);
+            loot.GetComponent<EffetItem>().valeur = Random.Range(enemy.valeurLoot/2, enemy.valeurLoot);
         }
+    }
 
-        //Indiquer qu'on est mort
-        ComportementJoueur.ennemisTues++;
-
+    //Fonction de mort de l'ennemi
+    public void MortEnnemi()
+    {
         //Se detruire
         Destroy(gameObject);
     }

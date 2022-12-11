@@ -26,11 +26,11 @@ public class ControleAmeliorations : MonoBehaviour
         //Si nous sommes pas deja en pause
         if(pause == false)
         {
-            //Demarer la coroutine
-            StartCoroutine(ProposerChoix(0.75f));
-
             //Indiquer que nous sommes en pause;
             pause = true;
+
+            //Demarer la coroutine
+            StartCoroutine(ProposerChoix(0.75f));
 
             //Enlever la vélocité du joueur
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
@@ -85,9 +85,6 @@ public class ControleAmeliorations : MonoBehaviour
         //Enlever les constraintes de mouvement au joueur
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 
-        //Depause
-        pause = false;
-
         //Enlever ses cartes de choix
         foreach (Transform child in parentAmeliorations.transform)
         {
@@ -107,9 +104,13 @@ public class ControleAmeliorations : MonoBehaviour
         //Clear la liste d'ameliorations selectionees
         ameliorationsSelectionnes.Clear();
 
+        //Depause
+        pause = false;
+
         //Selon l'amélioration, appeler la fonction
         switch (nomAmelioration)
         {
+            /**************** AMÉLIORATIONS DE JOUEUR ******************/
             case "Soin instantané":
                 GetComponent<ComportementJoueur>().AugmenterVie(valeur);
             break;
@@ -119,8 +120,9 @@ public class ControleAmeliorations : MonoBehaviour
             break;
 
             case "Taille démesurée":
-                GetComponent<ComportementJoueur>().AugmenterGrosseur(transform.localScale.magnitude*2);
-            break;
+                GetComponent<ComportementJoueur>().AugmenterGrosseur(transform.localScale.magnitude * 1.75f);
+                GetComponent<ControleTir>().diviseurGrosseurBalle -= GetComponent<ControleTir>().diviseurGrosseurBalle / 2;
+                break;
 
             case "Génie":
                 GetComponent<ComportementJoueur>().bonusXp += valeur;
@@ -160,6 +162,12 @@ public class ControleAmeliorations : MonoBehaviour
                 GetComponent<ControleJoueur>().forceSaut += valeur;
                 break;
 
+            case "Regénération améliorée":
+                GetComponent<ComportementJoueur>().regenVie += valeur;
+                break;
+
+            /**************** AMÉLIORATIONS DE TIR ******************/
+
             case "Mitraillette":
                 GetComponent<ControleTir>().shootCooldown -= valeur;
                 break;
@@ -174,10 +182,6 @@ public class ControleAmeliorations : MonoBehaviour
 
             case "Balles gluantes":
                 GetComponent<ControleTir>().peutSlow = true;
-                break;
-
-            case "Slime en bonne santé":
-                GetComponent<ControleTir>().diviseurGrosseurBalle -= GetComponent<ControleTir>().diviseurGrosseurBalle / 2;
                 break;
 
             case "Vitesse de la lumière":

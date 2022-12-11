@@ -15,18 +15,18 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 0
-  m_FogColor: {r: 0.67058825, g: 0.8588236, b: 0.882353, a: 1}
-  m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogColor: {r: 0.007378992, g: 0.009433985, b: 0.0071644885, a: 1}
+  m_FogMode: 2
+  m_FogDensity: 0.005
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.010960094, g: 0.48514998, b: 0.6444799, a: 1}
+  m_AmbientSkyColor: {r: 0.045186214, g: 0.13843165, b: 0.036889452, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 3
-  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 99a400087584f4263b1a8979d6007ad4, type: 2}
+  m_SubtractiveShadowColor: {r: 0.17254902, g: 0.32941177, b: 0.16862746, a: 1}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 42eaf2c5dbb13dc498f15df5a5b05fda, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -787,7 +787,7 @@ Transform:
   m_GameObject: {fileID: 141945954}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 500, y: 1, z: 500}
+  m_LocalScale: {x: 1500, y: 1, z: 1500}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1730589676}
@@ -1115,7 +1115,7 @@ MonoBehaviour:
   shootDelay: 0.1
   nombreBalles: 1
   forceTir: 50
-  valeurPerteTir: 0.075
+  valeurPerteTir: 0.065
   diviseurGrosseurBalle: 8
   degatsJoueur: 1
   peutTirerArriere: 0
@@ -1156,6 +1156,8 @@ MonoBehaviour:
   vieMax: 50
   sliderVie: {fileID: 413975115}
   texteVie: {fileID: 1289059786}
+  regenVie: 0.25
+  regenTemps: 1
   levelActuel: 0
   xpActuel: 0
   xpMax: 0
@@ -1169,6 +1171,7 @@ MonoBehaviour:
   sonHit: {fileID: 8300000, guid: 08892c356714f924caa000608f304dc1, type: 3}
   sonLevelUp: {fileID: 8300000, guid: c0ca24e698ed1e3409975c62096d3665, type: 3}
   sonPartiePerdue: {fileID: 8300000, guid: e521343afe8aa6c42bfad1c0d7dd57e6, type: 3}
+  rayonSpawn: 150
   bonusXp: 0
   bonusTaille: 0
   armure: 0
@@ -1226,7 +1229,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 11d0b7b3c898a9a45b48f3f45072d99a, type: 2}
   - {fileID: 11400000, guid: 0763040bb4c9c5f40a66c8755dcf168d, type: 2}
   - {fileID: 11400000, guid: dc93d35af8865d8448fe7b97897109dd, type: 2}
-  - {fileID: 11400000, guid: d5714efa7944aa242b4655a8facebce9, type: 2}
+  - {fileID: 11400000, guid: 2421dfe7881bf454896c0d1708335f7a, type: 2}
   - {fileID: 11400000, guid: 323e25a60cc04b1479086d563133dfd5, type: 2}
   - {fileID: 11400000, guid: 7bef682f5110e394d8f099baff983820, type: 2}
   - {fileID: 11400000, guid: 67534c56d2dcc4d4fb9edcce3b2ac633, type: 2}
@@ -3122,7 +3125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetChoisi: 0
   SpawnAmount: 1
-  spawnDelay: 2
+  spawnDelay: 1
   nombreObjetsSpawnPop: 35
   rayonSpawn: 200
   tableauObjets:
@@ -3433,7 +3436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9047193952a05604ab25e43388907ba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ennemiesToKillPerStage: 0f0000001900000023000000320000004100000064000000
+  ennemiesToKillPerStage: 0f0000006400000023000000320000004100000064000000
   refSpawnEnnemi: {fileID: 608891425}
   refSpawnItem: {fileID: 1208117082}
   texteStage: {fileID: 91351645}
@@ -3448,6 +3451,20 @@ MonoBehaviour:
   joueur: {fileID: 0}
   sonVictoire: {fileID: 8300000, guid: 01bcf1e7dd355054781797e479aa3128, type: 3}
   fillProgression: {fileID: 687371986}
+  mur: {fileID: 1387904809}
+  couleurMur:
+  - serializedVersion: 2
+    rgba: 2516582400
+  - serializedVersion: 2
+    rgba: 2519128439
+  - serializedVersion: 2
+    rgba: 2530257965
+  - serializedVersion: 2
+    rgba: 2525253657
+  - serializedVersion: 2
+    rgba: 2529372052
+  - serializedVersion: 2
+    rgba: 2529702881
 --- !u!1 &769092553
 GameObject:
   m_ObjectHideFlags: 0
@@ -4480,7 +4497,7 @@ MonoBehaviour:
   objetChoisi: 1
   SpawnAmount: 1
   spawnDelay: 1
-  nombreObjetsSpawnPop: 25
+  nombreObjetsSpawnPop: 15
   rayonSpawn: 200
   tableauObjets:
   - {fileID: 8045336980402031600, guid: 9d4fdeb88acfd4247bb3ead6d5eeee50, type: 3}
@@ -5060,7 +5077,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f6478c7bf6bd5554f965104f26f5114d, type: 2}
+  - {fileID: 2100000, guid: 6b9fc001ed960a74db54d7fb16a302f7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6117,8 +6134,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1387904809}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 85, y: -125, z: 85}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 85, y: 750, z: 85}
+  m_LocalScale: {x: 1, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1730589676}
@@ -6361,7 +6378,7 @@ Transform:
   m_GameObject: {fileID: 1490672999}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -100, z: 0}
-  m_LocalScale: {x: 500, y: 1, z: 500}
+  m_LocalScale: {x: 1500, y: 1, z: 1500}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1730589676}
@@ -6693,7 +6710,7 @@ Transform:
   m_GameObject: {fileID: 1626485277}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -250, z: 0}
-  m_LocalScale: {x: 500, y: 1, z: 500}
+  m_LocalScale: {x: 1500, y: 1, z: 1500}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1730589676}
@@ -7119,7 +7136,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh35352
+  m_Name: pb_Mesh28220
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8274,7 +8291,7 @@ Transform:
   m_GameObject: {fileID: 2026750481}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -150, z: 0}
-  m_LocalScale: {x: 500, y: 1, z: 500}
+  m_LocalScale: {x: 1500, y: 1, z: 1500}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1730589676}
@@ -8406,7 +8423,7 @@ Transform:
   m_GameObject: {fileID: 2075516190}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -200, z: 0}
-  m_LocalScale: {x: 500, y: 1, z: 500}
+  m_LocalScale: {x: 1500, y: 1, z: 1500}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1730589676}
@@ -8535,7 +8552,7 @@ Transform:
   m_GameObject: {fileID: 2133487112}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -50, z: 0}
-  m_LocalScale: {x: 500, y: 1, z: 500}
+  m_LocalScale: {x: 1500, y: 1, z: 1500}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1730589676}

@@ -11,6 +11,8 @@ public class ComportementJoueur : MonoBehaviour
     public float vieMax; //Vie max du joueur
     public Slider sliderVie; //Slider de barre de vie
     public TextMeshProUGUI texteVie; //Ref au texte de vie
+    public float regenVie; //Vie a regen
+    public float regenTemps; //Intervalle de temps que le joueur regen de la vie
 
     //XP
     public int levelActuel; //Ref au niveau actuel du joueur
@@ -31,6 +33,7 @@ public class ComportementJoueur : MonoBehaviour
     public static bool finJeu; //Indiquer que c'est la fin du jeu
     public AudioClip sonLevelUp; //Son lorsque le joueur level up
     public AudioClip sonPartiePerdue; //Son lorsque le joueur perd la partie
+    public float rayonSpawn; //Rayon dans lequel le joueur peut spawn au début du jeu
 
     //BONUS AMÉLIORATIONS
     public float bonusXp; //Bonus d'xp
@@ -39,6 +42,11 @@ public class ComportementJoueur : MonoBehaviour
 
     void Start()
     {
+        //Se déplacer à une positon aléatoire sur la map
+        //Trouver une position aléatoire
+        Vector3 positionAleatoire = Random.insideUnitCircle * rayonSpawn;
+        transform.position = new Vector3(positionAleatoire.x, 25, positionAleatoire.z);
+
         //Assigner quelques valeurs
         vieJoueur = vieMax;
         xpMax = xpMaxLvl1;
@@ -46,6 +54,9 @@ public class ComportementJoueur : MonoBehaviour
         ennemisTues = 0;
         finJeu = false;
         mortJoueur = false;
+
+        //Démarer le life regen
+        StartCoroutine(RegenVie(regenVie, regenTemps));
     }
 
     void Update()
@@ -55,15 +66,17 @@ public class ComportementJoueur : MonoBehaviour
         sliderVie.value = fillValueHp;
 
         //Mettre a jour le texte de vie
-        texteVie.text = Mathf.RoundToInt(vieJoueur).ToString();
+        texteVie.text = Mathf.FloorToInt(vieJoueur).ToString();
 
         //Mettre a jour la valeuyr du slider d'xp
         float fillValueXp = xpActuel / xpMax;
         sliderXp.value = fillValueXp;
 
         //Mettre a jour le texte d'xp
-        texteXp.text = Mathf.RoundToInt(xpActuel).ToString() + " / " + Mathf.RoundToInt(xpMax).ToString();
+        texteXp.text = Mathf.FloorToInt(xpActuel).ToString() + " / " + Mathf.FloorToInt(xpMax).ToString();
         texteLevelActuel.text = levelActuel.ToString();
+
+        //Regen de la vie
 
         //TEST, PRENDRE DEGATS
         if (Input.GetKeyDown(KeyCode.K))
@@ -76,6 +89,20 @@ public class ComportementJoueur : MonoBehaviour
         {
             AugmenterXp(5);
         }
+    }
+
+    //Fonction permettant de regen de la vie
+    public IEnumerator RegenVie(float amount, float delai)
+    {
+        //Si on est pas en pause
+        if(ControleAmeliorations.pause == false)
+        {
+            AugmenterVie(amount);
+        }
+
+        yield return new WaitForSeconds(delai);
+
+        StartCoroutine(RegenVie(regenVie, regenTemps));
     }
 
     //Fonction permettant au joueur de prendre des dégâts
@@ -135,7 +162,7 @@ public class ComportementJoueur : MonoBehaviour
         xpActuel += valeurXp + bonusXp;
 
         //Si jamais on dépasse l'xp max
-        if(Mathf.RoundToInt(xpActuel) >= xpMax)
+        if(Mathf.FloorToInt(xpActuel) >= xpMax)
         {
             //Trouver la difference si on depasse l'xp max
             float difference = xpActuel - xpMax;
