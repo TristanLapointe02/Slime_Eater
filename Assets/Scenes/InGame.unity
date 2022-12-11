@@ -322,10 +322,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18cb7a7425f5dc142a08d1f292f490e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vitesse: 10
-  bonusVitesse: 1
+  vitesse: 15
   rayonAimant: 2
-  bonusRayon: 1
 --- !u!135 &44530983
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4497,7 +4495,7 @@ MonoBehaviour:
   objetChoisi: 1
   SpawnAmount: 1
   spawnDelay: 1
-  nombreObjetsSpawnPop: 15
+  nombreObjetsSpawnPop: 10
   rayonSpawn: 200
   tableauObjets:
   - {fileID: 8045336980402031600, guid: 9d4fdeb88acfd4247bb3ead6d5eeee50, type: 3}

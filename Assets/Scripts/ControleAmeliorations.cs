@@ -150,8 +150,8 @@ public class ControleAmeliorations : MonoBehaviour
                 break;
 
             case "Slime aimanté":
-                GameObject.Find("Aimant").GetComponent<Aimant>().vitesse += (int)valeur;
-                GameObject.Find("Aimant").GetComponent<Aimant>().rayonAimant += (int)valeur;
+                GameObject.Find("Aimant").GetComponent<Aimant>().vitesse += valeur;
+                GameObject.Find("Aimant").GetComponent<Aimant>().rayonAimant += valeur;
                 break;
 
             case "Vers l'infini":

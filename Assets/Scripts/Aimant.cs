@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class Aimant : MonoBehaviour
 {
-    public int vitesse; //Vitesse du magnet
-    public int bonusVitesse; //Bonus de vitesse
-    public int rayonAimant; //Rayon de l'aimant
-    public int bonusRayon; //Bonus de rayon de l'aimant
+    public float vitesse; //Vitesse du magnet
+    public float rayonAimant; //Rayon de l'aimant
     private SphereCollider colliderAimant; //Collider de l'aimant
     private GameObject joueur; //Ref au joueur
 
@@ -27,7 +25,7 @@ public class Aimant : MonoBehaviour
         transform.position = new Vector3(joueur.transform.position.x, joueur.transform.position.y - joueur.GetComponent<Collider>().bounds.extents.y, joueur.transform.position.z);
 
         //Changer le rayon du collider selon la taille du joueur
-        colliderAimant.radius = (rayonAimant + (joueur.transform.localScale.magnitude / (rayonAimant * 1.5f))) * bonusRayon;
+        colliderAimant.radius = rayonAimant + (joueur.transform.localScale.magnitude / (rayonAimant * 1.5f));
     }
     private void OnTriggerStay(Collider collision)
     {
@@ -35,7 +33,7 @@ public class Aimant : MonoBehaviour
         if (collision.gameObject.layer == 11)
         {
             //Faire bouger l'item vers le joueur
-            collision.gameObject.transform.position = Vector3.MoveTowards(collision.gameObject.transform.position, transform.position, (vitesse * Time.deltaTime) * bonusVitesse);
+            collision.gameObject.transform.position = Vector3.MoveTowards(collision.gameObject.transform.position, transform.position, (vitesse * Time.deltaTime));
         }
     }
 }
