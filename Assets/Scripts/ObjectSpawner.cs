@@ -95,7 +95,7 @@ public class ObjectSpawner : MonoBehaviour
         AjouterObjets();
 
         //Selon le nombre d'objets a spawn
-        for (int i = 0; i < nombreObjetsSpawnPop; i++)
+        for (int i = 0; i < nombreObjetsSpawnPop + Random.Range(-10, 10); i++)
         {
             //Determiner une position aléatoire dans un cercle
             var cercle = Random.insideUnitCircle * rayonSpawn + new Vector2(joueur.transform.position.x, joueur.transform.position.z);

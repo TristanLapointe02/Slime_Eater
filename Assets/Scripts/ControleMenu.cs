@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,8 +9,19 @@ using UnityEngine.UI;
 public class ControleMenu : MonoBehaviour
 {
     public GameObject menuOptions; //Reference au menu options
+    public GameObject menuStatistiques; //Référence au menu Statistiques
     private bool etatMenuOptions; //Etat du menu d'options
     public Slider volumeSlider; //Reference au volume slider
+    public GameObject Joueur; //Reference au joueur
+
+    [Header("Menu Statistiques")]
+    public TextMeshProUGUI taille; //Valeur de la taille du joueur
+    public TextMeshProUGUI vitesse; //Valeur de la vitesse du joueur
+    public TextMeshProUGUI degats; //Valeur des dégats du joueur
+    public TextMeshProUGUI delaiTir; //Valeur du délai de tir
+    public TextMeshProUGUI nbrBalles; //Valeur du nombre de balles tirés
+    
+
 
     //Fonction permettant de recommencer a jouer
     public void ResetJeu()
@@ -57,6 +70,25 @@ public class ControleMenu : MonoBehaviour
 
         //Indiquer que l'etat du menu a change
         etatMenuOptions = false;
+    }
+
+    public void OuvrirStatistiques()
+    {
+        //Activer le menu de statistiques
+        menuStatistiques.SetActive(true);
+        //Assigner les valeurs des différentes stats aux textes du menu
+        taille.text = Joueur.GetComponent<Transform>().localScale.y.ToString();   
+        vitesse.text = Joueur.GetComponent<ControleJoueur>().vitesse.ToString();
+        degats.text = Joueur.GetComponent<ControleTir>().degatsJoueur.ToString();
+        delaiTir.text = Joueur.GetComponent<ControleTir>().shootCooldown.ToString();
+        nbrBalles.text = Joueur.GetComponent<ControleTir>().nombreBalles.ToString();
+        
+    }
+
+    public void FermerStatistiques()
+    {
+        //Fermer le menu
+        menuStatistiques.SetActive(false);
     }
 
     public void ChangeVolume()

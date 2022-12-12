@@ -80,6 +80,21 @@ public class ControleJoueur : MonoBehaviour
             Move(dashVitesse);
         }
 
+        // Si on appuie sur Tab
+        if (Input.GetButtonDown("Open Stats"))
+        {
+            // Afficher le menu de statistiques
+            gameObject.GetComponent<ControleMenu>().OuvrirStatistiques();
+        }
+        // Si on relâches Tab
+        if (Input.GetButtonUp("Open Stats"))
+        {
+            // Fermer le menu de statistiques
+            gameObject.GetComponent<ControleMenu>().FermerStatistiques();
+        }
+
+        
+
         if (isGrounded() && fixJump == false)
         {
             jumpCounter = maxJump;
