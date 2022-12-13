@@ -150,7 +150,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 11685458}
-  m_LocalRotation: {x: 0.28421503, y: 0.0000000164968, z: -0.0000000048903135, w: 0.95876056}
+  m_LocalRotation: {x: 0.28421503, y: -0.000000016496799, z: 0.000000004890313, w: 0.95876056}
   m_LocalPosition: {x: 0, y: 7.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -892,7 +892,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.3114, y: -66.6}
+  m_AnchoredPosition: {x: 2.3114, y: -41.7}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &188487821
@@ -2314,7 +2314,7 @@ GameObject:
   - component: {fileID: 725431110}
   - component: {fileID: 725431109}
   m_Layer: 5
-  m_Name: txt_VieMaxValeur
+  m_Name: txt_ValeurArmure
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2487,7 +2487,7 @@ GameObject:
   - component: {fileID: 765811734}
   - component: {fileID: 765811733}
   m_Layer: 5
-  m_Name: txtVieMax
+  m_Name: txtArmure
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2534,7 +2534,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Vie Max : \n"
+  m_text: "Armure : \n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 823435ccfec504a4d91cbffef882e3e7, type: 2}
   m_sharedMaterial: {fileID: 1908248766951462464, guid: 823435ccfec504a4d91cbffef882e3e7,
@@ -2703,8 +2703,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GestionMenuPause, Assembly-CSharp
+      - m_Target: {fileID: 2076316798}
+        m_TargetAssemblyTypeName: ControleMenu, Assembly-CSharp
         m_MethodName: ChangeVolume
         m_Mode: 1
         m_Arguments:
@@ -4078,7 +4078,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1103036588}
-  m_LocalRotation: {x: 0.28421503, y: 0.0000000164968, z: -0.0000000048903135, w: 0.95876056}
+  m_LocalRotation: {x: 0.28421503, y: -0.000000016496799, z: 0.000000004890313, w: 0.95876056}
   m_LocalPosition: {x: 0, y: 7.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10379,7 +10379,7 @@ MonoBehaviour:
   menuOptions: {fileID: 0}
   menuStatistiques: {fileID: 122356157}
   menuPause: {fileID: 1615113817}
-  volumeSlider: {fileID: 0}
+  volumeSlider: {fileID: 767556097}
   joueur: {fileID: 2076316794}
   vitesse: {fileID: 1055609251}
   forceSaut: {fileID: 260236721}
@@ -10387,7 +10387,7 @@ MonoBehaviour:
   degatsBalle: {fileID: 1114134968}
   delaiTir: {fileID: 1650361750}
   nbrBalles: {fileID: 1918532369}
-  vieMax: {fileID: 725431109}
+  armure: {fileID: 725431109}
   regen: {fileID: 1013925301}
   lstUpgrades: []
   ameliorations: {fileID: 188487821}
