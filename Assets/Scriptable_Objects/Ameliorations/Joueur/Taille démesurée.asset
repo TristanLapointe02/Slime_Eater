@@ -17,6 +17,6 @@ MonoBehaviour:
   description1: 'Augmentez votre taille de '
   valeur: 0.5
   description2: ' et la taille de vos balles de '
-  valeur2: 0.5
+  valeur2: 1.35
   description3: .
   peutRepiger: 1
