@@ -10,12 +10,13 @@ public class ObjectSpawner : MonoBehaviour
     public float spawnDelay; //Delai de spawn
     public int nombreObjetsSpawnPop; //Nombre d'ennemis a spawn en 1 instant
     public int rayonSpawn; //Positions où les objets peuvent spawn
+    public int rangeSpawn; //Range a spawn
     public GameObject[] tableauObjets; //Tableau des elements
     private List<GameObject> objetsActuels = new List<GameObject>(); //Liste des objets actuels
     public GameObject[] Etages; //Position y des etages
     private bool canSpawn; //Determine si on peut spawn ou non
     private GameObject joueur; //Ref au joueur
-
+    
     void Start()
     {
         //Trouver le joueur
@@ -95,7 +96,7 @@ public class ObjectSpawner : MonoBehaviour
         AjouterObjets();
 
         //Selon le nombre d'objets a spawn
-        for (int i = 0; i < nombreObjetsSpawnPop + Random.Range(-10, 10); i++)
+        for (int i = 0; i < nombreObjetsSpawnPop + Random.Range(-rangeSpawn, rangeSpawn); i++)
         {
             //Determiner une position aléatoire dans un cercle
             var cercle = Random.insideUnitCircle * rayonSpawn + new Vector2(joueur.transform.position.x, joueur.transform.position.z);

@@ -134,7 +134,7 @@ public class Balle : MonoBehaviour
                 ennemy.TakeDamage(degats);
 
                 //Faire une explosion
-                ennemy.GetComponent<Rigidbody>().AddExplosionForce(3500, transform.position, rayonExplosion);
+                ennemy.GetComponent<Rigidbody>().AddExplosionForce(2500, transform.position, rayonExplosion);
             }
         }
     }

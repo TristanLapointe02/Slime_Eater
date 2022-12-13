@@ -34,6 +34,8 @@ public class ComportementJoueur : MonoBehaviour
     public AudioClip sonLevelUp; //Son lorsque le joueur level up
     public AudioClip sonPartiePerdue; //Son lorsque le joueur perd la partie
     public float rayonSpawn; //Rayon dans lequel le joueur peut spawn au début du jeu
+    public Image ecranDegats; //Ecran de degats
+    private bool ecranDegatsActif; //Indique si l'écran de dégâts est actif
 
     //BONUS AMÉLIORATIONS
     public float bonusXp; //Bonus d'xp
@@ -76,8 +78,6 @@ public class ComportementJoueur : MonoBehaviour
         texteXp.text = Mathf.FloorToInt(xpActuel).ToString() + " / " + Mathf.FloorToInt(xpMax).ToString();
         texteLevelActuel.text = levelActuel.ToString();
 
-        //Regen de la vie
-
         //TEST, PRENDRE DEGATS
         if (Input.GetKeyDown(KeyCode.K))
         {
@@ -115,6 +115,10 @@ public class ComportementJoueur : MonoBehaviour
         if(vieJoueur > 0 && invulnerable == false)
         {
             vieJoueur -= valeurDegat/(1+ armure);
+
+            //Faire apparaître l'image de dégâts
+            ecranDegats.color = new Color(0.75f, 0.1f, 0.1f, 1);
+            StartCoroutine(FadeImage());
         }
 
         //Si le joueur était pour mourir
@@ -128,6 +132,17 @@ public class ComportementJoueur : MonoBehaviour
 
             //Appeler une fonction affichant le menu de fin
             FinJeu("Vous êtes mort.", sonPartiePerdue);
+        }
+    }
+
+    //Fonction permettant de fade l'image de degats
+    private IEnumerator FadeImage()
+    {
+        for (float i = 1; i >= 0; i -= Time.deltaTime)
+        {
+            // set color with i as alpha
+            ecranDegats.color = new Color(0.75f, 0.1f, 0.1f, i);
+            yield return null;
         }
     }
 
@@ -149,9 +164,12 @@ public class ComportementJoueur : MonoBehaviour
     public void AugmenterGrosseur(float valeurGrosseur)
     {
         //Augmenter le scale du joueur
-        if(transform.localScale.magnitude < 50)
+        if(transform.localScale.magnitude <= 35)
         {
             transform.localScale += new Vector3(valeurGrosseur + bonusTaille, valeurGrosseur + bonusTaille, valeurGrosseur + bonusTaille);
+
+            //Mettre a jour la force d'explosion
+            GetComponent<ControleJoueur>().forceExplosion = GetComponent<ControleJoueur>().forceExplosionInitiale + (transform.localScale.magnitude * GetComponent<ControleJoueur>().multiplicateurForceExplosion);
         }
     }
 
@@ -162,7 +180,7 @@ public class ComportementJoueur : MonoBehaviour
         xpActuel += valeurXp + bonusXp;
 
         //Si jamais on dépasse l'xp max
-        if(Mathf.FloorToInt(xpActuel) >= xpMax)
+        if(Mathf.FloorToInt(xpActuel) >= Mathf.FloorToInt(xpMax))
         {
             //Trouver la difference si on depasse l'xp max
             float difference = xpActuel - xpMax;
@@ -229,7 +247,6 @@ public class ComportementJoueur : MonoBehaviour
         //Attendre un certain delai
         yield return new WaitForSeconds(6);
 
-
         //Enlever la force de saut
         GetComponent<ControleJoueur>().forceSaut -= valeur;
     }
@@ -240,8 +257,14 @@ public class ComportementJoueur : MonoBehaviour
         //Indiquer que le joueur est invulnerable
         GetComponent<ComportementJoueur>().invulnerable = true;
 
+        //Mettre l'ecran de degats en jaune
+        ecranDegats.color = new Color(0.5f, 0.5f, 0.1f, 1f);
+
         //Attendre un certain delai
         yield return new WaitForSeconds(duree);
+
+        //Effacer l'ecran de degats
+        ecranDegats.color = new Color(1f, 1f, 1f, 0f);
 
         //Enlever l'invulnerabilite
         GetComponent<ComportementJoueur>().invulnerable = false;

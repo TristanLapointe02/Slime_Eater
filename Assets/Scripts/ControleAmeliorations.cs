@@ -142,6 +142,8 @@ public class ControleAmeliorations : MonoBehaviour
 
             case "Explosion nucléaire":
                 GameObject.Find("ZoneDegats").GetComponent<ZoneDegats>().bonusRayon += valeur;
+                GetComponent<ControleJoueur>().forceExplosionInitiale += valeur2;
+                GetComponent<ComportementJoueur>().AugmenterGrosseur(0);
                 break;
 
             case "En bonne santé":
@@ -203,6 +205,7 @@ public class ControleAmeliorations : MonoBehaviour
             case "Tir latéral":
                 GetComponent<ControleTir>().peutTirerCotes = true;
                 break;
+
             case "Balles explosives":
                 GetComponent<ControleTir>().peutExploser = true;
                 break;

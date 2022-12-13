@@ -13,7 +13,9 @@ public class ControleJoueur : MonoBehaviour
     int jumpCounter; //Counter du jump
     public int maxJump; //Nombre de sauts maximals du joueur
     public float degatsZone; //Degats de la zone de saut
+    public float forceExplosionInitiale; //Force explosion initiale
     public float forceExplosion; //Force de l'explosion de zone
+    public float multiplicateurForceExplosion; //Par combien multiplier la force d'explosion selon la taille du joueur
     float xInput; //Inputs sur l'axe des x
     float zInput; //Inputs sur l'axe des x
 
@@ -36,6 +38,10 @@ public class ControleJoueur : MonoBehaviour
 
         //Reset des valeurs
         jumpCounter = maxJump;
+        forceExplosion = forceExplosionInitiale;
+
+        //Montrer la zone
+        zone.gameObject.GetComponent<MeshRenderer>().enabled = true;
     }
 
     
@@ -71,6 +77,9 @@ public class ControleJoueur : MonoBehaviour
 
             //Permettre au joueur de sauter après un petit delai
             Invoke("ResetJump", 0.15f);
+
+            //Montrer la zone
+            zone.gameObject.GetComponent<MeshRenderer>().enabled = true;
         }
 
         // Si on appuie sur left shift
@@ -93,18 +102,10 @@ public class ControleJoueur : MonoBehaviour
             gameObject.GetComponent<ControleMenu>().FermerStatistiques();
         }
 
-        
-
+        //Reset jump counter
         if (isGrounded() && fixJump == false)
         {
             jumpCounter = maxJump;
-        }
-        
-        //Enable la zone de degats lorsqu'on "saute"
-        if(zone.distance - GetComponent<Collider>().bounds.extents.y >= 0.5f)
-        {
-            //Enable les visuels de la zone
-            zone.gameObject.GetComponent<MeshRenderer>().enabled = true;
         }
     }
 
@@ -177,7 +178,7 @@ public class ControleJoueur : MonoBehaviour
                 ennemy.TakeDamage(degatsZone);
 
                 //Faire une explosion
-                ennemy.GetComponent<Rigidbody>().AddExplosionForce(forceExplosion, transform.position, zone.rayonActuel / 2);
+                ennemy.GetComponent<Rigidbody>().AddExplosionForce(forceExplosion, new Vector3(transform.position.x, transform.position.y - GetComponent<Collider>().bounds.extents.y, transform.position.z), zone.rayonActuel / 2);
             }
         }
     }

@@ -18,7 +18,7 @@ MonoBehaviour:
   vieMax: 4
   degats: 8
   vitesse: 5
-  tailleEnnemi: 1.75
+  tailleEnnemi: 2.5
   valeurLoot: 1
   nombreLootSpawn: 2
   ranged: 0

@@ -114,6 +114,9 @@ public class StageProgression : MonoBehaviour
 
             //Reset le compteur d'ennemis tues
             ComportementJoueur.ennemisTues = 0;
+
+            //Montrer les visuels de la zone d'explosion
+            GameObject.Find("ZoneDegats").gameObject.GetComponent<MeshRenderer>().enabled = true;
         }
     }
 }
