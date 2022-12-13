@@ -14,20 +14,20 @@ public class ControleMenu : MonoBehaviour
     private bool etatMenuOptions; //Etat du menu d'options
     private bool etatMenuPause; //Etat du menu pause
     public Slider volumeSlider; //Reference au volume slider
-    public GameObject joueur; //Reference au joueur
 
     [Header("Menu Statistiques")]
+    public TextMeshProUGUI vieMax; //Valeur de la vie max du joueur
+    public TextMeshProUGUI regen; //Valeur de la régénération de vie du joueur
     public TextMeshProUGUI vitesse; //Valeur de la vitesse du joueur
     public TextMeshProUGUI forceSaut; //Valeur de la force du saut du joueur
     public TextMeshProUGUI degatsSaut; //Valeur des dégats de l'attaque de zone du joueur
+    public TextMeshProUGUI forceExplosion; //Valeur de l'armure du joueur
     public TextMeshProUGUI degatsBalle; //Valeur des dégats des balles du joueur
     public TextMeshProUGUI delaiTir; //Valeur du délai entre chaque tir
-    public TextMeshProUGUI nbrBalles; //Valeur du nombre de balles tirés à chaque tir
-    public TextMeshProUGUI armure; //Valeur de l'armure du joueur
-    public TextMeshProUGUI regen; //Valeur de la régénération de vie du joueur
+    public TextMeshProUGUI perteTir; //Valeur du nombre de balles tirés à chaque tir
+   
 
-
-    public List<string> lstUpgrades = new List<string>(); //Liste des upgrades de tir qui ont été obtenues
+    public List<string> listUpgrades = new List<string>(); //Liste des upgrades de tir qui ont été obtenues
     public TextMeshProUGUI ameliorations; //Élément du menu pour les upgrades de tir qui ont été obtenues
 
 
@@ -94,28 +94,26 @@ public class ControleMenu : MonoBehaviour
 
     public void OuvrirStatistiques()
     {
-        
-        //Assigner les valeurs des différentes stats aux textes du menu 
-        vitesse.text = joueur.GetComponent<ControleJoueur>().vitesse.ToString();
-        forceSaut.text = joueur.GetComponent<ControleJoueur>().forceSaut.ToString();
-        degatsSaut.text = joueur.GetComponent<ControleJoueur>().degatsZone.ToString();
-        degatsBalle.text = joueur.GetComponent<ControleTir>().degatsJoueur.ToString();
-        delaiTir.text = joueur.GetComponent<ControleTir>().shootCooldown.ToString();
-        nbrBalles.text = joueur.GetComponent<ControleTir>().nombreBalles.ToString();
-        armure.text = joueur.GetComponent<ComportementJoueur>().armure.ToString();
-        regen.text = joueur.GetComponent<ComportementJoueur>().regenVie.ToString() + "/s";
+        //Assigner les valeurs des différentes stats aux textes du menu
+        vieMax.text = GetComponent<ComportementJoueur>().vieMax.ToString();
+        regen.text = GetComponent<ComportementJoueur>().regenVie.ToString() + "/s";
+        vitesse.text = GetComponent<ControleJoueur>().vitesse.ToString();
+        forceSaut.text = GetComponent<ControleJoueur>().forceSaut.ToString();
+        degatsSaut.text = GetComponent<ControleJoueur>().degatsZone.ToString();
+        forceExplosion.text = GetComponent<ControleJoueur>().forceExplosion.ToString();
+        degatsBalle.text = GetComponent<ControleTir>().degatsJoueur.ToString();
+        delaiTir.text = GetComponent<ControleTir>().shootCooldown.ToString();
+        perteTir.text = GetComponent<ControleTir>().valeurPerteTir.ToString();
 
         //Ajouter les upgrades de tir au menu
         string upgrades = "";
-        foreach(string upgrade in lstUpgrades)
+        foreach(string upgrade in listUpgrades)
         {
             upgrades += "- ";
             upgrades += upgrade;
             upgrades += "\n";
         }
         ameliorations.text = upgrades;
-        Debug.Log(ameliorations.text);
-
 
         //Activer le menu de statistiques
         menuStatistiques.SetActive(true);

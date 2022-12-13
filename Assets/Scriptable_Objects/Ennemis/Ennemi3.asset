@@ -16,10 +16,10 @@ MonoBehaviour:
   descriptionEnnemi: an enemy that moves towards the player and attacks him with
     melee attacks
   vieMax: 3
-  degats: 2
-  vitesse: 10
+  degats: 3
+  vitesse: 12
   tailleEnnemi: 2
-  valeurLoot: 0.75
+  valeurLoot: 0.5
   nombreLootSpawn: 2
   ranged: 0
   etage: 3

@@ -58,8 +58,12 @@ public class ControleTir : MonoBehaviour
             //Sinon
             else
             {
-                //Jouer un son indiquant au joueur qu'il ne peut pas tirer
-                GetComponent<AudioSource>().PlayOneShot(sonTirImpossible);
+                //Si on n'a pas déjà le son qui joue
+                if(GetComponent<AudioSource>().isPlaying == false)
+                {
+                    //Jouer un son indiquant au joueur qu'il ne peut pas tirer
+                    GetComponent<AudioSource>().PlayOneShot(sonTirImpossible);
+                }
             }
         }
 

@@ -17,8 +17,8 @@ MonoBehaviour:
     attacks with projectiles
   vieMax: 3
   degats: 12
-  vitesse: 5
-  tailleEnnemi: 2
+  vitesse: 6
+  tailleEnnemi: 2.5
   valeurLoot: 1.25
   nombreLootSpawn: 2
   ranged: 1

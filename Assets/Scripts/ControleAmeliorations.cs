@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class ControleAmeliorations : MonoBehaviour
 {
+    public GameObject parentListeAmeliorations; //Parent de la liste des améliorations
     public GameObject parentAmeliorations; //Parent du choix des ameliorations
     public AudioClip sonChoix; //Son lorsque le joueur choisi une amelioration
     public GameObject carteAmelioration; //Carte vide d'une arme
@@ -13,7 +15,7 @@ public class ControleAmeliorations : MonoBehaviour
     public List<Amelioration> ameliorationsDisponibles = new List<Amelioration>(); //Liste des ameliorations
     private List<Amelioration> ameliorationsSelectionnes = new List<Amelioration>(); //Liste des ameliorations choisies
     public static bool pause; //Indiquer si nous sommes en pause pour le choix
-
+    private int storeAmeliorations; //Variable storant le nombre  d'améliorations, s'il y a lieu, suite à un autre level up pendant le choix d'améliorations
     private void Start()
     {
         //Reset la pause
@@ -23,17 +25,38 @@ public class ControleAmeliorations : MonoBehaviour
     //Fonction permettant d'appeler la coroutine qui propose les choix
     public void ActiverChoix()
     {
-        //Si nous sommes pas deja en pause
-        if(pause == false)
+        //Si nous sommes en pause, storer qu'on a level up
+        if (pause == true)
+        {
+            storeAmeliorations++;
+        }
+
+        //Si nous sommes pas en pause
+        if (pause == false)
         {
             //Indiquer que nous sommes en pause;
             pause = true;
 
             //Demarer la coroutine
-            StartCoroutine(ProposerChoix(0.75f));
+            StartCoroutine(ProposerChoix(0.55f));
 
             //Enlever la vélocité du joueur
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+
+            //Enlever un storage d'amélioration s'il y a lieu
+            if(storeAmeliorations > 0)
+            {
+                storeAmeliorations--;
+            }
+        } 
+    }
+
+    private void Update()
+    {
+        //Si nous avions storé une amélioration et que le choix est terminé
+        if(storeAmeliorations > 0 && pause == false)
+        {
+            ActiverChoix();
         }
     }
 
@@ -41,11 +64,14 @@ public class ControleAmeliorations : MonoBehaviour
     public IEnumerator ProposerChoix(float delai)
     {
         //Activer le parent des choix
-        parentAmeliorations.gameObject.SetActive(true);
+        parentListeAmeliorations.gameObject.SetActive(true);
 
         //Piger nos améliorations
         for (int i = 0; i < nombreAmeliorationsProposees; i++)
         {
+            //Attendre un petit delai
+            yield return new WaitForSeconds(delai);
+
             //Trouver une amélioration aléatoire
             Amelioration ameliorationAleatoire = ameliorationsDisponibles.ElementAt(Random.Range(0, ameliorationsDisponibles.Count));
 
@@ -59,6 +85,9 @@ public class ControleAmeliorations : MonoBehaviour
             GameObject carte = Instantiate(carteAmelioration);
             carte.transform.SetParent(parentAmeliorations.transform, false);
 
+            //Disable l'intéractivité
+            carte.GetComponent<Button>().enabled = false;
+
             //Lui passer une reference de joueur
             carte.GetComponent<CarteAmelioration>().joueur = gameObject;
 
@@ -66,10 +95,13 @@ public class ControleAmeliorations : MonoBehaviour
             carte.GetComponent<CarteAmelioration>().amelioration = ameliorationAleatoire;
 
             //Jouer un son de selection
-            GetComponent<AudioSource>().PlayOneShot(sonSelection);
+            GetComponent<AudioSource>().PlayOneShot(sonSelection);    
+        }
 
-            //Attendre un petit delai
-            yield return new WaitForSeconds(delai);
+        //Un coup les choix proposés, enable les boutons
+        foreach (Transform boutonAmelioration in parentAmeliorations.transform)
+        {
+            boutonAmelioration.GetComponent<Button>().enabled = true;
         }
     }
 
@@ -80,7 +112,7 @@ public class ControleAmeliorations : MonoBehaviour
         GetComponent<AudioSource>().PlayOneShot(sonChoix);
 
         //Désactive le parent
-        parentAmeliorations.gameObject.SetActive(false);
+        parentListeAmeliorations.gameObject.SetActive(false);
 
         //Enlever ses cartes de choix
         foreach (Transform child in parentAmeliorations.transform)
@@ -180,12 +212,10 @@ public class ControleAmeliorations : MonoBehaviour
 
             case "Tir perçant":
                 GetComponent<ControleTir>().peutTirerATravers = true;
-                GetComponent<ControleMenu>().lstUpgrades.Add("Tir perçant");
                 break;
 
             case "Balles gluantes":
                 GetComponent<ControleTir>().peutSlow = true;
-                GetComponent<ControleMenu>().lstUpgrades.Add("Balles gluantes");
                 break;
 
             case "Vitesse de la lumière":
@@ -202,18 +232,18 @@ public class ControleAmeliorations : MonoBehaviour
 
             case "Tir arrière":
                 GetComponent<ControleTir>().peutTirerArriere = true;
-                GetComponent<ControleMenu>().lstUpgrades.Add("Tir arrière");
                 break;
 
             case "Tir latéral":
                 GetComponent<ControleTir>().peutTirerCotes = true;
-                GetComponent<ControleMenu>().lstUpgrades.Add("Tir latéral");
                 break;
 
             case "Balles explosives":
                 GetComponent<ControleTir>().peutExploser = true;
-                GetComponent<ControleMenu>().lstUpgrades.Add("Balles explosives");
                 break;
         }
+
+        //Ajouter l'amélioration dans la liste d'améliorations présentes
+        GetComponent<ControleMenu>().listUpgrades.Add(nomAmelioration); 
     }
 }

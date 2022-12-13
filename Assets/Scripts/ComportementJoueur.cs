@@ -47,7 +47,7 @@ public class ComportementJoueur : MonoBehaviour
         //Se déplacer à une positon aléatoire sur la map
         //Trouver une position aléatoire
         Vector3 positionAleatoire = Random.insideUnitCircle * rayonSpawn;
-        transform.position = new Vector3(positionAleatoire.x, 25, positionAleatoire.z);
+        transform.position = new Vector3(positionAleatoire.x, 35, positionAleatoire.z);
 
         //Assigner quelques valeurs
         vieJoueur = vieMax;
@@ -68,7 +68,7 @@ public class ComportementJoueur : MonoBehaviour
         sliderVie.value = fillValueHp;
 
         //Mettre a jour le texte de vie
-        texteVie.text = Mathf.FloorToInt(vieJoueur).ToString() + "/" + vieMax.ToString();
+        texteVie.text = Mathf.FloorToInt(vieJoueur).ToString();
 
         //Mettre a jour la valeuyr du slider d'xp
         float fillValueXp = xpActuel / xpMax;

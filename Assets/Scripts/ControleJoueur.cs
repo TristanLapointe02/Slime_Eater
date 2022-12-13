@@ -31,6 +31,10 @@ public class ControleJoueur : MonoBehaviour
     //AUTRES
     bool fixJump; //Bool permettant de fix le jump
 
+    //MEILLEURE GESTION DU SAUT
+    public float fallMultiplier = 2.5f;
+    public float lowJumpMultiplier = 2f;
+
     void Start()
     {
         //Assigner les références
@@ -47,10 +51,36 @@ public class ControleJoueur : MonoBehaviour
     
     void Update()
     {
+        //TEST AMÉLIORATION JUMP
+        if(rb.velocity.y < 0)
+        {
+            rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        }
         //Capturer les inputs
         if(ComportementJoueur.finJeu == false && ControleAmeliorations.pause == false)
         {
             InputProcess();
+        }
+
+        //Gestion des inputs de menu
+        // Si on appuie sur Tab
+        if (Input.GetButtonDown("Open Stats"))
+        {
+            // Afficher le menu de statistiques
+            gameObject.GetComponent<ControleMenu>().OuvrirStatistiques();
+        }
+        // Si on relâches Tab
+        if (Input.GetButtonUp("Open Stats"))
+        {
+            // Fermer le menu de statistiques
+            gameObject.GetComponent<ControleMenu>().FermerStatistiques();
+        }
+
+        //Si jamais le joueur appuie sur escape
+        if (Input.GetButtonDown("Cancel"))
+        {
+            //Ouvrir/fermer menu pause
+            gameObject.GetComponent<ControleMenu>().MenuPause();
         }
     }
 
@@ -87,26 +117,6 @@ public class ControleJoueur : MonoBehaviour
         {
             dashTimer = 0;
             Move(dashVitesse);
-        }
-
-        // Si on appuie sur Tab
-        if (Input.GetButtonDown("Open Stats"))
-        {
-            // Afficher le menu de statistiques
-            gameObject.GetComponent<ControleMenu>().OuvrirStatistiques();
-        }
-        // Si on relâches Tab
-        if (Input.GetButtonUp("Open Stats"))
-        {
-            // Fermer le menu de statistiques
-            gameObject.GetComponent<ControleMenu>().FermerStatistiques();
-        }
-
-        //Si jamais le joueur appuie sur escape
-        if (Input.GetButtonDown("Cancel"))
-        {
-            //Ouvrir/fermer menu pause
-            gameObject.GetComponent<ControleMenu>().MenuPause();
         }
 
         //Reset jump counter

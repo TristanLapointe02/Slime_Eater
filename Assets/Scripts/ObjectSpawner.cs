@@ -144,7 +144,7 @@ public class ObjectSpawner : MonoBehaviour
     public void SpawnUnObjet(Vector3 position)
     {
         //Si le jeu est pas fini
-        if(StageProgression.etageActuel < Etages.Length && ComportementJoueur.finJeu == false)
+        if(StageProgression.etageActuel - 1 < Etages.Length && ComportementJoueur.finJeu == false)
         {
             //Determiner la position selon l'etage
             Vector3 positionSpawn = new Vector3(position.x, Etages[StageProgression.etageActuel - 1].transform.position.y + 10, position.z);

@@ -65,7 +65,7 @@ public class StageProgression : MonoBehaviour
                 etageActuel++;
 
                 //Si on vient de finir le jeu
-                if (etageActuel == Etages.Length)
+                if (etageActuel -1 == Etages.Length)
                 {
                     //Faire apparaitre le menu de fin
                     joueur.GetComponent<ComportementJoueur>().FinJeu("Vous avez gagné!", sonVictoire);
