@@ -82,9 +82,6 @@ public class ControleAmeliorations : MonoBehaviour
         //Désactive le parent
         parentAmeliorations.gameObject.SetActive(false);
 
-        //Enlever les constraintes de mouvement au joueur
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-
         //Enlever ses cartes de choix
         foreach (Transform child in parentAmeliorations.transform)
         {
@@ -92,17 +89,20 @@ public class ControleAmeliorations : MonoBehaviour
         }
 
         //Rajouter les choix anciennement proposés
-        foreach(Amelioration ameliorationChoisie in ameliorationsSelectionnes)
+        foreach(Amelioration ameliorationNonChoisie in ameliorationsSelectionnes)
         {
             //Si on peut
-            if (ameliorationChoisie.peutRepiger)
+            if (ameliorationNonChoisie.peutRepiger)
             {
-                ameliorationsDisponibles.Add(ameliorationChoisie);
+                ameliorationsDisponibles.Add(ameliorationNonChoisie);
             }
         }
 
         //Clear la liste d'ameliorations selectionees
         ameliorationsSelectionnes.Clear();
+
+        //Enlever les constraintes de mouvement au joueur
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 
         //Depause
         pause = false;

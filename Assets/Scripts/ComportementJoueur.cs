@@ -118,7 +118,7 @@ public class ComportementJoueur : MonoBehaviour
 
             //Faire apparaître l'image de dégâts
             ecranDegats.color = new Color(0.75f, 0.1f, 0.1f, 1);
-            StartCoroutine(FadeImage());
+            StartCoroutine(FadeImage(valeurDegat));
         }
 
         //Si le joueur était pour mourir
@@ -136,9 +136,13 @@ public class ComportementJoueur : MonoBehaviour
     }
 
     //Fonction permettant de fade l'image de degats
-    private IEnumerator FadeImage()
+    private IEnumerator FadeImage(float valeurDegats)
     {
-        for (float i = 1; i >= 0; i -= Time.deltaTime)
+        //Clamp la valeur entre 0 et 1
+        float valeurAlphaEcran = Mathf.Clamp(valeurDegats/10, 0, 1);
+
+        //Selon la force des dégâts
+        for (float i = valeurAlphaEcran; i >= 0; i -= Time.deltaTime)
         {
             // set color with i as alpha
             ecranDegats.color = new Color(0.75f, 0.1f, 0.1f, i);
