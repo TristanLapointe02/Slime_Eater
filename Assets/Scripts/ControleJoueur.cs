@@ -102,6 +102,13 @@ public class ControleJoueur : MonoBehaviour
             gameObject.GetComponent<ControleMenu>().FermerStatistiques();
         }
 
+        //Si jamais le joueur appuie sur escape
+        if (Input.GetButtonDown("Cancel"))
+        {
+            //Ouvrir/fermer menu pause
+            gameObject.GetComponent<ControleMenu>().MenuPause();
+        }
+
         //Reset jump counter
         if (isGrounded() && fixJump == false)
         {

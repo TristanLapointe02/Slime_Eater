@@ -68,7 +68,7 @@ public class ComportementJoueur : MonoBehaviour
         sliderVie.value = fillValueHp;
 
         //Mettre a jour le texte de vie
-        texteVie.text = Mathf.FloorToInt(vieJoueur).ToString();
+        texteVie.text = Mathf.FloorToInt(vieJoueur).ToString() + "/" + vieMax.ToString();
 
         //Mettre a jour la valeuyr du slider d'xp
         float fillValueXp = xpActuel / xpMax;

@@ -180,10 +180,12 @@ public class ControleAmeliorations : MonoBehaviour
 
             case "Tir perçant":
                 GetComponent<ControleTir>().peutTirerATravers = true;
+                GetComponent<ControleMenu>().lstUpgrades.Add("Tir perçant");
                 break;
 
             case "Balles gluantes":
                 GetComponent<ControleTir>().peutSlow = true;
+                GetComponent<ControleMenu>().lstUpgrades.Add("Balles gluantes");
                 break;
 
             case "Vitesse de la lumière":
@@ -200,14 +202,17 @@ public class ControleAmeliorations : MonoBehaviour
 
             case "Tir arrière":
                 GetComponent<ControleTir>().peutTirerArriere = true;
+                GetComponent<ControleMenu>().lstUpgrades.Add("Tir arrière");
                 break;
 
             case "Tir latéral":
                 GetComponent<ControleTir>().peutTirerCotes = true;
+                GetComponent<ControleMenu>().lstUpgrades.Add("Tir latéral");
                 break;
 
             case "Balles explosives":
                 GetComponent<ControleTir>().peutExploser = true;
+                GetComponent<ControleMenu>().lstUpgrades.Add("Balles explosives");
                 break;
         }
     }
