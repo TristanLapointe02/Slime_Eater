@@ -87,6 +87,10 @@ public class ComportementJoueur : MonoBehaviour
         //TEST, AUGMENTER XP
         if (Input.GetKeyDown(KeyCode.M))
         {
+            AugmenterXp(5000);
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
             AugmenterXp(5);
         }
     }
@@ -94,8 +98,8 @@ public class ComportementJoueur : MonoBehaviour
     //Fonction permettant de regen de la vie
     public IEnumerator RegenVie(float amount, float delai)
     {
-        //Si on est pas en pause
-        if(ControleAmeliorations.pause == false)
+        //Si on est pas en pause et que le jeu n'est pas fini
+        if(ControleAmeliorations.pause == false && finJeu == false)
         {
             AugmenterVie(amount);
         }

@@ -164,7 +164,7 @@ MonoBehaviour:
   objetExplosion: {fileID: 8591179905180451742, guid: 42eba4dbf50c9694ba9478c8d22e19f2,
     type: 3}
   sonExplosion: {fileID: 8300000, guid: b93aec8bd7b80514f85d247ef9737860, type: 3}
-  particuleExplosion: {fileID: 3432958286849152088, guid: 87ee7299dd44ed747af24dbb91bcd33b,
+  particuleExplosion: {fileID: 4593184484909914552, guid: 2e1e9506f5904a64b81744324fb7cd50,
     type: 3}
   pickUp: 0
-  activerDecompte: 0
+  delai: 3

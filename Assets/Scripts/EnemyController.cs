@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour
         gameObject.transform.localScale =  new Vector3(enemy.tailleEnnemi, enemy.tailleEnnemi, enemy.tailleEnnemi);
 
         //Changer le range de la zone indicatrice de l'ennemi selon la taille de l'ennemi
-        zoneEnnemi.transform.localScale = new Vector3(enemy.tailleEnnemi*1.15f + 0.45f, zoneEnnemi.transform.localScale.y, enemy.tailleEnnemi * 1.15f + 0.45f);
+        zoneEnnemi.transform.localScale = new Vector3(enemy.tailleEnnemi*1.025f + 0.45f, zoneEnnemi.transform.localScale.y, enemy.tailleEnnemi * 1.025f + 0.45f);
 
         //Changer la teinte de la zone selon la couleur de l'ennemi
         zoneEnnemi.GetComponent<Renderer>().material.color = enemy.couleur;

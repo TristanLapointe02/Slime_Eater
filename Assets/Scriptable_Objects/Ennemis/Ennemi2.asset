@@ -17,7 +17,7 @@ MonoBehaviour:
     melee attacks
   vieMax: 3
   degats: 4
-  vitesse: 6
+  vitesse: 7
   tailleEnnemi: 1.5
   valeurLoot: 0.35
   nombreLootSpawn: 1
@@ -26,4 +26,4 @@ MonoBehaviour:
   range: 0
   couleur:
     serializedVersion: 2
-    rgba: 6702974
+    rgba: 3362146174

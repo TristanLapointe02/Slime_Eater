@@ -15,7 +15,7 @@ MonoBehaviour:
   nom: "Peau \xE9paisse"
   icone: {fileID: 21300000, guid: c730cd2a3eb18494181e8ebd7aedf628, type: 3}
   description1: 'Perdez '
-  valeur: 0.035
+  valeur: 0.03
   description2: ' moins de masse en tirant.'
   valeur2: 0
   description3: 

@@ -17,7 +17,7 @@ MonoBehaviour:
     attacks with projectiles
   vieMax: 2
   degats: 4
-  vitesse: 3
+  vitesse: 4
   tailleEnnemi: 1.5
   valeurLoot: 0.35
   nombreLootSpawn: 2
@@ -26,4 +26,4 @@ MonoBehaviour:
   range: 25
   couleur:
     serializedVersion: 2
-    rgba: 3942443
+    rgba: 3359385643

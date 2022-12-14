@@ -829,7 +829,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuOptions: {fileID: 515166075}
+  menuStatistiques: {fileID: 0}
+  menuPause: {fileID: 0}
   volumeSlider: {fileID: 1239769810}
+  vieMax: {fileID: 0}
+  regen: {fileID: 0}
+  vitesse: {fileID: 0}
+  forceSaut: {fileID: 0}
+  degatsSaut: {fileID: 0}
+  forceExplosion: {fileID: 0}
+  degatsBalle: {fileID: 0}
+  delaiTir: {fileID: 0}
+  perteTir: {fileID: 0}
+  listUpgrades: []
+  ameliorations: {fileID: 0}
 --- !u!1001 &189200569
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2874,7 +2887,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

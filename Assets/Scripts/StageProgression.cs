@@ -56,16 +56,12 @@ public class StageProgression : MonoBehaviour
         //Mettre a jour le texte de niveau
         texteStage.text = etageActuel.ToString();
 
-        for (int i = 1; i < ennemiesToKillPerStage.Length; i++)
+        for (int i = 1; i <= ennemiesToKillPerStage.Length; i++)
         {
-            if (etageActuel == i && ComportementJoueur.ennemisTues >= ennemiesToKillPerStage[i-1] && ComportementJoueur.finJeu == false && etageActuel < Etages.Length)
+            if (etageActuel == i && ComportementJoueur.ennemisTues >= ennemiesToKillPerStage[i-1] && ComportementJoueur.finJeu == false && etageActuel <= Etages.Length)
             {
-                print("ALLO");
-                //Augmenter d'étage
-                etageActuel++;
-
                 //Si on vient de finir le jeu
-                if (etageActuel -1 == Etages.Length)
+                if (etageActuel == Etages.Length)
                 {
                     //Faire apparaitre le menu de fin
                     joueur.GetComponent<ComportementJoueur>().FinJeu("Vous avez gagné!", sonVictoire);
@@ -75,7 +71,11 @@ public class StageProgression : MonoBehaviour
                 //Sinon, pour le restant des étages
                 else
                 {
+                    //Changer de niveau
                     ChangerNiveau();
+
+                    //Augmenter d'étage
+                    etageActuel++;
                 } 
             }
         }
@@ -100,7 +100,7 @@ public class StageProgression : MonoBehaviour
             }
 
             //Detruire le plancher de l'etage
-            Etages[etageActuel - 2].gameObject.SetActive(false);
+            Etages[etageActuel - 1].gameObject.SetActive(false);
 
             //Faire spawn des objets
             refSpawnEnnemi.InitialSpawn();

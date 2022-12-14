@@ -851,7 +851,7 @@ MonoBehaviour:
   distance: 0
   plusGrandeDistance: 0
   rayonActuel: 0
-  bonusRayon: 1
+  bonusRayon: 1.25
 --- !u!64 &94768211
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1314,7 +1314,7 @@ MonoBehaviour:
   shootCooldown: 0.75
   shootDelay: 0.1
   nombreBalles: 1
-  forceTir: 50
+  forceTir: 55
   valeurPerteTir: 0.07
   diviseurGrosseurBalle: 8
   degatsJoueur: 1
@@ -1369,13 +1369,13 @@ MonoBehaviour:
   vieMax: 50
   sliderVie: {fileID: 413975115}
   texteVie: {fileID: 1289059786}
-  regenVie: 0.25
+  regenVie: 0.35
   regenTemps: 1
   levelActuel: 0
   xpActuel: 0
   xpMax: 0
-  xpMaxLvl1: 5
-  multiplicateurXp: 2.5
+  xpMaxLvl1: 6
+  multiplicateurXp: 3
   sliderXp: {fileID: 1710659846}
   texteXp: {fileID: 421422709}
   texteLevelActuel: {fileID: 180807954}
@@ -3737,8 +3737,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetChoisi: 0
   SpawnAmount: 3
-  spawnDelay: 1
-  nombreObjetsSpawnPop: 30
+  spawnDelay: 0.75
+  nombreObjetsSpawnPop: 35
   rayonSpawn: 200
   rangeSpawn: 5
   tableauObjets:
@@ -4049,7 +4049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9047193952a05604ab25e43388907ba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ennemiesToKillPerStage: 0f00000019000000280000003c0000005500000064000000
+  ennemiesToKillPerStage: 190000002300000032000000460000006400000087000000
   refSpawnEnnemi: {fileID: 608891425}
   refSpawnItem: {fileID: 1208117082}
   texteStage: {fileID: 91351645}
@@ -5805,7 +5805,7 @@ MonoBehaviour:
   objetChoisi: 1
   SpawnAmount: 1
   spawnDelay: 3
-  nombreObjetsSpawnPop: 6
+  nombreObjetsSpawnPop: 5
   rayonSpawn: 200
   rangeSpawn: 4
   tableauObjets:
