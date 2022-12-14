@@ -15,7 +15,7 @@ MonoBehaviour:
   nomEnnemi: EnemyRange4
   descriptionEnnemi: an ennemy that stays at a certain distance from the player and
     attacks with projectiles
-  vieMax: 6
+  vieMax: 10
   degats: 12
   vitesse: 8
   tailleEnnemi: 2.5

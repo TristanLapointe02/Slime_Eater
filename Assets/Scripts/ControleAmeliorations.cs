@@ -121,7 +121,7 @@ public class ControleAmeliorations : MonoBehaviour
         }
 
         //Rajouter les choix anciennement proposés
-        foreach(Amelioration ameliorationNonChoisie in ameliorationsSelectionnes)
+        foreach (Amelioration ameliorationNonChoisie in ameliorationsSelectionnes)
         {
             //Si on peut
             if (ameliorationNonChoisie.peutRepiger)
@@ -145,11 +145,11 @@ public class ControleAmeliorations : MonoBehaviour
             /**************** AMÉLIORATIONS DE JOUEUR ******************/
             case "Soin instantané":
                 GetComponent<ComportementJoueur>().AugmenterVie(valeur);
-            break;
+                break;
 
             case "Slime adhésif":
                 StartCoroutine(GetComponent<ComportementJoueur>().AugmenterVitesse(valeur, 0, true));
-            break;
+                break;
 
             case "Taille démesurée":
                 GetComponent<ComportementJoueur>().AugmenterGrosseur(transform.localScale.magnitude * valeur);
@@ -158,15 +158,15 @@ public class ControleAmeliorations : MonoBehaviour
 
             case "Génie":
                 GetComponent<ComportementJoueur>().bonusXp += valeur;
-            break;
+                break;
 
             case "Slime absorbant":
                 GetComponent<ComportementJoueur>().bonusTaille += valeur;
-            break;
+                break;
 
             case "Bouclier invisible":
                 GetComponent<ComportementJoueur>().armure += valeur;
-            break;
+                break;
 
             case "Boom!":
                 GetComponent<ControleJoueur>().degatsZone += valeur;
@@ -244,6 +244,32 @@ public class ControleAmeliorations : MonoBehaviour
         }
 
         //Ajouter l'amélioration dans la liste d'améliorations présentes
-        GetComponent<ControleMenu>().listUpgrades.Add(nomAmelioration); 
+        ControleMenu refListe = GetComponent<ControleMenu>();
+        // Si la liste est vide, ajouter l'amélioration à la liste
+        // Sinon, regarder si l'upgrade est déjà dans la liste
+        if (refListe.listUpgrades.Count == 0)
+        {
+            refListe.listUpgrades.Add(nomAmelioration);
+        }
+        else
+        {
+            int completedCount = 0;
+            int totalCount = refListe.listUpgrades.Count;
+            for (int i = 0; i < refListe.listUpgrades.Count; i++)
+            {
+                completedCount += 1;
+                // Si l'amélioration est déjà présente, ajouter un "+" à la fin
+                if (refListe.listUpgrades[i].Contains(nomAmelioration))
+                {
+                    refListe.listUpgrades[i] += "+";
+                    break;
+                }
+                if (completedCount == totalCount)
+                {
+                    refListe.listUpgrades.Add(nomAmelioration);
+                    break;
+                }
+            }
+        }
     }
 }

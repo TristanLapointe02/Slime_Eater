@@ -100,10 +100,13 @@ public class ControleMenu : MonoBehaviour
         vitesse.text = GetComponent<ControleJoueur>().vitesse.ToString();
         forceSaut.text = GetComponent<ControleJoueur>().forceSaut.ToString();
         degatsSaut.text = GetComponent<ControleJoueur>().degatsZone.ToString();
-        forceExplosion.text = GetComponent<ControleJoueur>().forceExplosion.ToString();
+        int forceExplosionRound = Mathf.RoundToInt(GetComponent<ControleJoueur>().forceExplosion); //Arrondir la valeur de forceExplosion pour ne pas afficher les décimales
+        forceExplosion.text = forceExplosionRound.ToString();
         degatsBalle.text = GetComponent<ControleTir>().degatsJoueur.ToString();
         delaiTir.text = GetComponent<ControleTir>().shootCooldown.ToString();
         perteTir.text = GetComponent<ControleTir>().valeurPerteTir.ToString();
+
+
 
         //Ajouter les upgrades de tir au menu
         string upgrades = "";
