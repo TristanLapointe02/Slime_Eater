@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "Soin instantan\xE9"
   m_EditorClassIdentifier: 
   nom: "Soin instantan\xE9"
-  icone: {fileID: 21300000, guid: c730cd2a3eb18494181e8ebd7aedf628, type: 3}
+  icone: {fileID: 21300000, guid: 23150a700a701b74aa9e7fd5def4a94c, type: 3}
   description1: "Reg\xE9n\xE9rez enti\xE8rement votre vie."
   valeur: 0
   description2: 

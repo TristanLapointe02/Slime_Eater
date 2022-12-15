@@ -200,6 +200,11 @@ public class ControleAmeliorations : MonoBehaviour
                 GetComponent<ComportementJoueur>().regenVie += valeur;
                 break;
 
+            case "Géant élan":
+                GetComponent<ControleJoueur>().dashVitesse += valeur * 1000;
+                GetComponent<ControleJoueur>().tailleDash += valeur2;
+                break;
+
             /**************** AMÉLIORATIONS DE TIR ******************/
 
             case "Mitraillette":
@@ -240,6 +245,10 @@ public class ControleAmeliorations : MonoBehaviour
 
             case "Balles explosives":
                 GetComponent<ControleTir>().peutExploser = true;
+                break;
+
+            case "Vampire":
+                GetComponent<ComportementJoueur>().vieVampire += valeur;
                 break;
         }
 

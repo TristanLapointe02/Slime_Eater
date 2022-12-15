@@ -13,6 +13,7 @@ public class ComportementJoueur : MonoBehaviour
     public TextMeshProUGUI texteVie; //Ref au texte de vie
     public float regenVie; //Vie a regen
     public float regenTemps; //Intervalle de temps que le joueur regen de la vie
+    public float vieVampire; //Vie regénérée de l'amélioration vampire
 
     //XP
     public int levelActuel; //Ref au niveau actuel du joueur
@@ -44,6 +45,9 @@ public class ComportementJoueur : MonoBehaviour
 
     void Start()
     {
+        //Augmenter le niveau du joueur
+        AugmenterXp(xpMax);
+
         //Se déplacer à une positon aléatoire sur la map
         //Trouver une position aléatoire
         Vector3 positionAleatoire = Random.insideUnitCircle * rayonSpawn;

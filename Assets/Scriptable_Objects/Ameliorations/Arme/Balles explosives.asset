@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Balles explosives
   m_EditorClassIdentifier: 
   nom: Balles explosives
-  icone: {fileID: 21300000, guid: c730cd2a3eb18494181e8ebd7aedf628, type: 3}
+  icone: {fileID: 21300000, guid: 4952b6ce6d42a8b4d8c045412a2d2c0f, type: 3}
   description1: Vos balles explosent au contact d'un ennemi.
   valeur: 0
   description2: 

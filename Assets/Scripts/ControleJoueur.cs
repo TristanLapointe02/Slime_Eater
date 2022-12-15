@@ -16,6 +16,7 @@ public class ControleJoueur : MonoBehaviour
     public float forceExplosionInitiale; //Force explosion initiale
     public float forceExplosion; //Force de l'explosion de zone
     public float multiplicateurForceExplosion; //Par combien multiplier la force d'explosion selon la taille du joueur
+    public float tailleDash; //Taille a regénérer pour l'amelioration de dash
     float xInput; //Inputs sur l'axe des x
     float zInput; //Inputs sur l'axe des x
 
@@ -116,7 +117,13 @@ public class ControleJoueur : MonoBehaviour
         if (Input.GetButtonDown("Fire3") && dashTimer >= dashCooldown)
         {
             dashTimer = 0;
-            Move(dashVitesse);
+            Move(dashVitesse, GetComponent<ControleTir>().gun.transform.forward);
+
+            //Regénérer de la masse s'il y a lieu
+            if(tailleDash > 0)
+            {
+                GetComponent<ComportementJoueur>().AugmenterGrosseur(tailleDash);
+            }
         }
 
         //Reset jump counter
@@ -136,7 +143,7 @@ public class ControleJoueur : MonoBehaviour
         }
 
         //Appeler la fonction de mouvement
-        Move(vitesse);
+        Move(vitesse, new Vector3(xInput, 0, zInput));
     }
 
     //Fonction de collision
@@ -161,10 +168,10 @@ public class ControleJoueur : MonoBehaviour
 
 
     //Fonction permettant de bouger le joueur
-    private void Move(float vitesse)
+    private void Move(float vitesse, Vector3 direction)
     {
         //Ajouter de la force à la balle
-        Vector3 deplacement = new Vector3(xInput, 0f, zInput);
+        Vector3 deplacement = new Vector3(direction.x, 0f, direction.z);
         rb.AddForce(deplacement.normalized * vitesse);
     }
 

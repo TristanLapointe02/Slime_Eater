@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "Tir per\xE7ant"
   m_EditorClassIdentifier: 
   nom: "Tir per\xE7ant"
-  icone: {fileID: 21300000, guid: c730cd2a3eb18494181e8ebd7aedf628, type: 3}
+  icone: {fileID: 21300000, guid: 56e7eea87481a024b8ff82ca98067a24, type: 3}
   description1: "Vos balles passent \xE0 travers les ennemis."
   valeur: 0
   description2: 

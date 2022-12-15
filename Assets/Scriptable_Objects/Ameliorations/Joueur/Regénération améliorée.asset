@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "Reg\xE9n\xE9ration am\xE9lior\xE9e"
   m_EditorClassIdentifier: 
   nom: "Reg\xE9n\xE9ration am\xE9lior\xE9e"
-  icone: {fileID: 21300000, guid: c730cd2a3eb18494181e8ebd7aedf628, type: 3}
+  icone: {fileID: 21300000, guid: 1d982b9441e566246a72374436629b90, type: 3}
   description1: "Reg\xE9n\xE9rez "
   valeur: 0.45
   description2: ' vie de plus par seconde.'

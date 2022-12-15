@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 191d4d94244a042428ba679c03167a29, type: 3}
+  m_Name: Vampire
+  m_EditorClassIdentifier: 
+  nom: Vampire
+  icone: {fileID: 21300000, guid: 3a517c7d88a864e46b92361770a4d1b3, type: 3}
+  description1: "R\xE9cup\xE9rez "
+  valeur: 1
+  description2: ' de vie en tuant un ennemi.'
+  valeur2: 0
+  description3: 
+  peutRepiger: 1

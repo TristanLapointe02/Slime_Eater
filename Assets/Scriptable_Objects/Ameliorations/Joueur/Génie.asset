@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "G\xE9nie"
   m_EditorClassIdentifier: 
   nom: "G\xE9nie"
-  icone: {fileID: 21300000, guid: c730cd2a3eb18494181e8ebd7aedf628, type: 3}
+  icone: {fileID: 21300000, guid: fe655500f99563248b045ab8e8d4ff11, type: 3}
   description1: 'Gagnez '
   valeur: 0.5
   description2: ' fois plus d''xp que la normale.'

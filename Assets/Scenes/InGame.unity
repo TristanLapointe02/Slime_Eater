@@ -1195,6 +1195,7 @@ MonoBehaviour:
   forceExplosionInitiale: 2500
   forceExplosion: 0
   multiplicateurForceExplosion: 200
+  tailleDash: 0
   sonJump: {fileID: 8300000, guid: ce56c48d366bbb444ba1a423a84bf33b, type: 3}
   sonAtterir: {fileID: 8300000, guid: c68e534cb982a1e4d9fc90f48d621460, type: 3}
   sonMangerSlime: {fileID: 8300000, guid: b231e1c1eff8da84badd88c8397e0a39, type: 3}
@@ -1370,11 +1371,12 @@ MonoBehaviour:
   texteVie: {fileID: 1289059786}
   regenVie: 0.35
   regenTemps: 1
+  vieVampire: 0
   levelActuel: 0
   xpActuel: 0
   xpMax: 0
-  xpMaxLvl1: 6
-  multiplicateurXp: 2.75
+  xpMaxLvl1: 12
+  multiplicateurXp: 3.5
   sliderXp: {fileID: 1710659846}
   texteXp: {fileID: 421422709}
   texteLevelActuel: {fileID: 180807954}
@@ -1447,6 +1449,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8305225c7102b5f42b8c4798d25528ae, type: 2}
   - {fileID: 11400000, guid: 5db7c72ac1b904e41989468e428569e8, type: 2}
   - {fileID: 11400000, guid: 1c183717c68f3e941a0131195b1e0d86, type: 2}
+  - {fileID: 11400000, guid: 921edcc7a4442f940a6fdb4b80fe43db, type: 2}
+  - {fileID: 11400000, guid: 33e46dc7ec7c7554abd0c4dab0cea8ff, type: 2}
 --- !u!1 &180807952
 GameObject:
   m_ObjectHideFlags: 0
@@ -2420,7 +2424,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.28421503, y: 0.0000000164968, z: -0.0000000048903135, w: 0.95876056}
+  m_LocalRotation: {x: 0.28421503, y: -0.000000016496799, z: 0.000000004890313, w: 0.95876056}
   m_LocalPosition: {x: 0, y: 7.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3722,7 +3726,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetChoisi: 0
   SpawnAmount: 3
-  spawnDelay: 0.75
+  spawnDelay: 0.5
   nombreObjetsSpawnPop: 35
   rayonSpawn: 200
   rangeSpawn: 5
@@ -4034,7 +4038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9047193952a05604ab25e43388907ba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ennemiesToKillPerStage: 2300000032000000460000005f00000082000000c8000000
+  ennemiesToKillPerStage: 28000000370000004b0000006400000082000000c8000000
   refSpawnEnnemi: {fileID: 608891425}
   refSpawnItem: {fileID: 1208117082}
   texteStage: {fileID: 91351645}
@@ -5038,7 +5042,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 922618811}
-  m_LocalRotation: {x: 0.28421503, y: 0.0000000164968, z: -0.0000000048903135, w: 0.95876056}
+  m_LocalRotation: {x: 0.28421503, y: -0.000000016496799, z: 0.000000004890313, w: 0.95876056}
   m_LocalPosition: {x: 0, y: 7.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

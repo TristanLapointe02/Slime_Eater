@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 191d4d94244a042428ba679c03167a29, type: 3}
+  m_Name: "G\xE9ant \xE9lan"
+  m_EditorClassIdentifier: 
+  nom: "G\xE9ant \xE9lan"
+  icone: {fileID: 21300000, guid: 2d594a88005bd4d42920b3925a6ded89, type: 3}
+  description1: "Votre \xE9lan vous propulse "
+  valeur: 2
+  description2: ' fois plus loin, et vous redonne '
+  valeur2: 0.35
+  description3: ' de masse.'
+  peutRepiger: 1

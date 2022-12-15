@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Slime meurtrier
   m_EditorClassIdentifier: 
   nom: Slime meurtrier
-  icone: {fileID: 21300000, guid: c730cd2a3eb18494181e8ebd7aedf628, type: 3}
+  icone: {fileID: 21300000, guid: 3543ae43ceb9ea44ebb9aae3a69f0b36, type: 3}
   description1: 'Vos balles font '
   valeur: 1
   description2: " d\xE9g\xE2t de plus."

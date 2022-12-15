@@ -102,11 +102,11 @@ public class EnemyController : MonoBehaviour
             //Faire jouer un son
             collision.gameObject.GetComponent<AudioSource>().PlayOneShot(sonSuction);
 
-            //Mourir
-            MortEnnemi();
-
             //Spawn du loot
             SpawnLoot();
+
+            //Mourir
+            MortEnnemi();
         }
     }
 
@@ -119,11 +119,11 @@ public class EnemyController : MonoBehaviour
         //Si la vie tombe a 0
         if (vie <= 0)
         {
-            //Mourir
-            MortEnnemi();
-
             //Spawn du loot
             SpawnLoot();
+
+            //Mourir
+            MortEnnemi();
 
             //Indiquer qu'un ennemi est mort
             ComportementJoueur.ennemisTues++;
@@ -162,6 +162,12 @@ public class EnemyController : MonoBehaviour
             //Changer la valeur du loot selon celle max qui faut donner
             loot.GetComponent<EffetItem>().valeur = Random.Range(enemy.valeurLoot/2, enemy.valeurLoot);
         }
+
+        //Redonner de la vie au joueur, s'il y a lieu
+        if(joueur.GetComponent<ComportementJoueur>().vieVampire > 0)
+        {
+            joueur.GetComponent<ComportementJoueur>().AugmenterVie(joueur.GetComponent<ComportementJoueur>().vieVampire);
+        } 
     }
 
     //Fonction de mort de l'ennemi
