@@ -52,15 +52,28 @@ public class ControleJoueur : MonoBehaviour
     
     void Update()
     {
-        //TEST AMÉLIORATION JUMP
+        //Amélioration de gravité
         if(rb.velocity.y < 0)
         {
             rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
+
         //Capturer les inputs
-        if(ComportementJoueur.finJeu == false && ControleAmeliorations.pause == false)
+        if(ComportementJoueur.finJeu == false && ControleAmeliorations.pause == false && ControleMenu.pauseMenu == false)
         {
             InputProcess();
+        }
+
+        //Si on est en pause, freeze le rigidboudi
+        if(ControleAmeliorations.pause == true || ControleMenu.pauseMenu == true)
+        {
+            //Enlever la vélocité du joueur
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        }
+        else
+        {
+            //Sinon, tout est beau
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         }
 
         //Gestion des inputs de menu
@@ -81,7 +94,8 @@ public class ControleJoueur : MonoBehaviour
         if (Input.GetButtonDown("Cancel"))
         {
             //Ouvrir/fermer menu pause
-            gameObject.GetComponent<ControleMenu>().MenuPause();
+            GetComponent<ControleMenu>().MenuPause();
+            print("hihi");
         }
     }
 

@@ -30,7 +30,42 @@ ModelImporter:
   - first:
       74: -8174297497461417188
     second: CharacterArmature|Yes
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eye_Black
+    second: {fileID: 2100000, guid: 02eba5d14e43b1f4ca75c8e7fdc6d2c0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eye_White
+    second: {fileID: 2100000, guid: 4da0de99e96c1204cafacd8e32a1dc2e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MushroomKing_Main
+    second: {fileID: 2100000, guid: 38344c0488d7ac549a0a42d6115c44d9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MushroomKing_Secondary
+    second: {fileID: 2100000, guid: e6403470706e08e4482b71aea21cb045, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Spikes
+    second: {fileID: 2100000, guid: 21d36c63d53f4a4488cbedbde09b679c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Teeth
+    second: {fileID: 2100000, guid: e7bdc270085339f4db7adee98cc92450, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tongue
+    second: {fileID: 2100000, guid: fbc1eb1f324fd3a4b9f32633d7bfda6d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

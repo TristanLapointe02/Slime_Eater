@@ -14,6 +14,7 @@ public class ControleMenu : MonoBehaviour
     private bool etatMenuOptions; //Etat du menu d'options
     private bool etatMenuPause; //Etat du menu pause
     public Slider volumeSlider; //Reference au volume slider
+    public static bool pauseMenu; //Indique si nous sommes en pause
 
     [Header("Menu Statistiques")]
     public TextMeshProUGUI vieMax; //Valeur de la vie max du joueur
@@ -30,6 +31,11 @@ public class ControleMenu : MonoBehaviour
     public List<string> listUpgrades = new List<string>(); //Liste des upgrades de tir qui ont été obtenues
     public TextMeshProUGUI ameliorations; //Élément du menu pour les upgrades de tir qui ont été obtenues
 
+    private void Awake()
+    {
+        //Reset la pause
+        pauseMenu = false;
+    }
 
     void Start()
     {
@@ -65,16 +71,15 @@ public class ControleMenu : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-
     public void MenuOptions()
     {
         if (etatMenuOptions == false)
         {
             //Activer le menu d'options
             menuOptions.SetActive(true);
+
             //Indiquer que l'état du menu a changé
             etatMenuOptions = true;
-
         }
         else if (etatMenuOptions == true)
         {
@@ -106,8 +111,6 @@ public class ControleMenu : MonoBehaviour
         delaiTir.text = GetComponent<ControleTir>().shootCooldown.ToString();
         perteTir.text = GetComponent<ControleTir>().valeurPerteTir.ToString();
 
-
-
         //Ajouter les upgrades de tir au menu
         string upgrades = "";
         foreach(string upgrade in listUpgrades)
@@ -137,6 +140,9 @@ public class ControleMenu : MonoBehaviour
 
             //Indiquer que l'etat du menu a change
             etatMenuPause = true;
+
+            //Activer la pause
+            pauseMenu = true;
         }
         else if (etatMenuPause == true)
         {
@@ -151,6 +157,9 @@ public class ControleMenu : MonoBehaviour
 
         //Indiquer que l'etat du menu a change
         etatMenuPause = false;
+
+        //Désactiver la pause
+        pauseMenu = false;
     }
 
     public void ChangeVolume()

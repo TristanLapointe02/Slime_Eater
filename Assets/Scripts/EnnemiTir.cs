@@ -11,9 +11,13 @@ public class EnnemiTir : MonoBehaviour
 
     [Header("Valeurs de tir")]
     bool peutTirer = true; //Bool permettant de savoir si l'ennemi peut tirer/cooldown
+    public float shootCooldown; //Cooldown de tir
     public float shootDelay; //Délai entre les balles tirées
     public int nombreBalles; //Nombre de balles a tirer
     public float forceTir; //Force du tir
+
+    //VARIABLE DE TEST
+    public bool forceStopTir; //Force le stop du tir
 
     [Header("Autres références")]
     public AudioClip sonTir; //Son de tir
@@ -25,27 +29,17 @@ public class EnnemiTir : MonoBehaviour
         gun.transform.LookAt(GetComponent<EnemyController>().joueur.transform);
 
         //S'il peut tirer et qu'il est in range
-        if (peutTirer && ControleAmeliorations.pause == false && GetComponent<EnemyController>().InRangeJoueur())
+        if (peutTirer && ControleAmeliorations.pause == false && ControleMenu.pauseMenu == false && GetComponent<EnemyController>().InRangeJoueur() && forceStopTir == false)
         {
             //Commencer le cooldown après avoir tirer
             peutTirer = false;
-            StartCoroutine(delaiTir(shootDelay));
+            StartCoroutine(delaiTir(shootCooldown));
 
             // Jouer un son de tir
             GetComponent<AudioSource>().PlayOneShot(sonTir);
 
-            //Pour le nombre de balles à tirer
-            for (int i = 0; i < nombreBalles; i++)
-            {
-                // Instancier une nouvelle balle
-                Balle nouvelleBalle = Instantiate(balle, gun.transform.position, gun.transform.rotation);
-
-                // Propulser la balle vers la direction du joueur
-                nouvelleBalle.GetComponent<Rigidbody>().AddForce(gun.transform.forward * forceTir, ForceMode.Impulse);
-
-                // Changer les dégats de la balle selon ceux de l'ennemi
-                nouvelleBalle.GetComponent<Balle>().degats = GetComponent<EnemyController>().enemy.degats;
-            }
+            //Tirer une balle vers l'avant
+            StartCoroutine(tirBalleEnnemie(nombreBalles, shootDelay, gun.transform.forward));
         }
     }
 
@@ -54,5 +48,27 @@ public class EnnemiTir : MonoBehaviour
     {
         yield return new WaitForSeconds(delai);
         peutTirer = true;
+    }
+
+    public IEnumerator tirBalleEnnemie(int nbBalles, float delai, Vector3 direction)
+    {
+        //Pour le nombre de balles a tirer
+        for (int i = 0; i < nombreBalles; i++)
+        {
+            //Jouer un son de tir
+            GetComponent<AudioSource>().PlayOneShot(sonTir);
+
+            //Instancier une balle
+            Balle nouvelleBalle = Instantiate(balle, gun.transform.position, gun.transform.rotation);
+
+            //Propulser la balle vers la direction du joueur
+            nouvelleBalle.GetComponent<Rigidbody>().AddForce(gun.transform.forward * forceTir, ForceMode.Impulse);
+
+            //Changer les degats de la balle selon ceux du joueur
+            nouvelleBalle.GetComponent<Balle>().degats = GetComponent<EnemyController>().enemy.degats;
+
+            //Delai pour la prochaine balle
+            yield return new WaitForSeconds(delai);
+        }
     }
 }

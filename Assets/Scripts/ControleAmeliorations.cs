@@ -16,7 +16,7 @@ public class ControleAmeliorations : MonoBehaviour
     private List<Amelioration> ameliorationsSelectionnes = new List<Amelioration>(); //Liste des ameliorations choisies
     public static bool pause; //Indiquer si nous sommes en pause pour le choix
     private int storeAmeliorations; //Variable storant le nombre  d'améliorations, s'il y a lieu, suite à un autre level up pendant le choix d'améliorations
-    private void Start()
+    private void Awake()
     {
         //Reset la pause
         pause = false;
@@ -39,9 +39,6 @@ public class ControleAmeliorations : MonoBehaviour
 
             //Demarer la coroutine
             StartCoroutine(ProposerChoix(0.55f));
-
-            //Enlever la vélocité du joueur
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 
             //Enlever un storage d'amélioration s'il y a lieu
             if(storeAmeliorations > 0)
@@ -132,9 +129,6 @@ public class ControleAmeliorations : MonoBehaviour
 
         //Clear la liste d'ameliorations selectionees
         ameliorationsSelectionnes.Clear();
-
-        //Enlever les constraintes de mouvement au joueur
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 
         //Depause
         pause = false;

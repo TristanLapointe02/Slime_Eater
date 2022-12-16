@@ -18,6 +18,8 @@ public class StageProgression : MonoBehaviour
     public Image fillProgression; //Image indiquant la progression du niveau
     public GameObject mur; //Reference au mur
     public Color32[] couleurMur; //Tableau de couleurs de niveau
+    public GameObject boss; //Reference au boss
+    public AudioClip bossMusic; //Musique du boss
 
     private void Awake()
     {
@@ -43,10 +45,7 @@ public class StageProgression : MonoBehaviour
         //TEST POUR CHANGER DE NIVEAU IMMEDIATEMENT
         if (Input.GetKeyDown(KeyCode.B) && etageActuel < Etages.Length && ComportementJoueur.finJeu == false)
         {
-            etageActuel++;
-            ChangerNiveau();
-            
-            print(etageActuel);
+            ComportementJoueur.ennemisTues = ennemiesToKillPerStage[etageActuel-1];
         }
     }
 
@@ -117,6 +116,15 @@ public class StageProgression : MonoBehaviour
 
             //Montrer les visuels de la zone d'explosion
             GameObject.Find("ZoneDegats").gameObject.GetComponent<MeshRenderer>().enabled = true;
+        }
+        //Si on est à l'avant dernier niveau, spawn le boss
+        if(etageActuel == Etages.Length - 1)
+        {
+            //Instancier le boss
+            Instantiate(boss);
+
+            //Jouer un bruit de boss fight
+            GetComponent<AudioSource>().PlayOneShot(bossMusic);
         }
     }
 }

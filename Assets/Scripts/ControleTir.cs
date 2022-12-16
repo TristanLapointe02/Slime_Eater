@@ -31,7 +31,7 @@ public class ControleTir : MonoBehaviour
     void Update()
     {
         //Si le joueur appuie sur clicque gauche
-        if (Input.GetButton("Fire1") && peutTirer && ControleAmeliorations.pause == false)
+        if (Input.GetButton("Fire1") && peutTirer && ControleAmeliorations.pause == false && ControleMenu.pauseMenu == false && ComportementJoueur.finJeu == false)
         {
             //Si on est pas trop petit
             if(tropPetit == false)
@@ -83,7 +83,7 @@ public class ControleTir : MonoBehaviour
     public IEnumerator tirBalle(int nbBalles, float delai, Vector3 direction)
     {
         //Pour le nombre de balles a tirer
-        for (int i = 0; i < nombreBalles; i++)
+        for (int i = 0; i < nbBalles; i++)
         {
             //Jouer un son de tir
             GetComponent<AudioSource>().PlayOneShot(sonTir);

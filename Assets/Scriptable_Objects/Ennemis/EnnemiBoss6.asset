@@ -10,21 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3665f582a021ff4bbe41a58282c4388, type: 3}
-  m_Name: Ennemi3
+  m_Name: EnnemiBoss6
   m_EditorClassIdentifier: 
-  nomEnnemi: EnemyMelee
-  descriptionEnnemi: an enemy that moves towards the player and attacks him with
-    melee attacks
-  vieMax: 5
-  degats: 3
-  vitesse: 16
-  tailleEnnemi: 1
-  valeurLoot: 0.5
-  nombreLootSpawn: 2
-  ranged: 0
-  boss: 0
-  etage: 3
-  range: 0
+  nomEnnemi: EnemyBoss
+  descriptionEnnemi: A boss that attacks from far away
+  vieMax: 120
+  degats: 10
+  vitesse: 8
+  tailleEnnemi: 10
+  valeurLoot: 0.85
+  nombreLootSpawn: 10
+  ranged: 1
+  boss: 1
+  etage: 6
+  range: 95
   couleur:
     serializedVersion: 2
-    rgba: 3783485497
+    rgba: 3774877183

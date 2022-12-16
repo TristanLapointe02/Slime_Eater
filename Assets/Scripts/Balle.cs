@@ -23,7 +23,7 @@ public class Balle : MonoBehaviour
     private void Update()
     {
         //Si le jeu est en pause, se détruire
-        if (ControleAmeliorations.pause)
+        if (ControleAmeliorations.pause || ControleMenu.pauseMenu)
         {
             DetruireBalle();
         }
@@ -81,6 +81,12 @@ public class Balle : MonoBehaviour
         if (collision.gameObject.tag == "Ennemi" && goThrough)
         {
             faireDegatsEnnemi(collision.gameObject);
+        }
+
+        //Si la balle touche le mur
+        if(collision.gameObject.layer == 12)
+        {
+            DetruireBalle();
         }
     }
 

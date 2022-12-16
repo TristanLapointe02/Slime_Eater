@@ -32,7 +32,7 @@ public class ObjectSpawner : MonoBehaviour
     void Update()
     {
         //Spawner les objets si le jeu est en cours
-        if(ComportementJoueur.finJeu == false)
+        if(ComportementJoueur.finJeu == false && ControleAmeliorations.pause == false && ControleMenu.pauseMenu == false)
         {
             Spawn();
         }
@@ -143,8 +143,15 @@ public class ObjectSpawner : MonoBehaviour
     //Fonction permettant de spawn un objet à une position donnée
     public void SpawnUnObjet(Vector3 position)
     {
-        //Si le jeu est pas fini
-        if(StageProgression.etageActuel - 1 < Etages.Length && ComportementJoueur.finJeu == false)
+        //Pour un item, si la position de spawn dépasse la distance entre le centre de la map et le mur
+        if(objetChoisi == TypesObjet.Item && Vector3.Distance(transform.position, position) > rayonSpawn)
+        {
+            //Sortir de la fonction et rien spawn
+            return;
+        }
+
+        //Sinon, si le jeu est pas fini et que nous sommes pas en pause
+        else if(StageProgression.etageActuel - 1 < Etages.Length && ComportementJoueur.finJeu == false)
         {
             //Determiner la position selon l'etage
             Vector3 positionSpawn = new Vector3(position.x, Etages[StageProgression.etageActuel - 1].transform.position.y + 10, position.z);

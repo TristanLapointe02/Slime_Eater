@@ -15,6 +15,7 @@ public class StatsEnemy : ScriptableObject
     public float valeurLoot; //Valeur de loot de l’ennemi
     public int nombreLootSpawn; //Nombre de loot a spawn de l’ennemi
     public bool ranged; //Determine si l’ennemi est ranged ou non
+    public bool boss; //Determine si on est un boss ou non
     public int etage; //Etage sur laquelle le mob va spawn
     public int range; //Range, si on est ranged
     public Color32 couleur; //Couleur de l'ennemi

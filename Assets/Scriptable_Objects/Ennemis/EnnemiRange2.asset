@@ -16,12 +16,13 @@ MonoBehaviour:
   descriptionEnnemi: an ennemy that stays at a certain distance from the player and
     attacks with projectiles
   vieMax: 3
-  degats: 4
+  degats: 3
   vitesse: 4
   tailleEnnemi: 1.5
   valeurLoot: 0.35
   nombreLootSpawn: 2
   ranged: 1
+  boss: 0
   etage: 2
   range: 25
   couleur:

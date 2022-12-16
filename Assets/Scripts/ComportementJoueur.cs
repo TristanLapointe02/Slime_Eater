@@ -103,7 +103,7 @@ public class ComportementJoueur : MonoBehaviour
     public IEnumerator RegenVie(float amount, float delai)
     {
         //Si on est pas en pause et que le jeu n'est pas fini
-        if(ControleAmeliorations.pause == false && finJeu == false)
+        if(ControleAmeliorations.pause == false && ControleMenu.pauseMenu == false && finJeu == false )
         {
             AugmenterVie(amount);
         }

@@ -29,6 +29,7 @@ public class GestionMenuPause : MonoBehaviour
         //Si jamais le joueur appuie sur escape
         if (Input.GetButtonDown("Cancel"))
         {
+            print("miaw");
             if (etatMenu == false)
             {
                 //Activer le menu

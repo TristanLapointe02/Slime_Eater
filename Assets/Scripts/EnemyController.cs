@@ -23,8 +23,12 @@ public class EnemyController : MonoBehaviour
         //Taille
         gameObject.transform.localScale =  new Vector3(enemy.tailleEnnemi, enemy.tailleEnnemi, enemy.tailleEnnemi);
 
-        //Changer le range de la zone indicatrice de l'ennemi selon la taille de l'ennemi
-        zoneEnnemi.transform.localScale = new Vector3(enemy.tailleEnnemi*1.025f + 0.45f, zoneEnnemi.transform.localScale.y, enemy.tailleEnnemi * 1.025f + 0.45f);
+        //Si on est pas un boss
+        if(enemy.boss == false)
+        {
+            //Changer le range de la zone indicatrice de l'ennemi selon la taille de l'ennemi
+            zoneEnnemi.transform.localScale = new Vector3(enemy.tailleEnnemi / 3 + 0.75f, zoneEnnemi.transform.localScale.y, enemy.tailleEnnemi / 3 + 0.75f);
+        }
 
         //Changer la teinte de la zone selon la couleur de l'ennemi
         zoneEnnemi.GetComponent<Renderer>().material.color = enemy.couleur;
@@ -51,8 +55,16 @@ public class EnemyController : MonoBehaviour
         //Trouver le joueur
         TrouverJoueur();
 
-        //Regarder le joueur
-        gameObject.transform.LookAt(joueur.transform);
+        //Regarder le joueur, si on est pas un boss
+        if(enemy.boss == false)
+        {
+            gameObject.transform.LookAt(joueur.transform);
+        }
+        //Si on est le boss, juste le regarder en x et z
+        else
+        {
+            gameObject.transform.LookAt(new Vector3(joueur.transform.position.x, transform.position.y, joueur.transform.position.z));
+        }
 
         //Obtenir la distance et direction avec joueur
         directionJoueur = joueur.transform.position - transform.position;
@@ -85,7 +97,7 @@ public class EnemyController : MonoBehaviour
     private void Move()
     {
         //Modifier la position de l'ennemi selon la vitesse, si nous sommes pas en pause
-        if(ControleAmeliorations.pause == false)
+        if(ControleAmeliorations.pause == false && ControleMenu.pauseMenu == false)
         {
             transform.position += directionJoueur.normalized * vitesse * Time.deltaTime;
         }
@@ -94,7 +106,7 @@ public class EnemyController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //Lorsqu'on collide avec le joueur
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" && enemy.boss == false)
         {
             // Faire perdre de la vie au joueur
             collision.gameObject.GetComponent<ComportementJoueur>().TakeDamage(enemy.degats);
