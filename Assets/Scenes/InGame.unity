@@ -10576,8 +10576,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GestionMenuPause, Assembly-CSharp
+      - m_Target: {fileID: 162638530}
+        m_TargetAssemblyTypeName: ControleMenu, Assembly-CSharp
         m_MethodName: ChangeVolume
         m_Mode: 1
         m_Arguments:
