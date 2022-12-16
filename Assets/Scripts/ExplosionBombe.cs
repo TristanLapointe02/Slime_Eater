@@ -77,11 +77,15 @@ public class ExplosionBombe : MonoBehaviour
             //Trouver les ennemis
             if (collider.gameObject.TryGetComponent(out EnemyController ennemy) && objetExplosion != null)
             {
-                //Leur faire des degats
-                ennemy.TakeDamage(item.valeur * 1000);
+                //Si ce n'est pas un boss
+                if (!ennemy.gameObject.name.Contains("Boss6"))
+                {
+                    //Leur faire des degats
+                    ennemy.TakeDamage(item.valeur * 1000);
 
-                //Faire une explosion
-                ennemy.GetComponent<Rigidbody>().AddExplosionForce(3500, transform.position, item.valeur + item.player.transform.localScale.magnitude);
+                    //Faire une explosion
+                    ennemy.GetComponent<Rigidbody>().AddExplosionForce(3500, transform.position, item.valeur + item.player.transform.localScale.magnitude);
+                }
             }
         }
     }

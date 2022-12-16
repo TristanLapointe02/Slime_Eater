@@ -212,11 +212,15 @@ public class ControleJoueur : MonoBehaviour
             //Trouver les ennemis
             if(collider.gameObject.TryGetComponent(out EnemyController ennemy))
             {
-                //Leur faire des degats
-                ennemy.TakeDamage(degatsZone);
+                //Si c'est pas un boss
+                if (!ennemy.gameObject.name.Contains("Boss6"))
+                {
+                    //Leur faire des degats
+                    ennemy.TakeDamage(degatsZone);
 
-                //Faire une explosion
-                ennemy.GetComponent<Rigidbody>().AddExplosionForce(forceExplosion, new Vector3(transform.position.x, transform.position.y - GetComponent<Collider>().bounds.extents.y, transform.position.z), zone.rayonActuel / 2);
+                    //Faire une explosion
+                    ennemy.GetComponent<Rigidbody>().AddExplosionForce(forceExplosion, new Vector3(transform.position.x, transform.position.y - GetComponent<Collider>().bounds.extents.y, transform.position.z), zone.rayonActuel / 2);
+                }     
             }
         }
     }
