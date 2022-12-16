@@ -1188,7 +1188,7 @@ MonoBehaviour:
   vitesse: 35
   dashVitesse: 2000
   dashTimer: 0
-  dashCooldown: 1
+  dashCooldown: 1.25
   forceSaut: 1.5
   maxJump: 1
   degatsZone: 1
@@ -3726,10 +3726,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetChoisi: 0
   SpawnAmount: 3
-  spawnDelay: 0.65
-  nombreObjetsSpawnPop: 40
+  spawnDelay: 0.5
+  nombreObjetsSpawnPop: 55
   rayonSpawn: 200
-  rangeSpawn: 5
+  rangeSpawn: 10
   tableauObjets:
   - {fileID: 2483025033023995390, guid: 4a9d949efa478b842b311f2bf8e042f3, type: 3}
   - {fileID: 5764174327737115379, guid: 3c8511597ba8f3349ab7a72712a6c922, type: 3}

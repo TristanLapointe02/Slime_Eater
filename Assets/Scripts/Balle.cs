@@ -44,7 +44,7 @@ public class Balle : MonoBehaviour
             //Si on peut exploser, le faire
             if (explose)
             {
-                Explosion();
+                Explosion(gameObject);
             }
 
             //Detruire l'objet
@@ -102,7 +102,7 @@ public class Balle : MonoBehaviour
         //Si on peut exploser, et qu'on est go trough le faire quand même au contact
         if (goThrough && explose)
         {
-            Explosion();
+            Explosion(ennemi);
         }
 
         //Si on peut slow l'ennemi, le faire
@@ -113,7 +113,7 @@ public class Balle : MonoBehaviour
     }
 
     //Fonction d'explosion
-    public void Explosion()
+    public void Explosion(GameObject source)
     {
         //Spawn un objet visuel
         GameObject effet = Instantiate(objetExplosion, gameObject.transform.position, Quaternion.identity);
@@ -139,8 +139,11 @@ public class Balle : MonoBehaviour
                 //Leur faire des degats
                 ennemy.TakeDamage(degats);
 
-                //Faire une explosion
-                ennemy.GetComponent<Rigidbody>().AddExplosionForce(2500, transform.position, rayonExplosion);
+                //Faire une explosion à tous sauf la source
+                if(ennemy.name != source.name)
+                {
+                    ennemy.GetComponent<Rigidbody>().AddExplosionForce(2500, transform.position, rayonExplosion);
+                }
             }
         }
     }

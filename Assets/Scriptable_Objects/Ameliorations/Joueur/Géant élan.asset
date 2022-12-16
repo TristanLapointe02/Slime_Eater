@@ -17,6 +17,6 @@ MonoBehaviour:
   description1: "Votre \xE9lan vous propulse "
   valeur: 2
   description2: ' fois plus loin, et vous redonne '
-  valeur2: 0.35
+  valeur2: 0.75
   description3: ' de masse.'
   peutRepiger: 1
