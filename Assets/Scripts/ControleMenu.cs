@@ -26,10 +26,12 @@ public class ControleMenu : MonoBehaviour
     public TextMeshProUGUI degatsBalle; //Valeur des dégats des balles du joueur
     public TextMeshProUGUI delaiTir; //Valeur du délai entre chaque tir
     public TextMeshProUGUI perteTir; //Valeur du nombre de balles tirés à chaque tir
+    public TextMeshProUGUI taille;
    
 
     public List<string> listUpgrades = new List<string>(); //Liste des upgrades de tir qui ont été obtenues
     public TextMeshProUGUI ameliorations; //Élément du menu pour les upgrades de tir qui ont été obtenues
+    public TextMeshProUGUI ameliorations2;
 
     private void Awake()
     {
@@ -110,16 +112,36 @@ public class ControleMenu : MonoBehaviour
         degatsBalle.text = GetComponent<ControleTir>().degatsJoueur.ToString();
         delaiTir.text = GetComponent<ControleTir>().shootCooldown.ToString();
         perteTir.text = GetComponent<ControleTir>().valeurPerteTir.ToString();
+        taille.text = (Mathf.Round(GetComponent<Transform>().localScale.y * 10f) *0.1f).ToString(); //Arrondir la valeur de taille à 1 décimale après la virgule
 
         //Ajouter les upgrades de tir au menu
         string upgrades = "";
+        string upgrades2 = "";
+        int counter = 0;
         foreach(string upgrade in listUpgrades)
         {
-            upgrades += "- ";
-            upgrades += upgrade;
-            upgrades += "\n";
+            //Ajouter les 12 premiers upgrades à la première colone
+            if (counter <= 11)
+            {
+                upgrades += "- ";
+                upgrades += upgrade;
+                upgrades += "\n";
+                counter++;
+            }
+            // Ajouter les upgrades suivantes à la deuxième colone
+            else
+            {
+                upgrades2 += "- ";
+                upgrades2 += upgrade;
+                upgrades2 += "\n";
+                counter++;
+            }
+
+
         }
+        // Remplir les 2 colones
         ameliorations.text = upgrades;
+        ameliorations2.text = upgrades2;
 
         //Activer le menu de statistiques
         menuStatistiques.SetActive(true);

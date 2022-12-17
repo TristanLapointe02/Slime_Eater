@@ -131,7 +131,15 @@ public class ControleJoueur : MonoBehaviour
         if (Input.GetButtonDown("Fire3") && dashTimer >= dashCooldown)
         {
             dashTimer = 0;
-            Move(dashVitesse, GetComponent<ControleTir>().gun.transform.forward);
+            if (xInput == 0 && zInput == 0)
+            {
+                Move(dashVitesse, GetComponent<ControleTir>().gun.transform.forward);
+            }
+            else
+            {
+                Move(dashVitesse, new Vector3(xInput, 0, zInput));
+            }
+            
 
             //Regénérer de la masse s'il y a lieu
             if(tailleDash > 0)
