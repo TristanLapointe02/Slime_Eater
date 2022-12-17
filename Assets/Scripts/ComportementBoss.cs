@@ -70,10 +70,16 @@ public class ComportementBoss : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //Lorsque le boss atterit sur le sol
-        if (collision.gameObject.tag == "Sol")
+        if (collision.gameObject.tag == "Sol" && GetComponent<EnemyController>().forceStop == true)
         {
             //Jouer un son d'explosion
             GetComponent<AudioSource>().PlayOneShot(sonAtterir);
+
+            //Indiquer qu'on peut maintenant attaquer
+            GetComponent<EnnemiTir>().peutTirer = true;
+
+            //Indiquer qu'il peut maintenant bouger
+            GetComponent<EnemyController>().forceStop = false;
 
             //Appeler la fonction pour faire des dégâts au joueur
             Explosion(forceExplosion, degatsZone);
@@ -83,6 +89,8 @@ public class ComportementBoss : MonoBehaviour
 
             //Disable les visuels de la zone
             cercleZoneExplosion.gameObject.GetComponent<MeshRenderer>().enabled = false;
+
+            print("TOUCHE SOL, POSITION:" + transform.position);
         }
     }
 
@@ -91,14 +99,24 @@ public class ComportementBoss : MonoBehaviour
         //Attendre un certain délai
         yield return new WaitForSeconds(Random.Range(delai - rangeAleatoireDelai, delai + rangeAleatoireDelai));
 
-        //Sauter
-        GetComponent<Rigidbody>().AddForce(Vector3.up * forceSaut * 1000f);
+        //Si nous sommes pas en pause,
+        if(ControleAmeliorations.pause == false && ControleMenu.pauseMenu == false)
+        {
+            //Sauter
+            GetComponent<Rigidbody>().AddForce(Vector3.up * forceSaut * 1000f);
 
-        //Montrer la zone
-        cercleZoneExplosion.gameObject.GetComponent<MeshRenderer>().enabled = true;
+            //Indiquer qu'on peut pas attaquer
+            GetComponent<EnnemiTir>().peutTirer = false;
 
-        //Jouer le son de saut
-        GetComponent<AudioSource>().PlayOneShot(sonJump);
+            //Empêcher le mouvement
+            GetComponent<EnemyController>().forceStop = true;
+
+            //Montrer la zone
+            cercleZoneExplosion.gameObject.GetComponent<MeshRenderer>().enabled = true;
+
+            //Jouer le son de saut
+            GetComponent<AudioSource>().PlayOneShot(sonJump);
+        }
 
         //Rappeler la coroutine
         StartCoroutine(Sauter(intervalleAttaqueSaut));

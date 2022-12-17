@@ -126,7 +126,8 @@ MonoBehaviour:
   shootCooldown: 3
   shootDelay: 0.1
   nombreBalles: 1
-  forceTir: 10
+  forceTir: 7.5
+  forceStopTir: 0
   sonTir: {fileID: 8300000, guid: 4988c824ede296d439bba5d66e03a659, type: 3}
   gun: {fileID: 2250377666436240534}
 --- !u!136 &2250377667788083141

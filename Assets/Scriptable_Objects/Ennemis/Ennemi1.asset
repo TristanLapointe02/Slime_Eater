@@ -22,8 +22,9 @@ MonoBehaviour:
   valeurLoot: 0.25
   nombreLootSpawn: 1
   ranged: 0
+  boss: 0
   etage: 1
   range: 0
   couleur:
     serializedVersion: 2
-    rgba: 3779351877
+    rgba: 4282668357

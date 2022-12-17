@@ -109,6 +109,7 @@ MonoBehaviour:
   couleurEnnemi: {r: 0, g: 0, b: 0, a: 0}
   vitesse: 0
   zoneEnnemi: {fileID: 3804933793980264156}
+  forceStop: 0
 --- !u!114 &390774333038167577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,10 +123,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   balle: {fileID: 5805499353154782828, guid: a4442f22475e50148813978869fe9700, type: 3}
+  peutTirer: 1
   shootCooldown: 2
   shootDelay: 0.1
   nombreBalles: 1
-  forceTir: 15
+  forceTir: 11.5
+  forceStopTir: 0
   sonTir: {fileID: 8300000, guid: 4988c824ede296d439bba5d66e03a659, type: 3}
   gun: {fileID: 1016614710160677904}
 --- !u!136 &390774333038167578
@@ -449,7 +452,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3804933793980264156}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.05, z: 0}
   m_LocalScale: {x: 1.3888999, y: 0.0025, z: 1.3888999}
   m_ConstrainProportionsScale: 0
   m_Children: []

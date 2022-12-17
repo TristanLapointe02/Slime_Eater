@@ -41,12 +41,6 @@ public class Balle : MonoBehaviour
         //Destroy la balle
         if(gameObject != null)
         {
-            //Si on peut exploser, le faire
-            if (explose)
-            {
-                Explosion(gameObject);
-            }
-
             //Detruire l'objet
             Destroy(gameObject);
         }
@@ -70,6 +64,12 @@ public class Balle : MonoBehaviour
         //Si on ne peut pas passer a travers des ennemis
         if(goThrough == false)
         {
+            //Si on peut exploser, le faire
+            if (explose)
+            {
+                Explosion(collision.gameObject);
+            }
+
             //Detruire la balle
             DetruireBalle();
         }
@@ -136,13 +136,14 @@ public class Balle : MonoBehaviour
             //Trouver les ennemis
             if (collider.gameObject.TryGetComponent(out EnemyController ennemy))
             {
-                //Leur faire des degats
-                ennemy.TakeDamage(degats);
-
-                //Faire une explosion à tous sauf la source
-                if(ennemy.name != source.name)
+                //Pour tous sauf la source
+                if(ennemy.gameObject.name != source.name)
                 {
-                    ennemy.GetComponent<Rigidbody>().AddExplosionForce(2500, transform.position, rayonExplosion);
+                    //Faire une explosion
+                    ennemy.GetComponent<Rigidbody>().AddExplosionForce(1500, transform.position, rayonExplosion);
+
+                    //Leur faire des degats
+                    ennemy.TakeDamage(degats);
                 }
             }
         }

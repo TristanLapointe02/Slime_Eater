@@ -6,7 +6,7 @@ using TMPro;
 
 public class ComportementJoueur : MonoBehaviour
 {
-    //VIE
+    [Header("Vie")]
     public float vieJoueur; //Vie du joueur
     public float vieMax; //Vie max du joueur
     public Slider sliderVie; //Slider de barre de vie
@@ -15,7 +15,7 @@ public class ComportementJoueur : MonoBehaviour
     public float regenTemps; //Intervalle de temps que le joueur regen de la vie
     public float vieVampire; //Vie regénérée de l'amélioration vampire
 
-    //XP
+    [Header("Xp")]
     public int levelActuel; //Ref au niveau actuel du joueur
     public float xpActuel; //Xp actuel du joueur
     public float xpMax; //Xp max du niveau actuel
@@ -25,7 +25,7 @@ public class ComportementJoueur : MonoBehaviour
     public TextMeshProUGUI texteXp; //Ref au texte de vie
     public TextMeshProUGUI texteLevelActuel; //Texte du level actuel du joueur
 
-    //AUTRES
+    [Header("Autres References")]
     public bool invulnerable; //Determine si le joueur est invulnérable ou non
     public static bool mortJoueur; //Detecte si nous sommes mort ou non
     public GameObject menuFin; //Reference au menu de fin
@@ -35,10 +35,17 @@ public class ComportementJoueur : MonoBehaviour
     public AudioClip sonLevelUp; //Son lorsque le joueur level up
     public AudioClip sonPartiePerdue; //Son lorsque le joueur perd la partie
     public float rayonSpawn; //Rayon dans lequel le joueur peut spawn au début du jeu
-    public Image ecranDegats; //Ecran de degats
-    private bool ecranDegatsActif; //Indique si l'écran de dégâts est actif
+    public GameObject ecranEffet; //Ecran de degats
 
-    //BONUS AMÉLIORATIONS
+    [Header("Couleurs d'effets")]
+    public Color couleurDegats;
+    public Color couleurHeal;
+    public Color couleurInvincible;
+    public Color couleurBonusDegats;
+    public Color couleurVitesse;
+    public Color couleurJumpBoost;
+
+    [Header("Bonus d'améliorations")]
     public float bonusXp; //Bonus d'xp
     public float bonusTaille; //Bonus de taille
     public float armure; //Bonus permettant au joueur de subir moins de dégâts
@@ -79,7 +86,7 @@ public class ComportementJoueur : MonoBehaviour
         sliderXp.value = fillValueXp;
 
         //Mettre a jour le texte d'xp
-        texteXp.text = Mathf.FloorToInt(xpActuel).ToString() + " / " + Mathf.FloorToInt(xpMax).ToString();
+        texteXp.text = Mathf.FloorToInt(xpActuel).ToString() + "/" + Mathf.FloorToInt(xpMax).ToString();
         texteLevelActuel.text = levelActuel.ToString();
 
         //TEST, PRENDRE DEGATS
@@ -97,6 +104,10 @@ public class ComportementJoueur : MonoBehaviour
         {
             AugmenterXp(5);
         }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            AugmenterGrosseur(5);
+        }
     }
 
     //Fonction permettant de regen de la vie
@@ -105,7 +116,7 @@ public class ComportementJoueur : MonoBehaviour
         //Si on est pas en pause et que le jeu n'est pas fini
         if(ControleAmeliorations.pause == false && ControleMenu.pauseMenu == false && finJeu == false )
         {
-            AugmenterVie(amount);
+            AugmenterVie(amount, true);
         }
 
         yield return new WaitForSeconds(delai);
@@ -116,17 +127,20 @@ public class ComportementJoueur : MonoBehaviour
     //Fonction permettant au joueur de prendre des dégâts
     public void TakeDamage(float valeurDegat)
     {
-        //Jouer un sound effect
-        GetComponent<AudioSource>().PlayOneShot(sonHit);
-
         //Enlever de la vie au joueur
         if(vieJoueur > 0 && invulnerable == false)
         {
+            //Enlever la vie
             vieJoueur -= valeurDegat/(1+ armure);
 
+            //Jouer un sound effect
+            GetComponent<AudioSource>().PlayOneShot(sonHit);
+
+            //Clamp la valeur entre 0 et 1
+            float valeurAlphaEcran = Mathf.Clamp(valeurDegat / 10, 0, 1);
+
             //Faire apparaître l'image de dégâts
-            ecranDegats.color = new Color(0.75f, 0.1f, 0.1f, 1);
-            StartCoroutine(FadeImage(valeurDegat));
+            StartCoroutine(AjoutEcranEffet(couleurDegats, 1f, valeurAlphaEcran));
         }
 
         //Si le joueur était pour mourir
@@ -143,29 +157,50 @@ public class ComportementJoueur : MonoBehaviour
         }
     }
 
-    //Fonction permettant de fade l'image de degats
-    private IEnumerator FadeImage(float valeurDegats)
+    //Fonction permettant d'instancier l'effet de couleur UI
+    public IEnumerator AjoutEcranEffet(Color couleurEffet, float duree, float valeurAlpha = 1)
     {
-        //Clamp la valeur entre 0 et 1
-        float valeurAlphaEcran = Mathf.Clamp(valeurDegats/10, 0, 1);
+        //Instancier l'élément de UI
+        GameObject nouvelEcranEffetUI = Instantiate(ecranEffet);
+        nouvelEcranEffetUI.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").gameObject.transform, false);
 
-        //Selon la force des dégâts
-        for (float i = valeurAlphaEcran; i >= 0; i -= Time.deltaTime)
+        //Lui donner une couleur
+        nouvelEcranEffetUI.GetComponent<Image>().color = new Color(couleurEffet.r, couleurEffet.g, couleurEffet.b, valeurAlpha);
+
+        //Storer la variable de l'image
+        Color couleurEcran = nouvelEcranEffetUI.GetComponent<Image>().color;
+
+        //Diminuer l'opcaité avec le temps
+        for (float i = 0; i < 1; i += Time.deltaTime / duree)
         {
-            // set color with i as alpha
-            ecranDegats.color = new Color(0.75f, 0.1f, 0.1f, i);
+            //Changer l'opacité de la couleur
+            var nouvelleCouleur = new Color(couleurEcran.r, couleurEcran.g, couleurEcran.b, Mathf.Lerp(couleurEcran.a, 0, i));
+            nouvelEcranEffetUI.GetComponent<Image>().color = nouvelleCouleur;
             yield return null;
         }
+
+        //Enlever l'élément de UI
+        Destroy(nouvelEcranEffetUI);
     }
 
     //Fonction permettant de heal le joueur
-    public void AugmenterVie(float valeurVie)
+    public void AugmenterVie(float valeurVie, bool pasMontrer = false)
     {
-        //Ajouter de la vie au joueur
-        vieJoueur += valeurVie;
+        //Si nous sommes plus low que notre max
+        if(vieJoueur < vieMax)
+        {
+            //Ajouter de la vie
+            vieJoueur += valeurVie;
+
+            //Ajout a l'ecran un effet, si le healing ne vient pas de regen
+            if(pasMontrer == false)
+            {
+                StartCoroutine(AjoutEcranEffet(couleurHeal, 1));
+            }
+        }
 
         //Si nous avons trop de vie
-        if (vieJoueur > vieMax)
+        else if (vieJoueur > vieMax)
         {
             //La mettre a son maximum
             vieJoueur = vieMax;
@@ -176,7 +211,7 @@ public class ComportementJoueur : MonoBehaviour
     public void AugmenterGrosseur(float valeurGrosseur)
     {
         //Augmenter le scale du joueur
-        if(transform.localScale.magnitude <= 35)
+        if(transform.localScale.magnitude <= 40)
         {
             transform.localScale += new Vector3(valeurGrosseur + bonusTaille, valeurGrosseur + bonusTaille, valeurGrosseur + bonusTaille);
 
@@ -229,12 +264,15 @@ public class ComportementJoueur : MonoBehaviour
         //Si c'est temporaire
         if(permanent == false)
         {
+            //Ajouter un effet a l'ecran
+            StartCoroutine(AjoutEcranEffet(couleurVitesse, duree));
+
             //Attendre un certain delai
             yield return new WaitForSeconds(duree);
 
             //Enlever la vitesse
             GetComponent<ControleJoueur>().vitesse -= valeur;
-        } 
+        }
     }
 
     //Fonction permettant d'augmenter les degats du joueur
@@ -242,6 +280,9 @@ public class ComportementJoueur : MonoBehaviour
     {
         //Ajouter les degats
         GetComponent<ControleTir>().degatsJoueur += valeur;
+
+        //Ajouter un effet a l'ecran
+        StartCoroutine(AjoutEcranEffet(couleurDegats, duree));
 
         //Attendre un certain delai
         yield return new WaitForSeconds(duree);
@@ -256,8 +297,11 @@ public class ComportementJoueur : MonoBehaviour
         //Ajouter un jump boost
         GetComponent<ControleJoueur>().forceSaut += valeur;
 
+        //Ajouter un effet a l'ecran
+        StartCoroutine(AjoutEcranEffet(couleurVitesse, duree));
+
         //Attendre un certain delai
-        yield return new WaitForSeconds(6);
+        yield return new WaitForSeconds(duree);
 
         //Enlever la force de saut
         GetComponent<ControleJoueur>().forceSaut -= valeur;
@@ -270,13 +314,10 @@ public class ComportementJoueur : MonoBehaviour
         GetComponent<ComportementJoueur>().invulnerable = true;
 
         //Mettre l'ecran de degats en jaune
-        ecranDegats.color = new Color(0.5f, 0.5f, 0.1f, 1f);
+        StartCoroutine(AjoutEcranEffet(new Color(0.5f, 0.5f, 0.1f, 1f), duree));
 
         //Attendre un certain delai
         yield return new WaitForSeconds(duree);
-
-        //Effacer l'ecran de degats
-        ecranDegats.color = new Color(1f, 1f, 1f, 0f);
 
         //Enlever l'invulnerabilite
         GetComponent<ComportementJoueur>().invulnerable = false;
@@ -285,6 +326,9 @@ public class ComportementJoueur : MonoBehaviour
     //Fonction qui indique que la partie est terminée
     public void FinJeu(string message, AudioClip son)
     {
+        //Indiquer que c'est la fin du jeu
+        finJeu = true;
+
         //Faire apparaitre un menu
         menuFin.SetActive(true);
 
@@ -293,11 +337,5 @@ public class ComportementJoueur : MonoBehaviour
 
         //Jouer un son
         GetComponent<AudioSource>().PlayOneShot(son);
-
-        //Enlever la vélocité du joueur
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-
-        //Indiquer que c'est la fin du jeu
-        finJeu = true;
     }
 }

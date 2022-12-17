@@ -13,6 +13,8 @@ public class EnemyController : MonoBehaviour
     public Color couleurEnnemi; //Couleur de base de l'ennemi
     public float vitesse; //Vitesse de l'ennemi
     public GameObject zoneEnnemi; //Lumiere de l'ennemi
+    public bool forceStop; //Dit a l'ennemi d'arreter de bouger
+    public AudioClip bossKill; //Sound effect quand on tue le boss
 
     private void Start()
     {
@@ -27,7 +29,12 @@ public class EnemyController : MonoBehaviour
         if(enemy.boss == false)
         {
             //Changer le range de la zone indicatrice de l'ennemi selon la taille de l'ennemi
-            zoneEnnemi.transform.localScale = new Vector3(enemy.tailleEnnemi / 3 + 0.75f, zoneEnnemi.transform.localScale.y, enemy.tailleEnnemi / 3 + 0.75f);
+            zoneEnnemi.transform.localScale = new Vector3(enemy.tailleEnnemi / 2.35f + 0.75f, zoneEnnemi.transform.localScale.y, enemy.tailleEnnemi / 2.35f + 0.75f);
+        }
+        //Sinon, si on l'est
+        else
+        {
+            forceStop = true;
         }
 
         //Changer la teinte de la zone selon la couleur de l'ennemi
@@ -55,29 +62,21 @@ public class EnemyController : MonoBehaviour
         //Trouver le joueur
         TrouverJoueur();
 
-        //Regarder le joueur, si on est pas un boss
-        if(enemy.boss == false)
-        {
-            gameObject.transform.LookAt(joueur.transform);
-        }
-        //Si on est le boss, juste le regarder en x et z
-        else
-        {
-            gameObject.transform.LookAt(new Vector3(joueur.transform.position.x, transform.position.y, joueur.transform.position.z));
-        }
+        //Regarder le joueur, juste en x et z
+        gameObject.transform.LookAt(new Vector3(joueur.transform.position.x, transform.position.y, joueur.transform.position.z));
 
         //Obtenir la distance et direction avec joueur
         directionJoueur = joueur.transform.position - transform.position;
 
         //Si l'ennemi n'est pas ranged
-        if (enemy.ranged == false)
+        if (enemy.ranged == false && forceStop == false)
         {
             //Appeler la fonction pour bouger normalement
             Move();
         }
 
         //Si l'ennemi est ranged
-        if (enemy.ranged == true)
+        if (enemy.ranged == true && forceStop == false)
         {
             // Si le joueur est trop loin, bouger vers lui
             if (InRangeJoueur() == false)
@@ -131,6 +130,12 @@ public class EnemyController : MonoBehaviour
         //Si la vie tombe a 0
         if (vie <= 0)
         {
+            //Si c'était le boss, jouer un sound effect
+            if (enemy.boss)
+            {
+                AudioSource.PlayClipAtPoint(bossKill, transform.position);
+            }
+
             //Spawn du loot
             SpawnLoot();
 
@@ -178,7 +183,7 @@ public class EnemyController : MonoBehaviour
         //Redonner de la vie au joueur, s'il y a lieu
         if(joueur.GetComponent<ComportementJoueur>().vieVampire > 0)
         {
-            joueur.GetComponent<ComportementJoueur>().AugmenterVie(joueur.GetComponent<ComportementJoueur>().vieVampire);
+            joueur.GetComponent<ComportementJoueur>().AugmenterVie(joueur.GetComponent<ComportementJoueur>().vieVampire, true);
         } 
     }
 

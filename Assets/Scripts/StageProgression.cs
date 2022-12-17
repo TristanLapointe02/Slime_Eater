@@ -121,7 +121,7 @@ public class StageProgression : MonoBehaviour
         if(etageActuel == Etages.Length - 1)
         {
             //Instancier le boss
-            Instantiate(boss);
+            Instantiate(boss, gameObject.transform.position, Quaternion.identity);
 
             //Jouer un bruit de boss fight
             GetComponent<AudioSource>().PlayOneShot(bossMusic);

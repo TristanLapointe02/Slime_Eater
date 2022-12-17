@@ -136,9 +136,8 @@ public class ControleMenu : MonoBehaviour
                 upgrades2 += "\n";
                 counter++;
             }
-
-
         }
+
         // Remplir les 2 colones
         ameliorations.text = upgrades;
         ameliorations2.text = upgrades2;

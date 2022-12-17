@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nomEnnemi: EnemyBoss
   descriptionEnnemi: A boss that attacks from far away
-  vieMax: 120
-  degats: 10
+  vieMax: 175
+  degats: 8
   vitesse: 8
   tailleEnnemi: 10
-  valeurLoot: 0.85
-  nombreLootSpawn: 10
+  valeurLoot: 0.5
+  nombreLootSpawn: 20
   ranged: 1
   boss: 1
   etage: 6
-  range: 95
+  range: 75
   couleur:
     serializedVersion: 2
-    rgba: 3774877183
+    rgba: 4278193663

@@ -33,8 +33,8 @@ public class ControleJoueur : MonoBehaviour
     bool fixJump; //Bool permettant de fix le jump
 
     //MEILLEURE GESTION DU SAUT
-    public float fallMultiplier = 2.5f;
-    public float lowJumpMultiplier = 2f;
+    public float fallMultiplier;
+    public float lowJumpMultiplier;
 
     void Start()
     {
@@ -64,8 +64,8 @@ public class ControleJoueur : MonoBehaviour
             InputProcess();
         }
 
-        //Si on est en pause, freeze le rigidboudi
-        if(ControleAmeliorations.pause == true || ControleMenu.pauseMenu == true)
+        //Si on est en pause ou fin du jeu, freeze le rigidboudi
+        if(ControleAmeliorations.pause || ControleMenu.pauseMenu || ComportementJoueur.finJeu)
         {
             //Enlever la vélocité du joueur
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
@@ -95,7 +95,6 @@ public class ControleJoueur : MonoBehaviour
         {
             //Ouvrir/fermer menu pause
             GetComponent<ControleMenu>().MenuPause();
-            print("hihi");
         }
     }
 

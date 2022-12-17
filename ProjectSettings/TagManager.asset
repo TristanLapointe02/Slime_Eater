@@ -7,6 +7,7 @@ TagManager:
   - Sol
   - Slime
   - Ennemi
+  - Canvas
   layers:
   - Default
   - TransparentFX

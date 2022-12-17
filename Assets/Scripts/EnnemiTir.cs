@@ -10,7 +10,7 @@ public class EnnemiTir : MonoBehaviour
     public Balle balle; //Balle tirée
 
     [Header("Valeurs de tir")]
-    bool peutTirer = true; //Bool permettant de savoir si l'ennemi peut tirer/cooldown
+    public bool peutTirer = true; //Bool permettant de savoir si l'ennemi peut tirer/cooldown
     public float shootCooldown; //Cooldown de tir
     public float shootDelay; //Délai entre les balles tirées
     public int nombreBalles; //Nombre de balles a tirer

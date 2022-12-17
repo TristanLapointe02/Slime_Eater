@@ -138,7 +138,7 @@ public class ControleAmeliorations : MonoBehaviour
         {
             /**************** AMÉLIORATIONS DE JOUEUR ******************/
             case "Soin instantané":
-                GetComponent<ComportementJoueur>().AugmenterVie(valeur);
+                GetComponent<ComportementJoueur>().AugmenterVie(GetComponent<ComportementJoueur>().vieMax - GetComponent<ComportementJoueur>().vieJoueur);
                 break;
 
             case "Slime adhésif":
