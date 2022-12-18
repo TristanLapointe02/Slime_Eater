@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nom: "Vitesse de la lumi\xE8re"
   icone: {fileID: 21300000, guid: 349d3de0484da9642b568db66a7ab24e, type: 3}
-  description1: 'La vitesse de vos balles augmente de '
+  description1: 'Augmentez la vitesse de vos balles de '
   valeur: 50
-  description2: .
+  description2: ' et elles repoussent davantage les ennemis.'
   valeur2: 0
   description3: 
   peutRepiger: 1
