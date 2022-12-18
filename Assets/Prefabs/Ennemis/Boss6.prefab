@@ -563,6 +563,7 @@ MonoBehaviour:
   vitesse: 0
   zoneEnnemi: {fileID: 1514181478413902460}
   forceStop: 0
+  bossKill: {fileID: 8300000, guid: 9189910f9c7615046903714825fb05c9, type: 3}
 --- !u!114 &5363072066396484625
 MonoBehaviour:
   m_ObjectHideFlags: 0
