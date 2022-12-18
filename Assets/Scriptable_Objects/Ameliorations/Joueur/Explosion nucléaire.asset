@@ -15,8 +15,8 @@ MonoBehaviour:
   nom: "Explosion nucl\xE9aire"
   icone: {fileID: 21300000, guid: 645c60f90f83372458440ffcfa48c912, type: 3}
   description1: 'Multipliez votre rayon d''explosion de '
-  valeur: 1.5
+  valeur: 1.35
   description2: ' et augmentez sa force de recul de '
-  valeur2: 1000
+  valeur2: 500
   description3: 
   peutRepiger: 1

@@ -141,11 +141,14 @@ public class Balle : MonoBehaviour
             //Trouver les ennemis
             if (collider.gameObject.TryGetComponent(out EnemyController ennemy))
             {
-                //Pour tous sauf la source
-                if(ennemy.gameObject.name != source.name)
+                //Pour tous sauf la source, si c'est pas le boss
+                if(ennemy.gameObject.GetInstanceID() != source.GetInstanceID())
                 {
-                    //Faire une explosion
-                    ennemy.GetComponent<Rigidbody>().AddExplosionForce(1500, transform.position, rayonExplosion);
+                    //Faire une explosion, si ce n'est pas le boss
+                    if(ennemy.enemy.boss == false)
+                    {
+                        ennemy.GetComponent<Rigidbody>().AddExplosionForce(1000, transform.position, rayonExplosion);
+                    }
 
                     //Leur faire des degats
                     ennemy.TakeDamage(degats);

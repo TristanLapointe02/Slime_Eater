@@ -701,10 +701,10 @@ MonoBehaviour:
   layerSol:
     serializedVersion: 2
     m_Bits: 8
-  bonusRayon: 2
+  bonusRayon: 2.5
   cercleZoneExplosion: {fileID: 1514181478413902460}
   degatsZone: 5
-  forceExplosion: 20000
+  forceExplosion: 25000
   sonJump: {fileID: 8300000, guid: cc0010c4ebd490047abcc6aa4042400d, type: 3}
   sonAtterir: {fileID: 8300000, guid: d3fa55caf56756f41847fd5a235ad42a, type: 3}
 --- !u!65 &2601282681574543713

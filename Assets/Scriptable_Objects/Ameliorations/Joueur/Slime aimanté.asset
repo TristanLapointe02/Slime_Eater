@@ -17,6 +17,6 @@ MonoBehaviour:
   description1: "Am\xE9liorez la force de votre aimant de "
   valeur: 15
   description2: ' et le rayon de '
-  valeur2: 0.75
+  valeur2: 0.85
   description3: .
   peutRepiger: 1

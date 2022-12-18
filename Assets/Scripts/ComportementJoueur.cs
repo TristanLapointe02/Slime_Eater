@@ -41,14 +41,12 @@ public class ComportementJoueur : MonoBehaviour
     public AudioClip sonPartiePerdue; //Son lorsque le joueur perd la partie
     public float rayonSpawn; //Rayon dans lequel le joueur peut spawn au début du jeu
     public GameObject ecranEffet; //Écran de dégâts
+    private bool fixInvulnerabilité; //Bool permettant de fix l'invulnérabilité multiple
 
     [Header("Couleurs d'effets")]
     public Color couleurDegats;
     public Color couleurHeal;
     public Color couleurInvincible;
-    public Color couleurBonusDegats;
-    public Color couleurVitesse;
-    public Color couleurJumpBoost;
 
     [Header("Bonus d'améliorations")]
     public float bonusXp; //Bonus d'xp
@@ -181,7 +179,7 @@ public class ComportementJoueur : MonoBehaviour
             //Ajout à l'écran un effet, si le healing ne vient pas de regen
             if(pasMontrer == false)
             {
-                StartCoroutine(AjoutEcranEffet(couleurHeal, 1));
+                StartCoroutine(AjoutEcranEffet(couleurHeal, 0.5f));
             }
         }
 
@@ -250,9 +248,6 @@ public class ComportementJoueur : MonoBehaviour
         //Si c'est temporaire
         if(permanent == false)
         {
-            //Ajouter un effet a l'ecran
-            StartCoroutine(AjoutEcranEffet(couleurVitesse, duree));
-
             //Attendre un certain delai
             yield return new WaitForSeconds(duree);
 
@@ -283,9 +278,6 @@ public class ComportementJoueur : MonoBehaviour
         //Ajouter un jump boost
         GetComponent<ControleJoueur>().forceSaut += valeur;
 
-        //Ajouter un effet a l'écran
-        StartCoroutine(AjoutEcranEffet(couleurVitesse, duree));
-
         //Attendre un certain délai
         yield return new WaitForSeconds(duree);
 
@@ -296,17 +288,30 @@ public class ComportementJoueur : MonoBehaviour
     //Fonction permettant d'augmenter la hauteur de saut du joueur
     public IEnumerator Invulnerabilite(float duree)
     {
+        //Si on avait déjà l'effet
+        if(GetComponent<ComportementJoueur>().invulnerable == true)
+        {
+            fixInvulnerabilité = true;
+        }
+
         //Indiquer que le joueur est invulnérable
         GetComponent<ComportementJoueur>().invulnerable = true;
 
         //Mettre l'écran de dégâts en jaune
-        StartCoroutine(AjoutEcranEffet(new Color(0.5f, 0.5f, 0.1f, 1f), duree));
+        StartCoroutine(AjoutEcranEffet(couleurInvincible, duree));
 
         //Attendre un certain delai
         yield return new WaitForSeconds(duree);
 
         //Enlever l'invulnérabilité
-        GetComponent<ComportementJoueur>().invulnerable = false;
+        if(fixInvulnerabilité == false)
+        {
+            GetComponent<ComportementJoueur>().invulnerable = false;
+        }
+        else
+        {
+            fixInvulnerabilité = false;
+        }
     }
 
     //Fonction qui indique que la partie est terminée

@@ -1188,13 +1188,13 @@ MonoBehaviour:
   vitesse: 35
   dashVitesse: 2000
   dashTimer: 0
-  dashCooldown: 1.35
+  dashCooldown: 1.5
   forceSaut: 1.5
   maxJump: 1
-  degatsZone: 1
-  forceExplosionInitiale: 2500
+  degatsZone: 0.75
+  forceExplosionInitiale: 2000
   forceExplosion: 0
-  multiplicateurForceExplosion: 200
+  multiplicateurForceExplosion: 185
   tailleDash: 0
   sonJump: {fileID: 8300000, guid: ce56c48d366bbb444ba1a423a84bf33b, type: 3}
   sonAtterir: {fileID: 8300000, guid: c68e534cb982a1e4d9fc90f48d621460, type: 3}
@@ -1376,8 +1376,8 @@ MonoBehaviour:
   levelActuel: 0
   xpActuel: 0
   xpMax: 0
-  xpMaxLvl1: 12
-  multiplicateurXp: 3.5
+  xpMaxLvl1: 20
+  multiplicateurXp: 4.5
   sliderXp: {fileID: 1710659846}
   texteXp: {fileID: 421422709}
   texteLevelActuel: {fileID: 180807954}
@@ -1392,9 +1392,6 @@ MonoBehaviour:
   couleurDegats: {r: 0.5188679, g: 0, b: 0, a: 1}
   couleurHeal: {r: 0.4666667, g: 0.85098046, b: 0.14901961, a: 1}
   couleurInvincible: {r: 0.80864424, g: 0.8301887, b: 0, a: 1}
-  couleurBonusDegats: {r: 1, g: 0.36519504, b: 0, a: 1}
-  couleurVitesse: {r: 0.1764706, g: 0.6745098, b: 0.81568635, a: 1}
-  couleurJumpBoost: {r: 0.882353, g: 0.20000002, b: 0.7843138, a: 1}
   bonusXp: 0
   bonusTaille: 0
   armure: 0
@@ -2571,7 +2568,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.28421503, y: 0.0000000164968, z: -0.0000000048903135, w: 0.95876056}
+  m_LocalRotation: {x: 0.28421503, y: 0.000000015110864, z: -0.000000004479466, w: 0.95876056}
   m_LocalPosition: {x: 0, y: 7.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3832,7 +3829,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh32486
+  m_Name: pb_Mesh28396
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4349,7 +4346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9047193952a05604ab25e43388907ba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ennemiesToKillPerStage: 28000000370000004b0000006400000082000000c8000000
+  ennemiesToKillPerStage: 3c00000046000000550000006900000082000000c8000000
   refSpawnEnnemi: {fileID: 608891425}
   refSpawnItem: {fileID: 1208117082}
   texteStage: {fileID: 91351645}
@@ -5451,7 +5448,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 922618811}
-  m_LocalRotation: {x: 0.28421503, y: 0.0000000164968, z: -0.0000000048903135, w: 0.95876056}
+  m_LocalRotation: {x: 0.28421503, y: 0.000000015110864, z: -0.000000004479466, w: 0.95876056}
   m_LocalPosition: {x: 0, y: 7.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

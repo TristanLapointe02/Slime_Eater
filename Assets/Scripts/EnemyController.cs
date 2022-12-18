@@ -43,7 +43,7 @@ public class EnemyController : MonoBehaviour
         if (enemy.boss == false)
         {
             //Changer le range de la zone indicatrice de l'ennemi selon la taille de l'ennemi
-            zoneEnnemi.transform.localScale = new Vector3(enemy.tailleEnnemi / 2.35f + 0.75f, zoneEnnemi.transform.localScale.y, enemy.tailleEnnemi / 2.35f + 0.75f);
+            zoneEnnemi.transform.localScale = new Vector3(enemy.tailleEnnemi / 2.65f + 1.65f, zoneEnnemi.transform.localScale.y, enemy.tailleEnnemi / 2.65f + 1.65f);
         }
         //Sinon, si il l'est
         else

@@ -15,7 +15,7 @@ MonoBehaviour:
   nom: "Taille d\xE9mesur\xE9e"
   icone: {fileID: 21300000, guid: 2dc2f62caa11d894cb97b2ce7c666ae2, type: 3}
   description1: 'Augmentez votre taille de '
-  valeur: 0.45
+  valeur: 0.35
   description2: ' et la taille de vos balles de '
   valeur2: 1.65
   description3: .
