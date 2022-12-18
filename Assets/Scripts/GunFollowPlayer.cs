@@ -2,21 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Description : Faire que l'objet gun se déplace correctement selon la position du joueur
+ * Fait par : Tristan Lapointe
+ */
+
 public class GunFollowPlayer : MonoBehaviour
 {
-    public GameObject player; //Reference au joueur
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject player; //Référence au joueur
 
     // Update is called once per frame
     void Update()
     {
-        //Suivre la position du joueur, mais toujours se placer à ses pieds, peu importe sa taille
+        //Si le joueur existe dans la scène
         if(player!= null)
         {
+            //Suivre la position du joueur, mais toujours se placer à ses pieds, peu importe sa taille
             transform.position = new Vector3(player.transform.position.x, player.transform.position.y - player.GetComponent<Collider>().bounds.size.y / 2.25f , player.transform.position.z);
         }
 

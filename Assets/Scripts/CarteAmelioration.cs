@@ -4,13 +4,18 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+/* 
+ * Description : Afficher l'information sur les cartes d'amélioration
+ * Fait par : Tristan Lapointe
+ */
+
 public class CarteAmelioration : MonoBehaviour
 {
-    public Amelioration amelioration; //Amelioration en soi
-    public TextMeshProUGUI titre; //Nom de l'amelioration
-    public TextMeshProUGUI description; //Texte de description de l'amelioration
-    public Image iconeAmelioration; //Icone d'amelioration
-    public GameObject joueur; //Reference au joueur
+    public Amelioration amelioration; //Amélioration en soi
+    public TextMeshProUGUI titre; //Nom de l'amélioration
+    public TextMeshProUGUI description; //Texte de description de l'amélioration
+    public Image iconeAmelioration; //Icône d'amélioration
+    public GameObject joueur; //Référence au joueur
 
     //Variables pour correctement afficher le texte
     private string texteValeur1; //Texte de valeur 1

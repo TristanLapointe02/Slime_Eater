@@ -6,14 +6,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/*
+ * Gestion et affichage des menus
+ * Fait par : Samuel Séguin
+ */
+
 public class ControleMenu : MonoBehaviour
 {
-    public GameObject menuOptions; //Reference au menu options
+    public GameObject menuOptions; //Référence au menu Options
     public GameObject menuStatistiques; //Référence au menu Statistiques
     public GameObject menuPause; //Référence au menu Pause
-    private bool etatMenuOptions; //Etat du menu d'options
-    private bool etatMenuPause; //Etat du menu pause
-    public Slider volumeSlider; //Reference au volume slider
+    private bool etatMenuOptions; //État du menu Options
+    private bool etatMenuPause; //État du menu Pause
+    public Slider volumeSlider; //Référence au volume slider
     public static bool pauseMenu; //Indique si nous sommes en pause
 
     [Header("Menu Statistiques")]
@@ -26,12 +31,12 @@ public class ControleMenu : MonoBehaviour
     public TextMeshProUGUI degatsBalle; //Valeur des dégats des balles du joueur
     public TextMeshProUGUI delaiTir; //Valeur du délai entre chaque tir
     public TextMeshProUGUI perteTir; //Valeur du nombre de balles tirés à chaque tir
-    public TextMeshProUGUI taille;
+    public TextMeshProUGUI taille; //Valeur de la taille du joueur 
    
 
-    public List<string> listUpgrades = new List<string>(); //Liste des upgrades de tir qui ont été obtenues
-    public TextMeshProUGUI ameliorations; //Élément du menu pour les upgrades de tir qui ont été obtenues
-    public TextMeshProUGUI ameliorations2;
+    public List<string> listUpgrades = new List<string>(); //Liste des améliorations qui ont été obtenus
+    public TextMeshProUGUI ameliorations; //Élément du menu pour les améliorations qui ont été obtenus
+    public TextMeshProUGUI ameliorations2; //Deuxième élément du menu pour les améliorations qui ont été obtenus
 
     private void Awake()
     {
@@ -41,19 +46,21 @@ public class ControleMenu : MonoBehaviour
 
     void Start()
     {
+        //Si aucun paramètre de volume est enregistré
         if (!PlayerPrefs.HasKey("musicVolume"))
         {
+            //Mettre le volume à 50%
             PlayerPrefs.SetFloat("musicVolume", 0.5f);
         }
-        //Si nous avions deja des parametres d'enregistres
+        //Si nous avions deja des paramètres d'enregistrés
         else
         {
-            //Load nos parametres
+            //Load nos paramètres
             LoadVolume();
         }
     }
 
-    //Fonction permettant de recommencer a jouer
+    //Fonction permettant de recommencer à jouer
     public void ResetJeu()
     {
         //Reset le jeu
@@ -67,14 +74,17 @@ public class ControleMenu : MonoBehaviour
         Application.Quit();
     }
 
+    //Fonction permettant d'aller au menu principal
     public void MainMenu()
     {
         //Retourner au menu principal
         SceneManager.LoadScene("MainMenu");
     }
 
+    //Gérer le menu Options
     public void MenuOptions()
     {
+        //Si le menu Options était désactivé
         if (etatMenuOptions == false)
         {
             //Activer le menu d'options
@@ -83,13 +93,15 @@ public class ControleMenu : MonoBehaviour
             //Indiquer que l'état du menu a changé
             etatMenuOptions = true;
         }
+        //Si le menu Options était activé
         else if (etatMenuOptions == true)
         {
+            //Fermer le menu
             FermerOptions();
         }
     }
 
-    //Fonction permettant de ferme le menu d'options
+    //Fonction permettant de fermer le menu Options
     public void FermerOptions()
     {
         //Fermer le menu
@@ -99,6 +111,7 @@ public class ControleMenu : MonoBehaviour
         etatMenuOptions = false;
     }
 
+    //Fonction pour ouvrir le menu Statistiques
     public void OuvrirStatistiques()
     {
         //Assigner les valeurs des différentes stats aux textes du menu
@@ -114,7 +127,7 @@ public class ControleMenu : MonoBehaviour
         perteTir.text = GetComponent<ControleTir>().valeurPerteTir.ToString();
         taille.text = (Mathf.Round(GetComponent<Transform>().localScale.y * 10f) *0.1f).ToString(); //Arrondir la valeur de taille à 1 décimale après la virgule
 
-        //Ajouter les upgrades de tir au menu
+        //Ajouter les améliorations obtenus
         string upgrades = "";
         string upgrades2 = "";
         int counter = 0;
@@ -128,7 +141,7 @@ public class ControleMenu : MonoBehaviour
                 upgrades += "\n";
                 counter++;
             }
-            // Ajouter les upgrades suivantes à la deuxième colone
+            // Ajouter les upgrades suivantes à la deuxième colone s'il y a lieu
             else
             {
                 upgrades2 += "- ";
@@ -146,43 +159,53 @@ public class ControleMenu : MonoBehaviour
         menuStatistiques.SetActive(true);
     }
 
+
+    //Fonction pour fermer le menu Statistiques
     public void FermerStatistiques()
     {
         //Fermer le menu
         menuStatistiques.SetActive(false);
     }
 
+
+    //Fonction pour gérer le menu Pause
     public void MenuPause()
     {
+        //Si le menu Pause n'est pas activé
         if (etatMenuPause == false)
         {
             //Activer le menu
             menuPause.SetActive(true);
 
-            //Indiquer que l'etat du menu a change
+            //Indiquer que l'état du menu a changé
             etatMenuPause = true;
 
             //Activer la pause
             pauseMenu = true;
         }
+        //Si le menu Pause est activé
         else if (etatMenuPause == true)
         {
+            //Fermer le menu
             FermerPause();
         }
     }
 
+    //Fonction pour fermer le menu Pause
     public void FermerPause()
     {
         //Fermer le menu
         menuPause.SetActive(false);
 
-        //Indiquer que l'etat du menu a change
+        //Indiquer que l'état du menu a changé
         etatMenuPause = false;
 
         //Désactiver la pause
         pauseMenu = false;
     }
 
+
+    //Fonction pour changer le volume
     public void ChangeVolume()
     {
         //Changer le volume
@@ -194,9 +217,10 @@ public class ControleMenu : MonoBehaviour
 
     
 
-    //Fonction permettant de loader les bons settings du joueur
+    //Fonction permettant de charger les bons settings du joueur
     private void LoadVolume()
     {
+        //Récupérer la valeur sauvegardée
         volumeSlider.value = PlayerPrefs.GetFloat("musicVolume");
 
         //Enregistrer les changements

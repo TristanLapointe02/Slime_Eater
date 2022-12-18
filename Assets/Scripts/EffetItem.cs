@@ -2,20 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Description : Gérer les effets des différents items
+ * Fait par : Samuel Séguin et Tristan Lapointe
+ */
+
 public class EffetItem : MonoBehaviour
 {
-    public StatsItems item; // type d'item
-    public GameObject player; // Référence au joueur
-    public string nom; // nom de l'item
-    public float valeur; // valeu de l'item
-    public float duree; //Duree de l'effet
+    public StatsItems item; //Type d'item
+    public GameObject player; //Référence au joueur
+    public string nom; //Nom de l'item
+    public float valeur; //Valeur de l'item
+    public float duree; //Durée de l'effet
     public GameObject effetUI; //UI de l'effet
     public GameObject parentEffetUI; //Parent de la liste d'effets
     
 
     void Awake()
     {
-        // Assigner valeurs du scriptableObject
+        //Assigner les valeurs du scriptableObject à l'item
         nom = item.name;
         valeur = item.valeur;
         duree = item.duree;
@@ -25,68 +30,74 @@ public class EffetItem : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        //Lorsqu'on est en collision avec le joueur
+        //Lorsque l'item entre en collision avec le joueur
         if (collision.tag == "Player")
         {
             ComportementJoueur joueur = collision.gameObject.GetComponent<ComportementJoueur>();
-            //Selon la potion que nous sommes
+            //Selon le type d'item : 
             switch (nom)
             {
+                //Pour la potion de vie
                 case "potionVie":
+                    //Augmenter la vie du joueur selon l'étage actuel
                     joueur.AugmenterVie(valeur * (1 + StageProgression.etageActuel / 5));
                     break;
 
+                //Pour la potion de vitesse
                 case "potionVitesse":
-                    //todo: ajouter fonction pour speedBoost dans ComportementJoueur
+                    //Augmenter temporairement la vitesse du joueur
                     joueur.StartCoroutine(joueur.AugmenterVitesse(valeur, duree));
                     break;
 
-                case "potionDegats":
-                    //todo: ajouter fonction DegatsBoost() dans ComportementJoueur
+                //Pour la potion de dégâts
+                case "potionDegats": 
+                    //Augmenter temporairement les dégâts du joueur
                     joueur.StartCoroutine(joueur.AugmenterDegats(valeur, duree));
                     break;
 
+                //Pour la potion de saut
                 case "potionJump":
-                    //todo: ajouter fonction JumpBoost() dans ComportementJoueur
+                    //Augmenter temporairement la hauteur de saut du joueur
                     joueur.StartCoroutine(joueur.AugmenterSaut(valeur, duree));
                     break;
 
+                //Pour la potion d'invulnérabilité
                 case "potionInvulnerable":
-                    //todo: ajouter fonction Invulnerable() dans ComportementJoueur
+                    //Rendre temporairement le joueur invincible
                     joueur.StartCoroutine(joueur.Invulnerabilite(duree));
                     break;
 
+                //Pour la bombe
                 case "nuke":
-                    //todo: ajouter fonction Nuke(), eleminer tous les ennemis autour du joueur
                     //Demarrer le compteur d'explosion
                     StartCoroutine(GetComponent<ExplosionBombe>().Explosion());
                     break;
 
+                //Pour un morceau de slime
                 case "slime":
                     //Grossir le joueur
                     joueur.AugmenterGrosseur(valeur);
 
                     //Ajouter de l'xp au joueur
                     joueur.AugmenterXp(1);
-
                     break;
             }
 
-            //Creer un UI pour l'effet
+            //Créer un UI pour l'effet
             CreerEffetUI();
 
-            //Detruire l'item
+            //Détruire l'item
             DestroyItem(item.sonItem);
         }
     }
 
-    //Fonction permettant d'ajouter un element UI indiquant l'effet
+    //Fonction permettant d'ajouter un élément UI indiquant l'effet
     public void CreerEffetUI()
     {
-        //Si l'effet a une duree
+        //Si l'effet a une durée
         if(item.duree > 0)
         {
-            //Faire apparaitre un element UI indiquant l'effet ajouté
+            //Faire apparaître un élément UI indiquant l'effet ajouté
             GameObject nouvelEffetUI = Instantiate(effetUI);
             nouvelEffetUI.transform.SetParent(parentEffetUI.transform, false);
 
@@ -106,7 +117,7 @@ public class EffetItem : MonoBehaviour
             player.GetComponent<AudioSource>().PlayOneShot(audioClip);
         }
 
-        //Detruire l'item, si on est pas la bombe
+        //Detruire l'item si ce n'est pas la bombe
         if(item.nomItem != "Nuke")
         {
             Destroy(gameObject);

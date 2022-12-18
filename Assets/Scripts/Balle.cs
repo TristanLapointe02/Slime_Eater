@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Description : Gestion des objets balles
+ * Fait par : Tristan Lapointe et Samuel Séguin
+ */
+
 public class Balle : MonoBehaviour
 {
     public int lifeTime; //Temps de vie de la balle
-    public float degats; //Degats de la balle
-    public AudioClip sonBalleHit; //Son lorsque la balle hit quelquechose
-    public bool goThrough; //Indiquer si on peut passer a travers des ennemis
+    public float degats; //Dégâts de la balle
+    public AudioClip sonBalleHit; //Son lorsque la balle frappe quelque chose
+    public bool goThrough; //Indiquer si on peut passer au travers des ennemis
     public bool explose; //Indiquer si la balle explose au contact
     public GameObject objetExplosion; //Si on peut exploser, ceci est l'objet d'explosion
     public AudioClip sonExplosion; //Son de l'explosion

@@ -2,25 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Description : Gestion du tir du joueur
+ * Fait par : Tristan Lapointe et Samuel Séguin
+ */
+
 public class ControleTir : MonoBehaviour
 {
     [Header("Balle")]
-    public Balle balle; //Balle tiree
+    public Balle balle; //Balle tirée
 
     [Header("Valeurs de tir")]
-    bool peutTirer = true; //Bool permettant de savoir si le joueur peut tirer / cooldown
-    public float shootCooldown; //Delai de tir entre les balles
-    public float shootDelay; //Delai entre balles multiples
-    public int nombreBalles; //Nombre de balles a tirer
+    bool peutTirer = true; //Bool permettant de savoir si le joueur peut tirer
+    public float shootCooldown; //Délai de tir entre les balles
+    public float shootDelay; //Délai entre balles multiples
+    public int nombreBalles; //Nombre de balles à tirer
     public float forceTir; //Force du tir
-    public float valeurPerteTir; //Scale que le joueur perd en tirant
-    public float diviseurGrosseurBalle; //Multiplicateur de grosseur de la balle selon le joueur
-    public float degatsJoueur; //Degats du joueur
-    public bool peutTirerArriere; //Indique si on peut tirer sur les côtés
+    public float valeurPerteTir; //Taille que le joueur perd en tirant
+    public float diviseurGrosseurBalle; //Multiplicateur de taille de la balle selon le joueur
+    public float degatsJoueur; //Dégâts infligés par joueur
+    public bool peutTirerArriere; //Indique si on peut tirer en arrière
     public bool peutTirerCotes; //Indique si on peut tirer sur les côtés
-    public bool peutTirerATravers; //Indique si la balle peut passer a travers
-    public bool peutExploser; //Indiquer si les balles peuvent exploser
-    public bool peutSlow; //Indiquer si les balles slow les ennemis
+    public bool peutTirerATravers; //Indique si la balle peut passer au travers des ennemis
+    public bool peutExploser; //Indique si les balles peuvent exploser
+    public bool peutSlow; //Indique si les balles ralentissent les ennemis
 
     [Header("Autres références")]
     public AudioClip sonTir; //Son de tir
@@ -30,13 +35,13 @@ public class ControleTir : MonoBehaviour
 
     void Update()
     {
-        //Si le joueur appuie sur clicque gauche
+        //Si le joueur appuie sur clique gauche
         if (Input.GetButton("Fire1") && peutTirer && ControleAmeliorations.pause == false && ControleMenu.pauseMenu == false && ComportementJoueur.finJeu == false)
         {
-            //Si on est pas trop petit
+            //Si on a assez de masse pour tirer
             if(tropPetit == false)
             {
-                //Indiquer qu'il ne peut plus tirer, et appeler une fonction
+                //Indiquer qu'on ne peut plus tirer, et appeler une fonction
                 peutTirer = false;
                 StartCoroutine(delaiTir(shootCooldown));
 
@@ -61,16 +66,16 @@ public class ControleTir : MonoBehaviour
                 //Si on n'a pas déjà le son qui joue
                 if(GetComponent<AudioSource>().isPlaying == false)
                 {
-                    //Jouer un son indiquant au joueur qu'il ne peut pas tirer
+                    //Jouer un son indiquant au joueur qu'il n'a pas assez de masse pour tirer
                     GetComponent<AudioSource>().PlayOneShot(sonTirImpossible);
                 }
             }
         }
 
-        //Si nous sommes trop petit, empêcher la possibilite de tirer
+        //Si nous sommes trop petit, empêcher la possibilitée de tirer
         if(gameObject.transform.localScale.magnitude <= 1)
         {
-            //Indiquer qu'il est trop petit
+            //Indiquer que nous sommes trop petit
             tropPetit = true;
         }
         else
@@ -91,28 +96,28 @@ public class ControleTir : MonoBehaviour
             //Instancier une balle
             Balle nouvelleBalle = Instantiate(balle, gun.transform.position, gun.transform.rotation);
 
-            //Changer la taille de la balle selon la grosseur du joueur
+            //Changer la taille de la balle selon la taille du joueur
             nouvelleBalle.gameObject.transform.localScale += new Vector3(transform.localScale.x / diviseurGrosseurBalle, transform.localScale.y / diviseurGrosseurBalle, transform.localScale.z / diviseurGrosseurBalle);
 
             //Propulser la balle vers la direction du curseur
             nouvelleBalle.GetComponent<Rigidbody>().AddForce(direction * forceTir, ForceMode.Impulse);
 
-            //Changer les degats de la balle selon ceux du joueur
+            //Changer les dégâts de la balle selon ceux du joueur
             nouvelleBalle.GetComponent<Balle>().degats = degatsJoueur;
 
-            //Dire a la balle qu'elle peut passer a travers ou non
+            //Dire à la balle qu'elle peut passer au travers des ennemis ou non
             if (peutTirerATravers)
             {
                 nouvelleBalle.GetComponent<Balle>().goThrough = true;
             }
 
-            //Dire a la balle qu'elle peut exploser au contact
+            //Dire a la balle qu'elle peut exploser au contact ou non
             if (peutExploser)
             {
                 nouvelleBalle.GetComponent<Balle>().explose = true;
             }
 
-            //Dire a la balle qu'elle peut slow au contact
+            //Dire a la balle qu'elle peut slow au contact ou non
             if (peutSlow)
             {
                 nouvelleBalle.GetComponent<Balle>().slow = true;
@@ -121,7 +126,7 @@ public class ControleTir : MonoBehaviour
             //Diminuer la taille du joueur
             gameObject.transform.localScale -= new Vector3(valeurPerteTir, valeurPerteTir, valeurPerteTir);
 
-            //Delai pour la prochaine balle
+            //Délai pour la prochaine balle
             yield return new WaitForSeconds(delai);
         }
     }
@@ -129,7 +134,10 @@ public class ControleTir : MonoBehaviour
     //Fonction de cooldown du tir
     public IEnumerator delaiTir(float delai)
     {
+        //Attendre un certain délai
         yield return new WaitForSeconds(delai);
+
+        //Indiquer qu'on peut tirer à nouveau
         peutTirer = true;
     }
 }

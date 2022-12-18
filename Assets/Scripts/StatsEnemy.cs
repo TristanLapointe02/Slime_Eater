@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Description : Scriptable object pour les ennemis du jeu
+ * Fait par : Samuel Séguin et Tristan Lapointe
+ */
+
 [CreateAssetMenu(menuName = "ScriptableObjects/Ennemi", fileName = "Ennemi")]
 
 public class StatsEnemy : ScriptableObject
@@ -17,6 +22,6 @@ public class StatsEnemy : ScriptableObject
     public bool ranged; //Determine si l’ennemi est ranged ou non
     public bool boss; //Determine si on est un boss ou non
     public int etage; //Etage sur laquelle le mob va spawn
-    public int range; //Range, si on est ranged
+    public int range; //Range, si l'ennemi attaque à distance
     public Color32 couleur; //Couleur de l'ennemi
 }

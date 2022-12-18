@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* 
+ * Description : Scriptable object pour les améliorations
+ * Fait par : Tristan Lapointe
+ */
+
 [CreateAssetMenu(menuName = "ScriptableObjects/Amelioration", fileName = "Amelioration")]
 public class Amelioration : ScriptableObject
 {

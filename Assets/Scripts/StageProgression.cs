@@ -4,26 +4,31 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+/*
+ * Description : Gérer la progression des étages durant la partie
+ * Fait par : Tristan Lapointe
+ */
+
 public class StageProgression : MonoBehaviour
 {
-    public int[] ennemiesToKillPerStage; //Nombre d'ennemis a tuer par stage
-    public ObjectSpawner refSpawnEnnemi; //Reference au spawn d'ennemis
-    public ObjectSpawner refSpawnItem; //Reference au spawn d'items
+    public int[] ennemiesToKillPerStage; //Nombre d'ennemis à tuer par étage
+    public ObjectSpawner refSpawnEnnemi; //Référence au spawn d'ennemis
+    public ObjectSpawner refSpawnItem; //Référence au spawn d'items
     public TextMeshProUGUI texteStage; //Texte affichant le stage actuel
-    public GameObject[] Etages; //Reference aux etages
-    public static int etageActuel; //Etage actuel
-    public AudioClip sonChangerEtage; //Son qui joue lorsqu'on change d'etage
-    public GameObject joueur; //Reference au joueur
+    public GameObject[] Etages; //Référence aux étages
+    public static int etageActuel; //Étage actuel
+    public AudioClip sonChangerEtage; //Son qui joue lorsqu'on change d'étage
+    public GameObject joueur; //Référence au joueur
     public AudioClip sonVictoire; //Son de victoire lorsque le joueur fini le jeu
     public Image fillProgression; //Image indiquant la progression du niveau
-    public GameObject mur; //Reference au mur
+    public GameObject mur; //Référence au mur
     public Color32[] couleurMur; //Tableau de couleurs de niveau
-    public GameObject boss; //Reference au boss
+    public GameObject boss; //Référence au boss
     public AudioClip bossMusic; //Musique du boss
 
     private void Awake()
     {
-        //Reset l'etage actuel à 1
+        //Reset l'étage actuel à 1
         etageActuel = 1;
 
         //Trouver le joueur
@@ -32,7 +37,7 @@ public class StageProgression : MonoBehaviour
 
     void Update()
     {
-        //Constamment verifier si nous avons fini un niveau
+        //Constamment vérifier si nous avons fini un niveau
         VerificationNiveau();
 
         //Mettre a jour la progression du niveau si on a pas fini
@@ -40,29 +45,23 @@ public class StageProgression : MonoBehaviour
         {
             fillProgression.fillAmount = ComportementJoueur.ennemisTues / ennemiesToKillPerStage[etageActuel - 1];
         }
-        
-
-        //TEST POUR CHANGER DE NIVEAU IMMEDIATEMENT
-        if (Input.GetKeyDown(KeyCode.B) && etageActuel < Etages.Length && ComportementJoueur.finJeu == false)
-        {
-            ComportementJoueur.ennemisTues = ennemiesToKillPerStage[etageActuel-1];
-        }
     }
 
-    //Fonction permettant de vérifier si un etage est terminé
+    //Fonction permettant de vérifier si un étage est terminé
     public void VerificationNiveau()
     {
-        //Mettre a jour le texte de niveau
+        //Mettre à jour le texte de niveau
         texteStage.text = etageActuel.ToString();
 
         for (int i = 1; i <= ennemiesToKillPerStage.Length; i++)
         {
+            //Pour chaque étage, si le joueur tue assez d'ennemis pour passer à l'étage suivant
             if (etageActuel == i && ComportementJoueur.ennemisTues >= ennemiesToKillPerStage[i-1] && ComportementJoueur.finJeu == false && etageActuel <= Etages.Length)
             {
                 //Si on vient de finir le jeu
                 if (etageActuel == Etages.Length)
                 {
-                    //Faire apparaitre le menu de fin
+                    //Faire apparaître le menu de fin
                     joueur.GetComponent<ComportementJoueur>().FinJeu("Vous avez gagné!", sonVictoire);
                     print("Etage actuel " + etageActuel + " Etage length " + Etages.Length);
                 }
@@ -83,7 +82,7 @@ public class StageProgression : MonoBehaviour
     //Fonction qui permet de changer de niveau
     public void ChangerNiveau()
     {
-        //Si nous avons pas fini
+        //Si nous n'avons pas fini
         if(etageActuel <= Etages.Length && ComportementJoueur.finJeu == false)
         {
             //Pour tous les ennemis présents dans la scène
@@ -98,7 +97,7 @@ public class StageProgression : MonoBehaviour
                 }
             }
 
-            //Detruire le plancher de l'etage
+            //Détruire le plancher de l'étage
             Etages[etageActuel - 1].gameObject.SetActive(false);
 
             //Faire spawn des objets
@@ -111,7 +110,7 @@ public class StageProgression : MonoBehaviour
             //Changer la couleur du mur
             mur.GetComponent<MeshRenderer>().material.color = couleurMur[etageActuel - 1];
 
-            //Reset le compteur d'ennemis tues
+            //Reset le compteur d'ennemis tués
             ComportementJoueur.ennemisTues = 0;
 
             //Montrer les visuels de la zone d'explosion

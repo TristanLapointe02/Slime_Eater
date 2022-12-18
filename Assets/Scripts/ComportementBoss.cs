@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Description : Comportement du boss ennemi
+ * Fait par : Tristan Lapointe
+ */
+
 public class ComportementBoss : MonoBehaviour
 {
     public int intervalleAttaqueSaut; //Intervalle de temps de l'attaque de saut
-    public int rangeAleatoireDelai; //Delai aleatoire du saut
+    public int rangeAleatoireDelai; //Délai aléatoire du saut
     public float offsetY; //Offset de bug fix sur l'axe des y
     public float forceSaut; //Force de saut de l'ennemi
     public float fallMultiplier; //Multiplicateur de plongée
@@ -15,7 +20,7 @@ public class ComportementBoss : MonoBehaviour
     private float rayonActuel; //Rayon actuel de la zone
     public float bonusRayon; //Bonus de rayon
     public GameObject cercleZoneExplosion; //Objet de la zone d'explosion
-    public float degatsZone; //Degats de la zone de saut
+    public float degatsZone; //Dégâts de la zone de saut
     public float forceExplosion; //Force de l'explosion de zone
     public AudioClip sonJump; //Son lorsque l'ennemi saute
     public AudioClip sonAtterir; //Son lorsque l'ennemi atterit
@@ -45,7 +50,7 @@ public class ComportementBoss : MonoBehaviour
 
         //Raycast avec le sol
         RaycastHit hit;
-        // Does the ray intersect any objects on the ground
+        // Si le raycast intersect quelconque objet sol
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerSol))
         {
             //Mettre a jour la distance
@@ -87,13 +92,12 @@ public class ComportementBoss : MonoBehaviour
             //Reset l'explosion
             plusGrandeDistance = 0;
 
-            //Disable les visuels de la zone
+            //Enlever les visuels de la zone
             cercleZoneExplosion.gameObject.GetComponent<MeshRenderer>().enabled = false;
-
-            print("TOUCHE SOL, POSITION:" + transform.position);
         }
     }
 
+    //Fonction de saut du boss
     public IEnumerator Sauter(float delai)
     {
         //Attendre un certain délai
@@ -133,7 +137,6 @@ public class ComportementBoss : MonoBehaviour
             //Trouver le joueur
             if (collider.gameObject.TryGetComponent(out ComportementJoueur joueur))
             {
-                print("partie2");
                 //Lui faire des dégâts
                 joueur.TakeDamage(degatsZone);
 
@@ -141,12 +144,5 @@ public class ComportementBoss : MonoBehaviour
                 joueur.GetComponent<Rigidbody>().AddExplosionForce(forceExplosion, new Vector3(transform.position.x, transform.position.y - offsetY, transform.position.z), rayonActuel/2);
             }
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        //Use the same vars you use to draw your Overlap SPhere to draw your Wire Sphere.
-        Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y - offsetY, transform.position.z), rayonActuel/2);
     }
 }

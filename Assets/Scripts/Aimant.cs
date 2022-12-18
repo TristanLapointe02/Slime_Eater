@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/*
+ * Description : Gérer l'aimant qui attire les items vers le joueur
+ * Fait par : Tristan Lapointe
+ */
+
 public class Aimant : MonoBehaviour
 {
     public float vitesse; //Vitesse du magnet
@@ -11,11 +17,10 @@ public class Aimant : MonoBehaviour
 
     private void Start()
     {
-        //Reference a l'aimant
+        //Référence à l'aimant
         colliderAimant = GetComponent<SphereCollider>();
         
-
-        //Ref au joueur
+        //Référence au joueur
         joueur = GameObject.FindGameObjectWithTag("Player");
     }
 

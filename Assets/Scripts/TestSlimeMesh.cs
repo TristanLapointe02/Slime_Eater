@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Description : Effet visuel du slime qui lui donne une apparence gélatineuse (essayez pas de comprendre, on comprend pas nous non plus).
+ * Fait par : Tristan Lapointe (avec recherche sur internet)
+ */
+
 public class TestSlimeMesh : MonoBehaviour
 {
     public float Intensity = 1f;

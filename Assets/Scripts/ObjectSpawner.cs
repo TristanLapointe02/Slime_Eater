@@ -2,30 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Description : Gestion du spawn d'objets (ennemis et items)
+ * Fait par : Tristan Lapointe et Samuel Séguin
+ */
+
 public class ObjectSpawner : MonoBehaviour
 {
     public enum TypesObjet { Ennemi, Item, Zone }; //Liste de types d'objets
     public TypesObjet objetChoisi; //Objet choisi
-    public int SpawnAmount; //Nombre d'objets a spawn
-    public float spawnDelay; //Delai de spawn
-    public int nombreObjetsSpawnPop; //Nombre d'ennemis a spawn en 1 instant
+    public int SpawnAmount; //Nombre d'objets à faire spawn
+    public float spawnDelay; //Délai de spawn
+    public int nombreObjetsSpawnPop; //Nombre d'ennemis a spawn en même temps
     public int rayonSpawn; //Positions où les objets peuvent spawn
     public int rangeSpawn; //Range a spawn
-    public GameObject[] tableauObjets; //Tableau des elements
+    public GameObject[] tableauObjets; //Tableau des éléments
     private List<GameObject> objetsActuels = new List<GameObject>(); //Liste des objets actuels
-    public GameObject[] Etages; //Position y des etages
-    private bool canSpawn; //Determine si on peut spawn ou non
-    private GameObject joueur; //Ref au joueur
+    public GameObject[] Etages; //Position y des étages
+    private bool canSpawn; //Détermine si on peut spawn ou non
+    private GameObject joueur; //Référence au joueur
     
     void Start()
     {
         //Trouver le joueur
         joueur = GameObject.FindGameObjectWithTag("Player");
 
-        //Indiquer que l'on peut spawn au debut
+        //Indiquer que l'on peut spawn au début
         canSpawn = true;
 
-        //Spawn des objets au debut
+        //Spawn des objets au début
         InitialSpawn();
     }
 
@@ -38,15 +43,17 @@ public class ObjectSpawner : MonoBehaviour
         }
     }
 
-    //Fonction permettant de donner un delai au spawn
+    //Fonction permettant de donner un délai au spawn
     public IEnumerator delaiSpawn(float delai)
     {
-        //Attendre un delai
+        //Attendre un délai
         yield return new WaitForSeconds(delai);
+        
+        //Indiquer qu'il peut spawn à nouveau
         canSpawn = true;
     }
 
-    //Fonction permettant de spawn un objet à une position aléatoire sur le radius d'un cercle ou a l'intérieur, selon l'item
+    //Fonction permettant de spawn un objet à une position aléatoire sur le radius d'un cercle ou a l'intérieur, selon l'objet
     public void Spawn()
     {
         //Si on peut spawn
@@ -55,7 +62,7 @@ public class ObjectSpawner : MonoBehaviour
             //Empêcher immediatement le spawn d'autres objets
             canSpawn = false;
 
-            //Trouver quel ennemi il est possible de spawn
+            //Trouver quel objet il est possible de spawn
             AjouterObjets();
 
             //Si on est un ennemi, spawn sur bordure
@@ -69,10 +76,10 @@ public class ObjectSpawner : MonoBehaviour
                 SpawnUnObjet(positionSurRadiusCercle);
             }
 
-            //Sinon, si on est un item, spawn a l'interieur du cercle
+            //Sinon, si on est un item, spawn a l'intérieur du cercle
             if (objetChoisi == TypesObjet.Item)
             {
-                //Determiner une position aleatoire sur le périmètre d'un cercle
+                //Déterminer une position aleatoire sur le périmètre d'un cercle
                 var cercle = Random.insideUnitCircle * rayonSpawn + new Vector2(joueur.transform.position.x, joueur.transform.position.z);
                 Vector3 positionDansCercle = new Vector3(cercle.x, 0, cercle.y);
 
@@ -80,25 +87,21 @@ public class ObjectSpawner : MonoBehaviour
                 SpawnUnObjet(positionDansCercle);
             }
 
-            //Sinon, si on est une zone
-            //TODO
-
-
             //Commencer le cooldown de spawn
             StartCoroutine(delaiSpawn(spawnDelay));
         }
     }
 
-    //Fonction permettant de spawn des objets en un instant
+    //Fonction permettant de spawn des objets en un instant au début de chaque étage
     public void InitialSpawn()
     {
         //Trouver quel objet il est possible de spawn
         AjouterObjets();
 
-        //Selon le nombre d'objets a spawn
+        //Selon le nombre d'objets à spawn
         for (int i = 0; i < nombreObjetsSpawnPop + Random.Range(-rangeSpawn, rangeSpawn); i++)
         {
-            //Determiner une position aléatoire dans un cercle
+            //Déterminer une position aléatoire dans un cercle
             var cercle = Random.insideUnitCircle * rayonSpawn + new Vector2(joueur.transform.position.x, joueur.transform.position.z);
             Vector3 positionDansCercle = new Vector3(cercle.x, 0, cercle.y);
 
@@ -107,7 +110,7 @@ public class ObjectSpawner : MonoBehaviour
         }
     }
 
-    //Fonction permettant d'ajouter les bons objets a la liste
+    //Fonction permettant d'ajouter les bons objets à la liste
     public void AjouterObjets()
     {
         //Clear la liste d'objets actuels
@@ -150,10 +153,10 @@ public class ObjectSpawner : MonoBehaviour
             return;
         }
 
-        //Sinon, si le jeu est pas fini et que nous sommes pas en pause
+        //Sinon, si la partie n'est pas finie et que nous ne sommes pas en pause
         else if(StageProgression.etageActuel - 1 < Etages.Length && ComportementJoueur.finJeu == false)
         {
-            //Determiner la position selon l'etage
+            //Determiner la position selon l'étage
             Vector3 positionSpawn = new Vector3(position.x, Etages[StageProgression.etageActuel - 1].transform.position.y + 10, position.z);
 
             //Spawn un objet

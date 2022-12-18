@@ -4,12 +4,17 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+/*
+ * Description : Effets visuels des items
+ * Fait par : Tristan Lapointe
+ */
+
 public class EffetItemUI : MonoBehaviour
 {
     public Image imageEffet; //Image de l'effet
     public Image imageCooldown; //Image du cooldown
-    public float temps; //Duree de l'effet
-    private bool isCooldown; //Verifier si nous sommes en cooldown
+    public float temps; //Durée de l'effet
+    private bool isCooldown; //Vérifier si nous sommes en cooldown
     private float tempsCooldown; //Temps du cooldown en soi
     public TextMeshProUGUI texteCompteurEffet; //Texte compteur de l'effet
     public TextMeshProUGUI texteNomEffet; //Nom de l'effet
@@ -25,7 +30,7 @@ public class EffetItemUI : MonoBehaviour
         //Diminuer le temps avec le temps
         tempsCooldown -= Time.deltaTime;
 
-        //Si l'effet run out, detruire l'objet ui
+        //Si l'effet se termine, detruire l'objet UI
         if (tempsCooldown < 0)
         {
             Destroy(gameObject);

@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/*
+ * Description : Gestion de la zone de dégâts lorsque le joueur saute
+ * Fait par : Tristan Lapointe
+ */
+
 public class ZoneDegats : MonoBehaviour
 {
-    public GameObject joueur; //Reference au joueur
+    public GameObject joueur; //Référence au joueur
     public LayerMask layerSol; //Layer du sol
     public float distance; //Distance actuelle avec le sol
     public float plusGrandeDistance; //Plus grande distance
@@ -19,7 +24,7 @@ public class ZoneDegats : MonoBehaviour
 
         //Raycast avec le sol
         RaycastHit hit;
-        // Does the ray intersect any objects on the ground
+        //Si le raycast intersecte avec le sol
         if (Physics.Raycast(joueur.transform.position, transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity, layerSol))
         {
             //Mettre a jour la distance

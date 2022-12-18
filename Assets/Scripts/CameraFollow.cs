@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
+/*
+ * Description : Movements de la caméra qui suit le joueur
+ * Fait par: Tristan Lapointe et Samuel Séguin
+ */
+
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target; //Target de la camera
-    public float smoothSpeed; //Vitesse a laquelle la camera smooth
+    public Transform target; //Target de la caméra
+    public float smoothSpeed; //Vitesse a laquelle la caméra smooth
     private Vector3 offset; //Offset de la caméra
-    public float forceZoomOutCam; //Force a laquelle la cam s'eloigne selon le scale du joueur
-    public CinemachineVirtualCamera vcam; //Virtual Camera ref
+    public float forceZoomOutCam; //Force a laquelle la caméra s'éloigne selon la taille du joueur
+    public CinemachineVirtualCamera vcam; //Virtual Camera reference
     public CinemachineTransposer _transposer; //Composer
 
     void Start()
@@ -20,17 +25,6 @@ public class CameraFollow : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //ANCIEN SCRIPT DE CAMERA
-        /*// Changer distance entre caméra et joueur selon sa taille
-        offset.z = (target.localScale.magnitude * -forceZoomOutCam) - (forceZoomOutCam + 1.5f); 
-        offset.y = (target.localScale.magnitude * forceZoomOutCam) + forceZoomOutCam;
-
-        //Changer la position de la camera
-        Vector3 positionCam = target.position + offset;
-
-        //Smooth avec un lerp
-        transform.position = Vector3.Lerp(transform.position, positionCam, smoothSpeed);*/
-
         //Changer la position de la caméra selon la taille du joueur
         offset.y = (target.localScale.magnitude * forceZoomOutCam) + (forceZoomOutCam*10f);
         offset.z = -(target.localScale.magnitude * forceZoomOutCam) - (forceZoomOutCam * 10f);
