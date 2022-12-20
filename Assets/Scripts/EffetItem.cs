@@ -33,7 +33,12 @@ public class EffetItem : MonoBehaviour
         //Lorsque l'item entre en collision avec le joueur
         if (collision.tag == "Player")
         {
+            //Assigner la référence au joueur
             ComportementJoueur joueur = collision.gameObject.GetComponent<ComportementJoueur>();
+
+            //Disable notre collider
+            GetComponent<Collider>().enabled = false;
+
             //Selon le type d'item : 
             switch (nom)
             {

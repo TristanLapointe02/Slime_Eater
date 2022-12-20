@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cda6f1cfe787974a869d5b55b71fc8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawner: {fileID: 0}
   enemy: {fileID: 11400000, guid: 97c707c6323e46f44abff42bb61daea4, type: 2}
   joueur: {fileID: 0}
   vie: 0
@@ -110,6 +111,8 @@ MonoBehaviour:
   couleurEnnemi: {r: 0, g: 0, b: 0, a: 0}
   vitesse: 0
   zoneEnnemi: {fileID: 8617320120675281935}
+  forceStop: 0
+  bossKill: {fileID: 0}
 --- !u!114 &2250377667788083147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,6 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   balle: {fileID: 5805499353154782828, guid: a4442f22475e50148813978869fe9700, type: 3}
+  peutTirer: 1
   shootCooldown: 3
   shootDelay: 0.1
   nombreBalles: 1
@@ -657,7 +661,7 @@ GameObject:
   - component: {fileID: 5749827721619565725}
   m_Layer: 0
   m_Name: GroundVisuals
-  m_TagString: Untagged
+  m_TagString: ZoneEnnemie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

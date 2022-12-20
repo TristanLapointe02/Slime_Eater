@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cda6f1cfe787974a869d5b55b71fc8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawner: {fileID: 0}
   enemy: {fileID: 11400000, guid: 8277e886b57808c4d884a30529cf6427, type: 2}
   joueur: {fileID: 0}
   vie: 0
@@ -171,6 +172,8 @@ MonoBehaviour:
   couleurEnnemi: {r: 0, g: 0, b: 0, a: 0}
   vitesse: 0
   zoneEnnemi: {fileID: 6194190927270874372}
+  forceStop: 0
+  bossKill: {fileID: 0}
 --- !u!136 &4206173859054390900
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -343,7 +346,7 @@ GameObject:
   - component: {fileID: 7857767401142235800}
   m_Layer: 0
   m_Name: GroundVisuals
-  m_TagString: Untagged
+  m_TagString: ZoneEnnemie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

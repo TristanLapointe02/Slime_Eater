@@ -8,6 +8,7 @@ TagManager:
   - Slime
   - Ennemi
   - Canvas
+  - ZoneEnnemie
   layers:
   - Default
   - TransparentFX

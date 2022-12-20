@@ -62,6 +62,9 @@ public class Balle : MonoBehaviour
         //Si la balle est tirée par un ennemi et touche le joueur
         if (collision.gameObject.tag == "Player")
         {
+            //Disable la collision
+            GetComponent<Collider>().enabled = false;
+
             //Faire des dégats au joueur
             collision.gameObject.GetComponent<ComportementJoueur>().TakeDamage(degats);
         }

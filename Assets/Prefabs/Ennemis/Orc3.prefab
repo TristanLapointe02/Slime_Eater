@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 2033952678933978482}
   m_Layer: 0
   m_Name: GroundVisuals
-  m_TagString: Untagged
+  m_TagString: ZoneEnnemie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -308,6 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cda6f1cfe787974a869d5b55b71fc8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawner: {fileID: 0}
   enemy: {fileID: 11400000, guid: 5fd952e364681084f98f305f898d7e21, type: 2}
   joueur: {fileID: 0}
   vie: 0

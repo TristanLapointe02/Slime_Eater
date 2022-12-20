@@ -19,7 +19,7 @@ public class ObjectSpawner : MonoBehaviour
     public GameObject[] tableauObjets; //Tableau des éléments
     private List<GameObject> objetsActuels = new List<GameObject>(); //Liste des objets actuels
     public GameObject[] Etages; //Position y des étages
-    private bool canSpawn; //Détermine si on peut spawn ou non
+    [HideInInspector] public bool canSpawn; //Détermine si on peut spawn ou non
     private GameObject joueur; //Référence au joueur
     
     void Start()
@@ -146,15 +146,8 @@ public class ObjectSpawner : MonoBehaviour
     //Fonction permettant de spawn un objet à une position donnée
     public void SpawnUnObjet(Vector3 position)
     {
-        //Pour un item, si la position de spawn dépasse la distance entre le centre de la map et le mur
-        if(objetChoisi == TypesObjet.Item && Vector3.Distance(transform.position, position) > rayonSpawn)
-        {
-            //Sortir de la fonction et rien spawn
-            return;
-        }
-
         //Sinon, si la partie n'est pas finie et que nous ne sommes pas en pause
-        else if(StageProgression.etageActuel - 1 < Etages.Length && ComportementJoueur.finJeu == false)
+        if(StageProgression.etageActuel - 1 < Etages.Length && ComportementJoueur.finJeu == false)
         {
             //Determiner la position selon l'étage
             Vector3 positionSpawn = new Vector3(position.x, Etages[StageProgression.etageActuel - 1].transform.position.y + 10, position.z);
@@ -162,10 +155,15 @@ public class ObjectSpawner : MonoBehaviour
             //Spawn un objet
             GameObject nouvelObjet = Instantiate(objetsActuels[Random.Range(0, objetsActuels.Count)].gameObject, positionSpawn, Quaternion.identity);
 
-            //Si nous sommes le spawner d'items, appliquer une rotation (bug fix)
+            //Si nous sommes le spawner d'items, appliquer une rotation
             if (objetChoisi == TypesObjet.Item)
             {
                 nouvelObjet.transform.Rotate(-90, 0, 0);
+            }
+            //Sinon, si c'était un ennemi, indiquer qu'on vient de le spawner
+            else if (objetChoisi == TypesObjet.Ennemi)
+            {
+                nouvelObjet.GetComponent<EnemyController>().spawner = GetComponent<ObjectSpawner>();
             }
         }
     }

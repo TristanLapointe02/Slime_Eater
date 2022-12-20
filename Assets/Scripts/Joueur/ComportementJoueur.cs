@@ -39,7 +39,6 @@ public class ComportementJoueur : MonoBehaviour
     public static bool finJeu; //Indiquer que c'est la fin du jeu
     public AudioClip sonLevelUp; //Son lorsque le joueur level up
     public AudioClip sonPartiePerdue; //Son lorsque le joueur perd la partie
-    public float rayonSpawn; //Rayon dans lequel le joueur peut spawn au début du jeu
     public GameObject ecranEffet; //Écran de dégâts
     private bool fixInvulnerabilité; //Bool permettant de fix l'invulnérabilité multiple
 
@@ -57,10 +56,6 @@ public class ComportementJoueur : MonoBehaviour
     {
         //Augmenter le niveau du joueur
         AugmenterXp(xpMax);
-
-        //Trouver une position aléatoire sur la map et s'y déplacer
-        Vector3 positionAleatoire = Random.insideUnitCircle * rayonSpawn;
-        transform.position = new Vector3(positionAleatoire.x, 35, positionAleatoire.z);
 
         //Assigner quelques valeurs
         vieJoueur = vieMax;
@@ -90,6 +85,28 @@ public class ComportementJoueur : MonoBehaviour
         //Mettre a jour le texte d'xp
         texteXp.text = Mathf.FloorToInt(xpActuel).ToString() + "/" + Mathf.FloorToInt(xpMax).ToString();
         texteLevelActuel.text = levelActuel.ToString();
+
+        //TEST, PRENDRE DEGATS
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            TakeDamage(10f);
+        }
+
+        //TEST, AUGMENTER XP
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            AugmenterXp(5000);
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            AugmenterXp(5);
+        }
+
+        //TEST, AUGMENTER TAILLE
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            AugmenterGrosseur(5);
+        }
     }
 
     //Fonction permettant de regen de la vie
@@ -328,5 +345,12 @@ public class ComportementJoueur : MonoBehaviour
 
         //Jouer un son
         GetComponent<AudioSource>().PlayOneShot(son);
+
+        //Trouver tous les ennemis et les tuer
+        EnemyController[] ennemis = GameObject.FindObjectsOfType<EnemyController>();
+        foreach(EnemyController ennemi in ennemis)
+        {
+            ennemi.MortEnnemi();
+        }
     }
 }

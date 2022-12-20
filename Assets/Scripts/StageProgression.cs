@@ -21,8 +21,6 @@ public class StageProgression : MonoBehaviour
     public GameObject joueur; //Référence au joueur
     public AudioClip sonVictoire; //Son de victoire lorsque le joueur fini le jeu
     public Image fillProgression; //Image indiquant la progression du niveau
-    public GameObject mur; //Référence au mur
-    public Color32[] couleurMur; //Tableau de couleurs de niveau
     public GameObject boss; //Référence au boss
     public AudioClip bossMusic; //Musique du boss
 
@@ -44,6 +42,12 @@ public class StageProgression : MonoBehaviour
         if(etageActuel <= Etages.Length && ComportementJoueur.finJeu == false)
         {
             fillProgression.fillAmount = ComportementJoueur.ennemisTues / ennemiesToKillPerStage[etageActuel - 1];
+        }
+
+        //TEST POUR CHANGER DE NIVEAU IMMEDIATEMENT
+        if (Input.GetKeyDown(KeyCode.B) && etageActuel < Etages.Length && ComportementJoueur.finJeu == false)
+        {
+            ComportementJoueur.ennemisTues = ennemiesToKillPerStage[etageActuel - 1];
         }
     }
 
@@ -107,9 +111,6 @@ public class StageProgression : MonoBehaviour
             //Jouer un sound effect
             joueur.gameObject.GetComponent<AudioSource>().PlayOneShot(sonChangerEtage);
 
-            //Changer la couleur du mur
-            mur.GetComponent<MeshRenderer>().material.color = couleurMur[etageActuel - 1];
-
             //Reset le compteur d'ennemis tués
             ComportementJoueur.ennemisTues = 0;
 
@@ -120,7 +121,7 @@ public class StageProgression : MonoBehaviour
         if(etageActuel == Etages.Length - 1)
         {
             //Instancier le boss
-            Instantiate(boss, gameObject.transform.position, Quaternion.identity);
+            Instantiate(boss, new Vector3(joueur.transform.position.x, 0, joueur.transform.position.z), Quaternion.identity);
 
             //Jouer un bruit de boss fight
             GetComponent<AudioSource>().PlayOneShot(bossMusic);

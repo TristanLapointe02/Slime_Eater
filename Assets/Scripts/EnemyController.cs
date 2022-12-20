@@ -9,17 +9,20 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    [Header("Statistiques ennemi")]
     public StatsEnemy enemy; //Type d'ennemi
-    public GameObject joueur; //Référence au joueur
+    [HideInInspector] public Color couleurEnnemi; //Couleur de base de l'ennemi
+    [HideInInspector] public float vitesse; //Vitesse de l'ennemi
+    [HideInInspector] public float vie; //Vie de l'ennemi
+
+    [Header("Références")]
+    [HideInInspector] public ObjectSpawner spawner; //Référence au spawner qui l'a fait spawn
+    [HideInInspector] public GameObject joueur; //Référence au joueur
+    [HideInInspector] public bool forceStop; //Dit a l'ennemi d'arrêter de bouger
     private Vector3 directionJoueur; //Distance et direction entre ennemi et joueur
-    public float vie; //Vie de l'ennemi
     public GameObject slimeLoot; //Référence au loot de slime
     public AudioClip sonSuction; //Son de suction lorsque l'ennemi touche le joueur
-    public Color couleurEnnemi; //Couleur de base de l'ennemi
-    public float vitesse; //Vitesse de l'ennemi
-    public GameObject zoneEnnemi; //Lumière de l'ennemi
-    public bool forceStop; //Dit a l'ennemi d'arrêter de bouger
-    public AudioClip bossKill; //Sound effect quand on tue le boss
+    private GameObject zoneEnnemi; //zone de l'ennemi
 
     private void Start()
     {
@@ -36,8 +39,20 @@ public class EnemyController : MonoBehaviour
         //Vitesse
         vitesse = enemy.vitesse;
 
+        //Trouver la zone ennemi
+        foreach (Transform enfant in transform)
+        {
+            if (enfant.tag == "ZoneEnnemie")
+            {
+                zoneEnnemi = enfant.gameObject;
+            }
+        }
+
         //Changer la teinte de la zone selon la couleur de l'ennemi
         zoneEnnemi.GetComponent<Renderer>().material.color = enemy.couleur;
+
+        //Trouver le joueur
+        joueur = GameObject.FindGameObjectWithTag("Player");
 
         //Si l'ennemi en question n'est pas un boss
         if (enemy.boss == false)
@@ -50,10 +65,7 @@ public class EnemyController : MonoBehaviour
         {
             //Empêcher à l'ennemi de bouger
             forceStop = true;
-        }
-
-        //Trouver le joueur
-        TrouverJoueur();
+        } 
     }
 
     private void Update()
@@ -65,9 +77,6 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Trouver le joueur
-        TrouverJoueur();
-
         //Regarder le joueur, juste en x et z
         gameObject.transform.LookAt(new Vector3(joueur.transform.position.x, transform.position.y, joueur.transform.position.z));
 
@@ -91,10 +100,18 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-        //Si c'est la fin du jeu, mourir
-        if (ComportementJoueur.finJeu)
+        //Si nous sommes pas un boss et que notre position avec le joueur est trop loin, despawn
+        if(enemy.boss == false && spawner != null)
         {
-            MortEnnemi();
+            if (directionJoueur.magnitude >= spawner.rayonSpawn * 2f)
+            {
+                //Dire au spawner de spawn un autre ennemi
+                spawner.canSpawn = true;
+                spawner.Spawn();
+
+                //Mourir
+                MortEnnemi();
+            }
         }
     }
 
@@ -139,7 +156,7 @@ public class EnemyController : MonoBehaviour
             //Si c'était le boss, jouer un sound effect
             if (enemy.boss)
             {
-                AudioSource.PlayClipAtPoint(bossKill, transform.position);
+                AudioSource.PlayClipAtPoint(GetComponent<ComportementBoss>().bossKill, transform.position);
             }
 
             //Spawn du loot
@@ -204,16 +221,6 @@ public class EnemyController : MonoBehaviour
     public void AppliquerMat()
     {
         gameObject.GetComponentInChildren<SkinnedMeshRenderer>().material.color = couleurEnnemi;
-    }
-
-    //Fonction permettant de trouver le joueur
-    public void TrouverJoueur()
-    {
-        //Trouver le joueur si nous l'avons pas
-        if (joueur == null)
-        {
-            joueur = GameObject.FindGameObjectWithTag("Player");
-        }
     }
 
     //Fonction retournant le joueur est dans la range de l'ennemi

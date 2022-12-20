@@ -24,7 +24,7 @@ public class ComportementBoss : MonoBehaviour
     public float forceExplosion; //Force de l'explosion de zone
     public AudioClip sonJump; //Son lorsque l'ennemi saute
     public AudioClip sonAtterir; //Son lorsque l'ennemi atterit
-
+    public AudioClip bossKill; //Sound effect quand on tue le boss
     private void Start()
     {
         //Démarrer le comportement de saut
