@@ -31,7 +31,7 @@ public class EnnemiTir : MonoBehaviour
     void Update()
     {
         //Faire que le gun pointe vers le joueur
-        gun.transform.LookAt(GetComponent<EnemyController>().joueur.transform);
+        gun.transform.LookAt(SpawnJoueur.joueur.transform);
 
         //S'il peut tirer et qu'il est in range
         if (peutTirer && ControleAmeliorations.pause == false && ControleMenu.pauseMenu == false && GetComponent<EnemyController>().InRangeJoueur() && forceStopTir == false)

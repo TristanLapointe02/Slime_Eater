@@ -142,7 +142,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 0d29d2c1cf6eb684ab736124637244c2, type: 2}
-  player: {fileID: 0}
   nom: 
   valeur: 0
   duree: 0

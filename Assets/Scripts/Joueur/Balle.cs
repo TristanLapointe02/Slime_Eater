@@ -16,6 +16,7 @@ public class Balle : MonoBehaviour
     public bool explose; //Indiquer si la balle explose au contact
     public GameObject objetExplosion; //Si on peut exploser, ceci est l'objet d'explosion
     public AudioClip sonExplosion; //Son de l'explosion
+    public float forceExplosion;
     public int rayonExplosion; //Rayon de l'explosion
     public bool slow; //Indiquer si la balle peut slow
 
@@ -147,14 +148,8 @@ public class Balle : MonoBehaviour
                 //Pour tous sauf la source, si c'est pas le boss
                 if(ennemy.gameObject.GetInstanceID() != source.GetInstanceID())
                 {
-                    //Faire une explosion, si ce n'est pas le boss
-                    if(ennemy.enemy.boss == false)
-                    {
-                        ennemy.GetComponent<Rigidbody>().AddExplosionForce(1000, transform.position, rayonExplosion);
-                    }
-
-                    //Leur faire des degats
-                    ennemy.TakeDamage(degats);
+                    //Leur faire subir une explosion
+                    ennemy.SubirExplosion(forceExplosion, transform.position, rayonExplosion, degats);
                 }
             }
         }

@@ -15,12 +15,14 @@ public class ExplosionBombe : MonoBehaviour
     public bool pickUp; //Variable de pick-up pour la bombe
     public float delai; //Délai de la bombe
     EffetItem item; //Référence a l'item
+    private GameObject joueur; //Référence au joueur
 
     // Start is called before the first frame update
     void Start()
     {
         //Assigner les references
         item = GetComponent<EffetItem>();
+        joueur = SpawnJoueur.joueur;
     }
 
     // Update is called once per frame
@@ -30,13 +32,13 @@ public class ExplosionBombe : MonoBehaviour
         if (pickUp)
         {
             //Se faire transporter à l'intérieur du joueur
-            transform.position = new Vector3(item.player.transform.position.x, item.player.transform.position.y, item.player.transform.position.z);
+            transform.position = new Vector3(joueur.transform.position.x, joueur.transform.position.y, joueur.transform.position.z);
 
             //Enlever notre collider
             GetComponent<Collider>().enabled = false;
 
             //Changer la taille de l'item selon la taille du joueur
-            gameObject.transform.localScale = new Vector3(item.player.transform.localScale.x, item.player.transform.localScale.y, item.player.transform.localScale.z);
+            gameObject.transform.localScale = new Vector3(joueur.transform.localScale.x, joueur.transform.localScale.y, joueur.transform.localScale.z);
         }
     }
 
@@ -53,7 +55,7 @@ public class ExplosionBombe : MonoBehaviour
         GameObject effet = Instantiate(objetExplosion, gameObject.transform.position, Quaternion.identity);
 
         //Changer la taille de l'effet selon notre rayon
-        effet.transform.localScale = new Vector3(item.valeur + item.player.transform.localScale.x, 0.1f, item.valeur + item.player.transform.localScale.z);
+        effet.transform.localScale = new Vector3(item.valeur + joueur.transform.localScale.x, 0.1f, item.valeur + joueur.transform.localScale.z);
 
         //Le détruire tout de suite après
         Destroy(effet, 0.15f);
@@ -62,7 +64,7 @@ public class ExplosionBombe : MonoBehaviour
         AudioSource.PlayClipAtPoint(sonExplosion, gameObject.transform.position);
 
         //Pour tous les colliders dans la zone d'explosion
-        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, item.valeur + item.player.transform.localScale.magnitude);
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, item.valeur + joueur.transform.localScale.magnitude);
 
         //Indiquer qu'on ne doit plus suivre le joueur
         pickUp = false;
@@ -71,7 +73,7 @@ public class ExplosionBombe : MonoBehaviour
         GameObject nouvelleParticule = Instantiate(particuleExplosion, transform.position, Quaternion.identity);
 
         //Changer le scale de la particule selon le scale de l'explosion
-        nouvelleParticule.transform.localScale = new Vector3(item.player.transform.localScale.x * 3, item.player.transform.localScale.y * 3, item.player.transform.localScale.z * 3);
+        nouvelleParticule.transform.localScale = new Vector3(joueur.transform.localScale.x * 3, joueur.transform.localScale.y * 3, joueur.transform.localScale.z * 3);
 
         //Se détruire
         Destroy(gameObject);
@@ -82,15 +84,8 @@ public class ExplosionBombe : MonoBehaviour
             //Trouver les ennemis
             if (collider.gameObject.TryGetComponent(out EnemyController ennemy) && objetExplosion != null)
             {
-                //Si ce n'est pas un boss
-                if (!ennemy.gameObject.name.Contains("Boss6"))
-                {
-                    //Leur faire des dégâts
-                    ennemy.TakeDamage(item.valeur * 1000);
-
-                    //Faire une explosion
-                    ennemy.GetComponent<Rigidbody>().AddExplosionForce(3500, transform.position, item.valeur + item.player.transform.localScale.magnitude);
-                }
+                //Leur faire subir une explosion
+                ennemy.SubirExplosion(3500, transform.position, item.valeur + joueur.transform.localScale.magnitude, item.valeur * 1000);
             }
         }
     }

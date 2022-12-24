@@ -10,12 +10,18 @@ using TMPro;
 
 public class ZoneDegats : MonoBehaviour
 {
-    public GameObject joueur; //Référence au joueur
+    private GameObject joueur; //Référence au joueur
     public LayerMask layerSol; //Layer du sol
     public float distance; //Distance actuelle avec le sol
     public float plusGrandeDistance; //Plus grande distance
     public float rayonActuel; //Rayon actuel de la zone
     public float bonusRayon; //Bonus du rayon de la zone
+
+    private void Start()
+    {
+        //Assigner la référence du joueur
+        joueur = SpawnJoueur.joueur;
+    }
 
     void Update()
     {

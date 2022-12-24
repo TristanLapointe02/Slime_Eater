@@ -10,7 +10,6 @@ using UnityEngine;
 public class EffetItem : MonoBehaviour
 {
     public StatsItems item; //Type d'item
-    public GameObject player; //Référence au joueur
     public string nom; //Nom de l'item
     public float valeur; //Valeur de l'item
     public float duree; //Durée de l'effet
@@ -24,7 +23,6 @@ public class EffetItem : MonoBehaviour
         nom = item.name;
         valeur = item.valeur;
         duree = item.duree;
-        player = GameObject.FindGameObjectWithTag("Player");
         parentEffetUI = GameObject.Find("ListeEffets");
     }
 
@@ -34,10 +32,7 @@ public class EffetItem : MonoBehaviour
         if (collision.tag == "Player")
         {
             //Assigner la référence au joueur
-            ComportementJoueur joueur = collision.gameObject.GetComponent<ComportementJoueur>();
-
-            //Disable notre collider
-            GetComponent<Collider>().enabled = false;
+            ComportementJoueur joueur = SpawnJoueur.joueur.GetComponent<ComportementJoueur>();
 
             //Selon le type d'item : 
             switch (nom)
@@ -119,7 +114,7 @@ public class EffetItem : MonoBehaviour
         //Si on peut jouer un son, le faire
         if (audioClip != null)
         {
-            player.GetComponent<AudioSource>().PlayOneShot(audioClip);
+            AudioSource.PlayClipAtPoint(audioClip, transform.position);
         }
 
         //Detruire l'item si ce n'est pas la bombe

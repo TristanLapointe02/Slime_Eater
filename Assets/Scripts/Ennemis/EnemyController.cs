@@ -17,15 +17,18 @@ public class EnemyController : MonoBehaviour
 
     [Header("Références")]
     [HideInInspector] public ObjectSpawner spawner; //Référence au spawner qui l'a fait spawn
-    [HideInInspector] public GameObject joueur; //Référence au joueur
     [HideInInspector] public bool forceStop; //Dit a l'ennemi d'arrêter de bouger
     private Vector3 directionJoueur; //Distance et direction entre ennemi et joueur
     public GameObject slimeLoot; //Référence au loot de slime
     public AudioClip sonSuction; //Son de suction lorsque l'ennemi touche le joueur
     private GameObject zoneEnnemi; //zone de l'ennemi
+    private GameObject joueur; //Ref au joueur
 
     private void Start()
     {
+        //Trouver la ref au joueur
+        joueur = SpawnJoueur.joueur;
+
         //Assigner les valeurs de maniere dynamique selon les stats
         //Vie
         vie = enemy.vieMax;
@@ -50,9 +53,6 @@ public class EnemyController : MonoBehaviour
 
         //Changer la teinte de la zone selon la couleur de l'ennemi
         zoneEnnemi.GetComponent<Renderer>().material.color = enemy.couleur;
-
-        //Trouver le joueur
-        joueur = GameObject.FindGameObjectWithTag("Player");
 
         //Si l'ennemi en question n'est pas un boss
         if (enemy.boss == false)
@@ -227,5 +227,18 @@ public class EnemyController : MonoBehaviour
     public bool InRangeJoueur()
     {
         return directionJoueur.magnitude <= enemy.range + joueur.GetComponent<Collider>().bounds.size.x;
+    }
+
+    //Fonction permettant à l'ennemi de subir une explosion dans une direction donnée
+    public void SubirExplosion(float force, Vector3 centre, float rayon, float degats)
+    {
+        //Faire une explosion, si nous sommes pas le boss
+        if (enemy.boss == false)
+        {
+            GetComponent<Rigidbody>().AddExplosionForce(force, centre, rayon);
+        }
+
+        //Prendre des dégâts
+        TakeDamage(degats);
     }
 }

@@ -91,9 +91,6 @@ public class ControleAmeliorations : MonoBehaviour
             //Désactiver l'intéractivité
             carte.GetComponent<Button>().enabled = false;
 
-            //Lui passer une référence de joueur 
-            carte.GetComponent<CarteAmelioration>().joueur = gameObject;
-
             //Lui assigner l'amélioration
             carte.GetComponent<CarteAmelioration>().amelioration = ameliorationAleatoire;
 

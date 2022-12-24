@@ -41,6 +41,9 @@ public class ComportementJoueur : MonoBehaviour
     public AudioClip sonPartiePerdue; //Son lorsque le joueur perd la partie
     public GameObject ecranEffet; //Écran de dégâts
     private bool fixInvulnerabilité; //Bool permettant de fix l'invulnérabilité multiple
+    public TextMeshProUGUI texteStage; //Texte affichant le stage actuel
+    public Image fillProgression; //Image indiquant la progression du niveau
+
 
     [Header("Couleurs d'effets")]
     public Color couleurDegats;
@@ -85,6 +88,9 @@ public class ComportementJoueur : MonoBehaviour
         //Mettre a jour le texte d'xp
         texteXp.text = Mathf.FloorToInt(xpActuel).ToString() + "/" + Mathf.FloorToInt(xpMax).ToString();
         texteLevelActuel.text = levelActuel.ToString();
+
+        //Mettre a jour le texte du stage
+        texteStage.text = StageProgression.etageActuel.ToString();
 
         //TEST, PRENDRE DEGATS
         if (Input.GetKeyDown(KeyCode.K))

@@ -29,6 +29,7 @@ public class CameraFollow : MonoBehaviour
         offset.y = (target.localScale.magnitude * forceZoomOutCam) + (forceZoomOutCam*10f);
         offset.z = -(target.localScale.magnitude * forceZoomOutCam) - (forceZoomOutCam * 10f);
 
+        //Appliquer un offset afin de gérer l'angle de vue
         _transposer.m_FollowOffset = new Vector3 (0, offset.y, offset.z);
     }
 }

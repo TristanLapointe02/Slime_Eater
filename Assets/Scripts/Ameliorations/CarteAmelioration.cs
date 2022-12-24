@@ -15,7 +15,6 @@ public class CarteAmelioration : MonoBehaviour
     public TextMeshProUGUI titre; //Nom de l'amélioration
     public TextMeshProUGUI description; //Texte de description de l'amélioration
     public Image iconeAmelioration; //Icône d'amélioration
-    public GameObject joueur; //Référence au joueur
 
     //Variables pour correctement afficher le texte
     private string texteValeur1; //Texte de valeur 1
@@ -48,6 +47,6 @@ public class CarteAmelioration : MonoBehaviour
     public void FermerAmelioration()
     {
         //Appeler la fonction d'amélioration sur le joueur
-        joueur.GetComponent<ControleAmeliorations>().AjoutAmelioration(amelioration.nom, amelioration.valeur, amelioration.valeur2);
+        SpawnJoueur.joueur.GetComponent<ControleAmeliorations>().AjoutAmelioration(amelioration.nom, amelioration.valeur, amelioration.valeur2);
     }
 }

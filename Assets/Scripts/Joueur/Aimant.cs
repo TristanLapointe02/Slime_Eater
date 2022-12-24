@@ -21,7 +21,7 @@ public class Aimant : MonoBehaviour
         colliderAimant = GetComponent<SphereCollider>();
         
         //Référence au joueur
-        joueur = GameObject.FindGameObjectWithTag("Player");
+        joueur = SpawnJoueur.joueur;
     }
 
     private void Update()

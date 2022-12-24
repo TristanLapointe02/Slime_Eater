@@ -14,13 +14,11 @@ public class StageProgression : MonoBehaviour
     public int[] ennemiesToKillPerStage; //Nombre d'ennemis à tuer par étage
     public ObjectSpawner refSpawnEnnemi; //Référence au spawn d'ennemis
     public ObjectSpawner refSpawnItem; //Référence au spawn d'items
-    public TextMeshProUGUI texteStage; //Texte affichant le stage actuel
     public GameObject[] Etages; //Référence aux étages
     public static int etageActuel; //Étage actuel
     public AudioClip sonChangerEtage; //Son qui joue lorsqu'on change d'étage
     public GameObject joueur; //Référence au joueur
     public AudioClip sonVictoire; //Son de victoire lorsque le joueur fini le jeu
-    public Image fillProgression; //Image indiquant la progression du niveau
     public GameObject boss; //Référence au boss
     public AudioClip bossMusic; //Musique du boss
 
@@ -30,7 +28,7 @@ public class StageProgression : MonoBehaviour
         etageActuel = 1;
 
         //Trouver le joueur
-        joueur = GameObject.Find("Joueur");
+        joueur = SpawnJoueur.joueur;
     }
 
     void Update()
@@ -41,7 +39,7 @@ public class StageProgression : MonoBehaviour
         //Mettre a jour la progression du niveau si on a pas fini
         if(etageActuel <= Etages.Length && ComportementJoueur.finJeu == false)
         {
-            fillProgression.fillAmount = ComportementJoueur.ennemisTues / ennemiesToKillPerStage[etageActuel - 1];
+            joueur.GetComponent<ComportementJoueur>().fillProgression.fillAmount = ComportementJoueur.ennemisTues / ennemiesToKillPerStage[etageActuel - 1];
         }
 
         //TEST POUR CHANGER DE NIVEAU IMMEDIATEMENT
@@ -54,9 +52,6 @@ public class StageProgression : MonoBehaviour
     //Fonction permettant de vérifier si un étage est terminé
     public void VerificationNiveau()
     {
-        //Mettre à jour le texte de niveau
-        texteStage.text = etageActuel.ToString();
-
         for (int i = 1; i <= ennemiesToKillPerStage.Length; i++)
         {
             //Pour chaque étage, si le joueur tue assez d'ennemis pour passer à l'étage suivant
@@ -67,7 +62,6 @@ public class StageProgression : MonoBehaviour
                 {
                     //Faire apparaître le menu de fin
                     joueur.GetComponent<ComportementJoueur>().FinJeu("Vous avez gagné!", sonVictoire);
-                    print("Etage actuel " + etageActuel + " Etage length " + Etages.Length);
                 }
 
                 //Sinon, pour le restant des étages

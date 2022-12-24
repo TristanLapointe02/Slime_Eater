@@ -14,8 +14,8 @@ public class ObjectSpawner : MonoBehaviour
     public int SpawnAmount; //Nombre d'objets à faire spawn
     public float spawnDelay; //Délai de spawn
     public int nombreObjetsSpawnPop; //Nombre d'ennemis a spawn en même temps
-    public int rayonSpawn; //Positions où les objets peuvent spawn
     public int rangeSpawn; //Range a spawn
+    public int rayonSpawn; //Positions où les objets peuvent spawn
     public GameObject[] tableauObjets; //Tableau des éléments
     private List<GameObject> objetsActuels = new List<GameObject>(); //Liste des objets actuels
     public GameObject[] Etages; //Position y des étages
@@ -25,7 +25,7 @@ public class ObjectSpawner : MonoBehaviour
     void Start()
     {
         //Trouver le joueur
-        joueur = GameObject.FindGameObjectWithTag("Player");
+        joueur = SpawnJoueur.joueur;
 
         //Indiquer que l'on peut spawn au début
         canSpawn = true;

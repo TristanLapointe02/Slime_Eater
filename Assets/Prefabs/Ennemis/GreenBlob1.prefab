@@ -303,18 +303,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cda6f1cfe787974a869d5b55b71fc8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawner: {fileID: 0}
   enemy: {fileID: 11400000, guid: c86b7b3618e7c0e40ad77e762e922c70, type: 2}
-  joueur: {fileID: 0}
+  couleurEnnemi: {r: 0, g: 0, b: 0, a: 0}
+  vitesse: 0
   vie: 0
+  spawner: {fileID: 0}
+  forceStop: 0
   slimeLoot: {fileID: 6973327156890209381, guid: 65011b37b0d31ed4c99f69329726b4e7,
     type: 3}
   sonSuction: {fileID: 8300000, guid: b231e1c1eff8da84badd88c8397e0a39, type: 3}
-  couleurEnnemi: {r: 0, g: 0, b: 0, a: 0}
-  vitesse: 0
-  zoneEnnemi: {fileID: 109234285190287314}
-  forceStop: 0
-  bossKill: {fileID: 0}
 --- !u!136 &2483025033023995391
 CapsuleCollider:
   m_ObjectHideFlags: 0
