@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /*
  * Description : Gestion des inputs et actions du joueur
@@ -57,7 +58,7 @@ public class ControleJoueur : MonoBehaviour
     void Update()
     {
         //Amélioration de gravité
-        if(rb.velocity.y < 0)
+        if (rb.velocity.y < 0)
         {
             rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
@@ -98,7 +99,7 @@ public class ControleJoueur : MonoBehaviour
         if (Input.GetButtonDown("Cancel"))
         {
             //Ouvrir/fermer menu pause
-            GetComponent<ControleMenu>().MenuPause();
+            GetComponent<ControleMenu>().MenuOptions();
         }
     }
 
@@ -108,6 +109,8 @@ public class ControleJoueur : MonoBehaviour
         //Recevoir l'input de WASD ou des touches directionnelles 
         xInput = Input.GetAxis("Horizontal");
         zInput = Input.GetAxis("Vertical");
+
+        
 
         //Si on appuie sur espace
         if (Input.GetButtonDown("Jump") && jumpCounter > 0)

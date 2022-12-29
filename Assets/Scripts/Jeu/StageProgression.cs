@@ -26,7 +26,10 @@ public class StageProgression : MonoBehaviour
     {
         //Reset l'étage actuel à 1
         etageActuel = 1;
+    }
 
+    private void Start()
+    {
         //Trouver le joueur
         joueur = SpawnJoueur.joueur;
     }

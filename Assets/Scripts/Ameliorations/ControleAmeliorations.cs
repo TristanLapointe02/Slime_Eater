@@ -21,7 +21,6 @@ public class ControleAmeliorations : MonoBehaviour
     private List<Amelioration> ameliorationsSelectionnes = new List<Amelioration>(); //Liste des améliorations choisies
     public static bool pause; //Indiquer si nous sommes en pause pour le choix
     private int storeAmeliorations; //Variable qui store le nombre  d'améliorations, s'il y a lieu, suite à un autre level up pendant le choix d'améliorations
-
     private void Awake()
     {
         //Reset la pause
@@ -98,9 +97,10 @@ public class ControleAmeliorations : MonoBehaviour
             GetComponent<AudioSource>().PlayOneShot(sonSelection);    
         }
 
-        //Un coup les choix proposés, activer les boutons
+        //Un coup les choix proposés, pour tous les boutons
         foreach (Transform boutonAmelioration in parentAmeliorations.transform)
         {
+            //Activer les boutons
             boutonAmelioration.GetComponent<Button>().enabled = true;
         }
     }

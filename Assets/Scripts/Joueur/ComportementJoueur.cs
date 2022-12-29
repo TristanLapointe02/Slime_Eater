@@ -358,5 +358,8 @@ public class ComportementJoueur : MonoBehaviour
         {
             ennemi.MortEnnemi();
         }
+
+        //Fermer le menu d'options
+        GetComponent<ControleMenu>().FermerOptions();
     }
 }

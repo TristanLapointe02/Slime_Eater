@@ -5,19 +5,18 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 /*
  * Gestion et affichage des menus
- * Fait par : Samuel Séguin
+ * Fait par : Samuel Séguin et Tristan Lapointe
  */
 
 public class ControleMenu : MonoBehaviour
 {
     public GameObject menuOptions; //Référence au menu Options
     public GameObject menuStatistiques; //Référence au menu Statistiques
-    public GameObject menuPause; //Référence au menu Pause
     private bool etatMenuOptions; //État du menu Options
-    private bool etatMenuPause; //État du menu Pause
     public Slider volumeSlider; //Référence au volume slider
     public static bool pauseMenu; //Indique si nous sommes en pause
 
@@ -33,7 +32,7 @@ public class ControleMenu : MonoBehaviour
     public TextMeshProUGUI perteTir; //Valeur du nombre de balles tirés à chaque tir
     public TextMeshProUGUI taille; //Valeur de la taille du joueur 
    
-
+    [Header("Listes d'améliorations")]
     public List<string> listUpgrades = new List<string>(); //Liste des améliorations qui ont été obtenus
     public TextMeshProUGUI ameliorations; //Élément du menu pour les améliorations qui ont été obtenus
     public TextMeshProUGUI ameliorations2; //Deuxième élément du menu pour les améliorations qui ont été obtenus
@@ -84,20 +83,27 @@ public class ControleMenu : MonoBehaviour
     //Gérer le menu Options
     public void MenuOptions()
     {
-        //Si le menu Options était désactivé
-        if (etatMenuOptions == false)
+        //Si le jeu est en cours
+        if(ComportementJoueur.finJeu == false)
         {
-            //Activer le menu d'options
-            menuOptions.SetActive(true);
+            //Si le menu Options était désactivé
+            if (etatMenuOptions == false)
+            {
+                //Activer le menu d'options
+                menuOptions.SetActive(true);
 
-            //Indiquer que l'état du menu a changé
-            etatMenuOptions = true;
-        }
-        //Si le menu Options était activé
-        else if (etatMenuOptions == true)
-        {
-            //Fermer le menu
-            FermerOptions();
+                //Indiquer que l'état du menu a changé
+                etatMenuOptions = true;
+
+                //Activer la pause
+                pauseMenu = true;
+            }
+            //Si le menu Options était activé
+            else if (etatMenuOptions == true)
+            {
+                //Fermer le menu
+                FermerOptions();
+            }
         }
     }
 
@@ -109,6 +115,9 @@ public class ControleMenu : MonoBehaviour
 
         //Indiquer que l'etat du menu a change
         etatMenuOptions = false;
+
+        //Désactiver la pause
+        pauseMenu = false;
     }
 
     //Fonction pour ouvrir le menu Statistiques
@@ -165,43 +174,6 @@ public class ControleMenu : MonoBehaviour
     {
         //Fermer le menu
         menuStatistiques.SetActive(false);
-    }
-
-
-    //Fonction pour gérer le menu Pause
-    public void MenuPause()
-    {
-        //Si le menu Pause n'est pas activé
-        if (etatMenuPause == false)
-        {
-            //Activer le menu
-            menuPause.SetActive(true);
-
-            //Indiquer que l'état du menu a changé
-            etatMenuPause = true;
-
-            //Activer la pause
-            pauseMenu = true;
-        }
-        //Si le menu Pause est activé
-        else if (etatMenuPause == true)
-        {
-            //Fermer le menu
-            FermerPause();
-        }
-    }
-
-    //Fonction pour fermer le menu Pause
-    public void FermerPause()
-    {
-        //Fermer le menu
-        menuPause.SetActive(false);
-
-        //Indiquer que l'état du menu a changé
-        etatMenuPause = false;
-
-        //Désactiver la pause
-        pauseMenu = false;
     }
 
 
