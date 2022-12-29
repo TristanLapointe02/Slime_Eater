@@ -10,20 +10,36 @@ using UnityEngine.InputSystem.Users;
 
 public class GamePadCursor : MonoBehaviour
 {
-    [SerializeField] private PlayerInput playerInput; //Inputs émis par le joueur
+    public PlayerInput playerInput; //Inputs émis par le joueur
     public Mouse virtualMouse; //Référence à notre souris virtuelle
     private Mouse currentMouse; //Reference a notre souris/type de souris actuelle
-    [SerializeField] private RectTransform cursorTransform; //Position du curseur
+    public RectTransform cursorTransform; //Position du curseur
     [SerializeField] private Canvas canvas; //Canvas
     [SerializeField] private RectTransform canvasTransform; //Position du canvas
     [SerializeField] private float sensibilite; //Vitesse de notre curseur
     [SerializeField] private float padding; //padding du curseur
     private bool previousMouseState; //Permet d'enregistrer l'état précédent du curseur
     private Camera mainCamera; //Reference a notre camera
-    private string previousControlScheme = ""; //Enregistrer l'état actuel de notre control scheme
-    private const string gamepadScheme = "Gamepad"; //Nom de notre plan de gamepad
-    private const string mouseScheme = "Keyboard&Mouse"; //Nom de notre plan de clavier souris
+    [HideInInspector] public string previousControlScheme = ""; //Enregistrer l'état actuel de notre control scheme
+    [HideInInspector] public const string gamepadScheme = "Gamepad"; //Nom de notre plan de gamepad
+    [HideInInspector] public const string mouseScheme = "Keyboard&Mouse"; //Nom de notre plan de clavier souris
+    public Texture2D cursorTexture; //Texture du curseur
+    public Texture2D blankCursor; //Texture du curseur
 
+    private void Start()
+    {
+        //Faire que la texture transparente du curseur est réellement transparente
+        //Ceci est un bug fix pour l'éditeur de unity
+        #if UNITY_EDITOR
+        Color32[] pixels = blankCursor.GetPixels32();
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            pixels[i] = new Color32(0, 0, 0, 0);
+        }
+        blankCursor.SetPixels32(pixels);
+        blankCursor.Apply();
+        #endif
+    }
     //Lorsque le script est activé
     private void OnEnable()
     {
@@ -153,15 +169,20 @@ public class GamePadCursor : MonoBehaviour
         {
             //Disable le curseur du gamepad
             cursorTransform.gameObject.SetActive(false);
-
-            //Activer notre curseur de souris
-            Cursor.visible = true;
-
+            
             //Changer la position de notre souris actuelle
             currentMouse.WarpCursorPosition(virtualMouse.position.ReadValue());
 
             //Enregistrer l'état
             previousControlScheme = mouseScheme;
+
+            //Activer notre curseur de souris
+            Cursor.visible = true;
+
+            //Changer la texture lorsque nous sommes dans l'éditeur
+            #if UNITY_EDITOR
+            Cursor.SetCursor(cursorTexture, new Vector2(cursorTexture.width / 2, cursorTexture.height / 2), CursorMode.Auto);
+            #endif
         }
         //Si on a le gamepad
         else if (playerInput.currentControlScheme == gamepadScheme && previousControlScheme != gamepadScheme)
@@ -169,15 +190,20 @@ public class GamePadCursor : MonoBehaviour
             //Enable le curseur du gamepad
             cursorTransform.gameObject.SetActive(true);
 
-            //Disable les visuels de notre souris
-            Cursor.visible = false;
-
             //Changer l'état de l'input pour que la transition soit fluide
             InputState.Change(virtualMouse.position, currentMouse.position.ReadValue());
             AnchorCursor(currentMouse.position.ReadValue());
 
             //Enregistrer l'état
             previousControlScheme = gamepadScheme;
+
+            //Disable les visuels de notre souris
+            Cursor.visible = false;
+
+            //Changer la texture lorsque nous sommes dans l'éditeur
+            #if UNITY_EDITOR
+            Cursor.SetCursor(blankCursor, Vector2.zero, CursorMode.Auto);
+            #endif
         }
     }
 

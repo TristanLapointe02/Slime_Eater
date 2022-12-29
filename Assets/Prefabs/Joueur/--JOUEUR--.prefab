@@ -650,7 +650,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Menu principal
+  m_text: Quitter
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 823435ccfec504a4d91cbffef882e3e7, type: 2}
   m_sharedMaterial: {fileID: 1908248766951462464, guid: 823435ccfec504a4d91cbffef882e3e7,
@@ -7120,6 +7120,8 @@ MonoBehaviour:
   canvasTransform: {fileID: 4639685124816425050}
   sensibilite: 1000
   padding: 35
+  previousControlScheme: 
+  cursorTexture: {fileID: 2800000, guid: 3528532aed9a0ce4ea82de1061a2d034, type: 3}
 --- !u!114 &5697660460905486140
 MonoBehaviour:
   m_ObjectHideFlags: 0

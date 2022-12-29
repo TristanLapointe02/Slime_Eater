@@ -797,6 +797,9 @@ MonoBehaviour:
   canvasTransform: {fileID: 584626674}
   sensibilite: 1000
   padding: 20
+  previousControlScheme: 
+  cursorTexture: {fileID: 2800000, guid: 3528532aed9a0ce4ea82de1061a2d034, type: 3}
+  blankCursor: {fileID: 2800000, guid: 116476fd2a9b2f048bb3d4882f4e9254, type: 3}
 --- !u!1001 &189200569
 PrefabInstance:
   m_ObjectHideFlags: 0
