@@ -19,11 +19,21 @@ public class Balle : MonoBehaviour
     public float forceExplosion;
     public int rayonExplosion; //Rayon de l'explosion
     public bool slow; //Indiquer si la balle peut slow
+    private TrailRenderer trail; //Trail de la balle
 
     void Start()
     {
         //Detruire la balle apres x secondes
         Invoke("DetruireBalle", lifeTime);
+
+        //Assigner les références
+        trail = GetComponent<TrailRenderer>();
+
+        //Changer la taille de début du trail renderer selon la taille de la balle
+        if(trail != null)
+        {
+            trail.startWidth = transform.localScale.magnitude / 2;
+        }
     }
 
     private void Update()

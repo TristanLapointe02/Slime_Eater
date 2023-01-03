@@ -31,13 +31,12 @@ public class GunFollowPlayer : MonoBehaviour
         {
             TracerRayon(Mouse.current.position.ReadValue());
         }
-        
 
         //Sinon, si nous avons le curseur de gamepad
         else if (joueur.GetComponent<GamePadCursor>().playerInput.currentControlScheme == "Gamepad")
         {
             TracerRayon(joueur.GetComponent<GamePadCursor>().cursorTransform.position);
-        }
+        } 
     }
 
     public void TracerRayon(Vector3 traceur)

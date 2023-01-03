@@ -7122,6 +7122,7 @@ MonoBehaviour:
   padding: 35
   previousControlScheme: 
   cursorTexture: {fileID: 2800000, guid: 3528532aed9a0ce4ea82de1061a2d034, type: 3}
+  blankCursor: {fileID: 2800000, guid: 116476fd2a9b2f048bb3d4882f4e9254, type: 3}
 --- !u!114 &5697660460905486140
 MonoBehaviour:
   m_ObjectHideFlags: 0

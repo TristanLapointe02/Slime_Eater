@@ -72,9 +72,6 @@ public class StageProgression : MonoBehaviour
                 {
                     //Changer de niveau
                     ChangerNiveau();
-
-                    //Augmenter d'étage
-                    etageActuel++;
                 } 
             }
         }
@@ -101,6 +98,9 @@ public class StageProgression : MonoBehaviour
             //Détruire le plancher de l'étage
             Etages[etageActuel - 1].gameObject.SetActive(false);
 
+            //Incrémenter l'étage
+            etageActuel++;
+
             //Faire spawn des objets
             refSpawnEnnemi.InitialSpawn();
             refSpawnItem.InitialSpawn();
@@ -115,7 +115,7 @@ public class StageProgression : MonoBehaviour
             GameObject.Find("ZoneDegats").gameObject.GetComponent<MeshRenderer>().enabled = true;
         }
         //Si on est à l'avant dernier niveau, spawn le boss
-        if(etageActuel == Etages.Length - 1)
+        if(etageActuel == Etages.Length)
         {
             //Instancier le boss
             Instantiate(boss, new Vector3(joueur.transform.position.x, 0, joueur.transform.position.z), Quaternion.identity);

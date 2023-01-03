@@ -42,6 +42,9 @@ public class EnemyController : MonoBehaviour
         //Vitesse
         vitesse = enemy.vitesse;
 
+        //Mettre a jour la barre de vie au départ
+        GetComponent<BarreVieEnnemi>().MajBarreVie(vie, enemy.vieMax, false);
+
         //Trouver la zone ennemi
         foreach (Transform enfant in transform)
         {
@@ -168,6 +171,9 @@ public class EnemyController : MonoBehaviour
             //Indiquer qu'un ennemi est mort
             ComportementJoueur.ennemisTues++;
         }
+
+        //Mettre a jour la barre de vie
+        GetComponent<BarreVieEnnemi>().MajBarreVie(vie, enemy.vieMax);
 
         //Changer le matériel pendant 0.15 secondes
         GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.red;
