@@ -18,9 +18,9 @@ public class ObjectSpawner : MonoBehaviour
     public int rayonSpawn; //Positions où les objets peuvent spawn
     public GameObject[] tableauObjets; //Tableau des éléments
     private List<GameObject> objetsActuels = new List<GameObject>(); //Liste des objets actuels
-    public GameObject[] Etages; //Position y des étages
     [HideInInspector] public bool canSpawn; //Détermine si on peut spawn ou non
     private GameObject joueur; //Référence au joueur
+    public GestionSpawnPlancherV3 gestionnairePlancher; //Reference au gestionnaire de plancher
     
     void Start()
     {
@@ -147,10 +147,10 @@ public class ObjectSpawner : MonoBehaviour
     public void SpawnUnObjet(Vector3 position)
     {
         //Sinon, si la partie n'est pas finie et que nous ne sommes pas en pause
-        if(StageProgression.etageActuel - 1 < Etages.Length && ComportementJoueur.finJeu == false)
+        if(StageProgression.etageActuel - 1 < gestionnairePlancher.nombreEtages && ComportementJoueur.finJeu == false)
         {
             //Determiner la position selon l'étage
-            Vector3 positionSpawn = new Vector3(position.x, Etages[StageProgression.etageActuel - 1].transform.position.y + 10, position.z);
+            Vector3 positionSpawn = new Vector3(position.x, gestionnairePlancher.yEtages + 15, position.z);
 
             //Spawn un objet
             GameObject nouvelObjet = Instantiate(objetsActuels[Random.Range(0, objetsActuels.Count)].gameObject, positionSpawn, Quaternion.identity);

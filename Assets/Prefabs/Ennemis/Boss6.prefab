@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 1514181478413902460}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.0025, z: 1}
+  m_LocalScale: {x: 1, y: 0.0015, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4694621139867119270}
@@ -801,7 +801,7 @@ MonoBehaviour:
   fallMultiplier: 5
   layerSol:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 65544
   bonusRayon: 2.5
   cercleZoneExplosion: {fileID: 1514181478413902460}
   degatsZone: 5

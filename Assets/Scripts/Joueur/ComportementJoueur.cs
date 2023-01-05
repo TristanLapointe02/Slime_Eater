@@ -43,6 +43,7 @@ public class ComportementJoueur : MonoBehaviour
     private bool fixInvulnerabilité; //Bool permettant de fix l'invulnérabilité multiple
     public TextMeshProUGUI texteStage; //Texte affichant le stage actuel
     public Image fillProgression; //Image indiquant la progression du niveau
+    public GestionSpawnPlancherV3 gestionnairePlancher; //Reference au gestionnaire de plancher
 
 
     [Header("Couleurs d'effets")]
@@ -57,6 +58,9 @@ public class ComportementJoueur : MonoBehaviour
 
     void Start()
     {
+        //Assigner les références
+        gestionnairePlancher = GameObject.FindGameObjectWithTag("GestionnairePlancher").GetComponent<GestionSpawnPlancherV3>();
+
         //Augmenter le niveau du joueur
         AugmenterXp(xpMax);
 
@@ -151,7 +155,7 @@ public class ComportementJoueur : MonoBehaviour
         }
 
         //Si le joueur était pour mourir
-        if(vieJoueur <= 0 && mortJoueur == false)
+        if(Mathf.FloorToInt(vieJoueur) <= 0 && mortJoueur == false)
         {
             //Indiquer qu'il est mort
             mortJoueur = true;
@@ -224,6 +228,9 @@ public class ComportementJoueur : MonoBehaviour
 
             //Mettre à jour la force d'explosion
             GetComponent<ControleJoueur>().forceExplosion = GetComponent<ControleJoueur>().forceExplosionInitiale + (transform.localScale.magnitude * GetComponent<ControleJoueur>().multiplicateurForceExplosion);
+
+            //Mettre a jour le rayon de spawn des tuiles
+            gestionnairePlancher.rayon = gestionnairePlancher.rayonDeBase + (transform.localScale.magnitude*2);
         }
     }
 

@@ -14,13 +14,14 @@ public class StageProgression : MonoBehaviour
     public int[] ennemiesToKillPerStage; //Nombre d'ennemis à tuer par étage
     public ObjectSpawner refSpawnEnnemi; //Référence au spawn d'ennemis
     public ObjectSpawner refSpawnItem; //Référence au spawn d'items
-    public GameObject[] Etages; //Référence aux étages
     public static int etageActuel; //Étage actuel
     public AudioClip sonChangerEtage; //Son qui joue lorsqu'on change d'étage
-    public GameObject joueur; //Référence au joueur
+    [HideInInspector] public GameObject joueur; //Référence au joueur
     public AudioClip sonVictoire; //Son de victoire lorsque le joueur fini le jeu
     public GameObject boss; //Référence au boss
     public AudioClip bossMusic; //Musique du boss
+    public GestionSpawnPlancherV3 gestionPlancher; //Reference au gestionnaire de plancher
+    public GameObject plancherInvisible; //Reference au plancher invisible
 
     private void Awake()
     {
@@ -40,13 +41,19 @@ public class StageProgression : MonoBehaviour
         VerificationNiveau();
 
         //Mettre a jour la progression du niveau si on a pas fini
-        if(etageActuel <= Etages.Length && ComportementJoueur.finJeu == false)
+        if(etageActuel <= gestionPlancher.nombreEtages && ComportementJoueur.finJeu == false)
         {
             joueur.GetComponent<ComportementJoueur>().fillProgression.fillAmount = ComportementJoueur.ennemisTues / ennemiesToKillPerStage[etageActuel - 1];
         }
 
+        //Si la distance entre le joueur et le plancher invisible est trop grande, la recadrer
+        if(Vector3.Distance(joueur.transform.position, plancherInvisible.transform.position) > 500)
+        {
+            plancherInvisible.transform.position = joueur.transform.position;
+        }
+
         //TEST POUR CHANGER DE NIVEAU IMMEDIATEMENT
-        if (Input.GetKeyDown(KeyCode.B) && etageActuel < Etages.Length && ComportementJoueur.finJeu == false)
+        if (Input.GetKeyDown(KeyCode.B) && etageActuel < gestionPlancher.nombreEtages && ComportementJoueur.finJeu == false)
         {
             ComportementJoueur.ennemisTues = ennemiesToKillPerStage[etageActuel - 1];
         }
@@ -58,10 +65,10 @@ public class StageProgression : MonoBehaviour
         for (int i = 1; i <= ennemiesToKillPerStage.Length; i++)
         {
             //Pour chaque étage, si le joueur tue assez d'ennemis pour passer à l'étage suivant
-            if (etageActuel == i && ComportementJoueur.ennemisTues >= ennemiesToKillPerStage[i-1] && ComportementJoueur.finJeu == false && etageActuel <= Etages.Length)
+            if (etageActuel == i && ComportementJoueur.ennemisTues >= ennemiesToKillPerStage[i-1] && ComportementJoueur.finJeu == false && etageActuel <= gestionPlancher.nombreEtages)
             {
                 //Si on vient de finir le jeu
-                if (etageActuel == Etages.Length)
+                if (etageActuel == gestionPlancher.nombreEtages)
                 {
                     //Faire apparaître le menu de fin
                     joueur.GetComponent<ComportementJoueur>().FinJeu("Vous avez gagné!", sonVictoire);
@@ -81,7 +88,7 @@ public class StageProgression : MonoBehaviour
     public void ChangerNiveau()
     {
         //Si nous n'avons pas fini
-        if(etageActuel <= Etages.Length && ComportementJoueur.finJeu == false)
+        if(etageActuel <= gestionPlancher.nombreEtages && ComportementJoueur.finJeu == false)
         {
             //Pour tous les ennemis présents dans la scène
             GameObject[] ennemisPresents = GameObject.FindGameObjectsWithTag("Ennemi");
@@ -96,9 +103,19 @@ public class StageProgression : MonoBehaviour
             }
 
             //Détruire le plancher de l'étage
-            Etages[etageActuel - 1].gameObject.SetActive(false);
+            foreach(GameObject tuile in gestionPlancher.plancherActuel)
+            {
+                Destroy(tuile);
+            }
+
+            //Clear la liste du plancher actuel
+            gestionPlancher.plancherActuel.Clear();
+
+            //Changer la position actuelle du plancher invisible
+            plancherInvisible.transform.Translate(Vector3.down * 75);
 
             //Incrémenter l'étage
+            gestionPlancher.yEtages -= gestionPlancher.incrementationEtages;
             etageActuel++;
 
             //Faire spawn des objets
@@ -115,7 +132,7 @@ public class StageProgression : MonoBehaviour
             GameObject.Find("ZoneDegats").gameObject.GetComponent<MeshRenderer>().enabled = true;
         }
         //Si on est à l'avant dernier niveau, spawn le boss
-        if(etageActuel == Etages.Length)
+        if(etageActuel == gestionPlancher.nombreEtages)
         {
             //Instancier le boss
             Instantiate(boss, new Vector3(joueur.transform.position.x, 0, joueur.transform.position.z), Quaternion.identity);

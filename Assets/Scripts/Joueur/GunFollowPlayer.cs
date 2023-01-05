@@ -11,7 +11,7 @@ using UnityEngine.InputSystem;
 public class GunFollowPlayer : MonoBehaviour
 {
     private GameObject joueur; //Référence au joueur
-
+    public LayerMask layersPlancher; //Layers du plancher
     private void Start()
     {
         joueur = SpawnJoueur.joueur;
@@ -46,7 +46,7 @@ public class GunFollowPlayer : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(traceur);
 
         //Si nous touchons le sol
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer("Sol")))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layersPlancher))
         {
             //Regarder vers cette direction
             transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
