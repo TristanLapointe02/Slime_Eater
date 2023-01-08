@@ -37,7 +37,7 @@ public class ZoneDegats : MonoBehaviour
             distance = hit.distance;
 
             //Mettre a jour la position de la zone
-            gameObject.transform.position = new Vector3(transform.position.x, hit.transform.position.y + 0.55f, transform.position.z);
+            gameObject.transform.position = new Vector3(transform.position.x, hit.transform.position.y + hit.transform.gameObject.GetComponent<Collider>().bounds.extents.y + 0.05f, transform.position.z);
 
             //Mettre a jour la lus grande valeur
             if (plusGrandeDistance < hit.distance)

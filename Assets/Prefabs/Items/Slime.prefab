@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e4141093403fcfe4289c3b1e4045f668, type: 2}
+  - {fileID: 2100000, guid: a4e8e848b0ed9ba4ea349ebac0873ba4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -147,3 +147,4 @@ MonoBehaviour:
   duree: 0
   effetUI: {fileID: 182527638235650108, guid: ae240c56e6914ee49994509ef9be30c0, type: 3}
   parentEffetUI: {fileID: 0}
+  spawner: {fileID: 0}

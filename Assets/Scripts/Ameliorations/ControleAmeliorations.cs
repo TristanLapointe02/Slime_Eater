@@ -13,6 +13,7 @@ public class ControleAmeliorations : MonoBehaviour
 {
     public GameObject parentListeAmeliorations; //Parent de la liste des améliorations
     public GameObject parentAmeliorations; //Parent du choix des améliorations
+    public GameObject parentBoutons; //Parent des boutons d'améliorations
     public AudioClip sonChoix; //Son lorsque le joueur choisi une amélioration
     public GameObject carteAmelioration; //Carte vide d'une arme
     public int nombreAmeliorationsProposees; //Nombre d'ameliorations proposées
@@ -21,6 +22,7 @@ public class ControleAmeliorations : MonoBehaviour
     private List<Amelioration> ameliorationsSelectionnes = new List<Amelioration>(); //Liste des améliorations choisies
     public static bool pause; //Indiquer si nous sommes en pause pour le choix
     private int storeAmeliorations; //Variable qui store le nombre  d'améliorations, s'il y a lieu, suite à un autre level up pendant le choix d'améliorations
+
     private void Awake()
     {
         //Reset la pause
@@ -43,12 +45,18 @@ public class ControleAmeliorations : MonoBehaviour
             pause = true;
 
             //Démarer la coroutine
-            StartCoroutine(ProposerChoix(0.55f));
+            StartCoroutine(ProposerChoix(0.65f));
 
             //Enlever un storage d'amélioration s'il y a lieu
             if(storeAmeliorations > 0)
             {
                 storeAmeliorations--;
+            }
+
+            //Pour tous les boutons de modification d'amélioration
+            foreach(Transform child in parentBoutons.transform)
+            {
+                child.GetComponent<ControleBoutonAmelioration>().VerifierCharge();
             }
         } 
     }
@@ -74,38 +82,93 @@ public class ControleAmeliorations : MonoBehaviour
             //Attendre un petit delai
             yield return new WaitForSeconds(delai);
 
-            //Trouver une amélioration aléatoire
-            Amelioration ameliorationAleatoire = ameliorationsDisponibles.ElementAt(Random.Range(0, ameliorationsDisponibles.Count));
-
-            //L'ajouter à la liste de ceux sélectionnés
-            ameliorationsSelectionnes.Add(ameliorationAleatoire);
-
-            //Enlever l'amélioration choisie de la pool
-            ameliorationsDisponibles.Remove(ameliorationAleatoire);
+            //Choisir une amélioration
+            Amelioration ameliorationAleatoire = ChoisirAmelioration();
 
             //Instancier une carte avec cette arme
             GameObject carte = Instantiate(carteAmelioration);
             carte.transform.SetParent(parentAmeliorations.transform, false);
 
-            //Désactiver l'intéractivité
-            carte.GetComponent<Button>().enabled = false;
-
-            //Lui assigner l'amélioration
-            carte.GetComponent<CarteAmelioration>().amelioration = ameliorationAleatoire;
+            //Lui assigner ses valeurs selon le choix
+            carte.GetComponent<CarteAmelioration>().AssignerValeurs(ameliorationAleatoire);
 
             //Jouer un son de sélection
             GetComponent<AudioSource>().PlayOneShot(sonSelection);    
         }
 
         //Un coup les choix proposés, pour tous les boutons
-        foreach (Transform boutonAmelioration in parentAmeliorations.transform)
+        foreach (Transform child in parentAmeliorations.transform)
         {
             //Activer les boutons
-            boutonAmelioration.GetComponent<Button>().enabled = true;
+            child.GetComponent<Button>().interactable = true;
         }
     }
 
-    //Fonction d'amélioration
+    //Fonction permettant de choisir une amélioration
+    public Amelioration ChoisirAmelioration()
+    {
+        //Trouver une amélioration avec laquelle remplacer
+        Amelioration ameliorationAleatoire = ameliorationsDisponibles.ElementAt(Random.Range(0, ameliorationsDisponibles.Count));
+
+        //L'ajouter à la liste de ceux sélectionnés
+        ameliorationsSelectionnes.Add(ameliorationAleatoire);
+
+        //Enlever l'amélioration choisie de la pool
+        ameliorationsDisponibles.Remove(ameliorationAleatoire);
+
+        return ameliorationAleatoire;
+    }
+
+    //Fonction permettant de rafraîchir le choix d'améliorations avec de nouvelles options
+    public void RafraichirOptions()
+    {
+        //Jouer un son de sélection
+        GetComponent<AudioSource>().PlayOneShot(sonSelection);
+
+        //Pour chaque carte proposée
+        foreach(Transform child in parentAmeliorations.transform)
+        {
+            //S'enlever de la liste de ceux choisis
+            ameliorationsSelectionnes.Remove(child.GetComponent<CarteAmelioration>().amelioration);
+
+            //Retourner dans la pool
+            ameliorationsDisponibles.Add(child.GetComponent<CarteAmelioration>().amelioration);
+
+            //Choisir une amélioration
+            Amelioration ameliorationAleatoire = ChoisirAmelioration();
+
+            //Lui assigner ses valeurs selon le choix
+            child.GetComponent<CarteAmelioration>().AssignerValeurs(ameliorationAleatoire);
+        }
+    }
+
+    //Fonction permettant de tout choisir les améliorations proposées
+    public void ToutChoisir()
+    {
+        //Jouer un son de sélection
+        GetComponent<AudioSource>().PlayOneShot(sonSelection);
+
+        //Pour chaque carte proposée
+        foreach (Transform child in parentAmeliorations.transform)
+        {
+            //Ajouter l'amélioration et ferme les choix
+            child.GetComponent<CarteAmelioration>().FermerAmelioration();
+        }
+    }
+    //Fonction permettant de prendre en double l'amélioration choisie, si possible
+    public void ChoisirDouble()
+    {
+        //Jouer un son de sélection
+        GetComponent<AudioSource>().PlayOneShot(sonSelection);
+
+        //Indiquer qu'on peut choisir en double
+        foreach (Transform child in parentAmeliorations.transform)
+        {
+            //Ajouter l'amélioration et ferme les choix
+            child.GetComponent<CarteAmelioration>().pigerDouble = true;
+        }
+    }
+    //Fonction permettant d'ajouter une amélioration au joueur suite à son choix
     public void AjoutAmelioration(string nomAmelioration, float valeur, float valeur2)
     {
         //Jouer un son de sélection

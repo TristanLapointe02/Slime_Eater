@@ -11,7 +11,9 @@ using UnityEngine.UI;
 
 public class StageProgression : MonoBehaviour
 {
-    public int[] ennemiesToKillPerStage; //Nombre d'ennemis à tuer par étage
+    public int ennemiesToKillInitially; //Nombre d'ennemis à tuer par étage
+    [HideInInspector] int ennemiesToKill; //Nombre d'ennemis à tuer pour cet étage
+    public int ennemiesToKillMultiplicateur; //À quel point il faut tuer plus d'ennemis par étage
     public ObjectSpawner refSpawnEnnemi; //Référence au spawn d'ennemis
     public ObjectSpawner refSpawnItem; //Référence au spawn d'items
     public static int etageActuel; //Étage actuel
@@ -22,6 +24,7 @@ public class StageProgression : MonoBehaviour
     public AudioClip bossMusic; //Musique du boss
     public GestionSpawnPlancherV3 gestionPlancher; //Reference au gestionnaire de plancher
     public GameObject plancherInvisible; //Reference au plancher invisible
+    public GameObject UIChangementNiveau; //Prefab UI de changement de niveau
 
     private void Awake()
     {
@@ -33,6 +36,15 @@ public class StageProgression : MonoBehaviour
     {
         //Trouver le joueur
         joueur = SpawnJoueur.joueur;
+
+        //Indiquer une couleur de départ
+        gestionPlancher.ChangerCouleur();
+
+        //Indiquer le nombre d'ennemis à tuer au départ
+        ennemiesToKill = ennemiesToKillInitially;
+
+        //Initialement afficher le niveau
+        AfficherNiveau(etageActuel);
     }
 
     void Update()
@@ -43,7 +55,7 @@ public class StageProgression : MonoBehaviour
         //Mettre a jour la progression du niveau si on a pas fini
         if(etageActuel <= gestionPlancher.nombreEtages && ComportementJoueur.finJeu == false)
         {
-            joueur.GetComponent<ComportementJoueur>().fillProgression.fillAmount = ComportementJoueur.ennemisTues / ennemiesToKillPerStage[etageActuel - 1];
+            joueur.GetComponent<ComportementJoueur>().fillProgression.fillAmount = ComportementJoueur.ennemisTues / ennemiesToKill;
         }
 
         //Si la distance entre le joueur et le plancher invisible est trop grande, la recadrer
@@ -55,17 +67,17 @@ public class StageProgression : MonoBehaviour
         //TEST POUR CHANGER DE NIVEAU IMMEDIATEMENT
         if (Input.GetKeyDown(KeyCode.B) && etageActuel < gestionPlancher.nombreEtages && ComportementJoueur.finJeu == false)
         {
-            ComportementJoueur.ennemisTues = ennemiesToKillPerStage[etageActuel - 1];
+            ComportementJoueur.ennemisTues = ennemiesToKill;
         }
     }
 
     //Fonction permettant de vérifier si un étage est terminé
     public void VerificationNiveau()
     {
-        for (int i = 1; i <= ennemiesToKillPerStage.Length; i++)
+        for (int i = 1; i <= gestionPlancher.nombreEtages; i++)
         {
             //Pour chaque étage, si le joueur tue assez d'ennemis pour passer à l'étage suivant
-            if (etageActuel == i && ComportementJoueur.ennemisTues >= ennemiesToKillPerStage[i-1] && ComportementJoueur.finJeu == false && etageActuel <= gestionPlancher.nombreEtages)
+            if (etageActuel == i && ComportementJoueur.ennemisTues >= ennemiesToKill && ComportementJoueur.finJeu == false && etageActuel <= gestionPlancher.nombreEtages)
             {
                 //Si on vient de finir le jeu
                 if (etageActuel == gestionPlancher.nombreEtages)
@@ -112,11 +124,17 @@ public class StageProgression : MonoBehaviour
             gestionPlancher.plancherActuel.Clear();
 
             //Changer la position actuelle du plancher invisible
-            plancherInvisible.transform.Translate(Vector3.down * 75);
+            plancherInvisible.transform.Translate(Vector3.down * gestionPlancher.incrementationEtages);
 
             //Incrémenter l'étage
             gestionPlancher.yEtages -= gestionPlancher.incrementationEtages;
             etageActuel++;
+
+            //Indiquer que nus changeons de couleur de niveau
+            gestionPlancher.ChangerCouleur();
+
+            //Afficher le niveau
+            AfficherNiveau(etageActuel);
 
             //Faire spawn des objets
             refSpawnEnnemi.InitialSpawn();
@@ -125,8 +143,15 @@ public class StageProgression : MonoBehaviour
             //Jouer un sound effect
             joueur.gameObject.GetComponent<AudioSource>().PlayOneShot(sonChangerEtage);
 
+            //Dire au joueur que sa suivante zone peut exploser
+            joueur.GetComponent<ControleJoueur>().peutExploser = true;
+
             //Reset le compteur d'ennemis tués
             ComportementJoueur.ennemisTues = 0;
+
+            //Reset et incrémenter le nombre d'ennemis à tuer
+            ennemiesToKill += ennemiesToKillMultiplicateur * etageActuel;
+            //print("Nombre d'ennemis à tuer: " + ennemiesToKill);
 
             //Montrer les visuels de la zone d'explosion
             GameObject.Find("ZoneDegats").gameObject.GetComponent<MeshRenderer>().enabled = true;
@@ -140,5 +165,18 @@ public class StageProgression : MonoBehaviour
             //Jouer un bruit de boss fight
             GetComponent<AudioSource>().PlayOneShot(bossMusic);
         }
+    }
+
+    //Fonction permettant d'afficher à l'écran de nouveau niveau actuel
+    public void AfficherNiveau(int niveau)
+    {
+        //Instancier le prefab UI dans le canvas
+        GameObject panneau = Instantiate(UIChangementNiveau);
+
+        //Changer le parent du paneau
+        panneau.transform.SetParent(joueur.GetComponent<ComportementJoueur>().ParentLevelUI.transform, false);
+
+        //Indiquer quel niveau qu'il doit afficher
+        panneau.GetComponent<AffichageNiveau>().niveau = niveau;
     }
 }

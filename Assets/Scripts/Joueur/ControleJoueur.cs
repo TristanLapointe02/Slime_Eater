@@ -25,6 +25,7 @@ public class ControleJoueur : MonoBehaviour
     public float tailleDash; //Taille a regénérer pour l'amelioration de dash
     float xInput; //Inputs sur l'axe des x
     float zInput; //Inputs sur l'axe des z
+    [HideInInspector] public bool peutExploser = true; //Gère si l'on peut exploser ou non
 
     [Header("Sons")]
     public AudioClip sonJump; //Son lorsque le joueur saute
@@ -110,8 +111,6 @@ public class ControleJoueur : MonoBehaviour
         xInput = Input.GetAxis("Horizontal");
         zInput = Input.GetAxis("Vertical");
 
-        
-
         //Si on appuie sur espace
         if (Input.GetButtonDown("Jump") && jumpCounter > 0)
         {
@@ -132,6 +131,9 @@ public class ControleJoueur : MonoBehaviour
 
             //Montrer la zone
             zone.gameObject.GetComponent<MeshRenderer>().enabled = true;
+
+            //Indiquer que l'on peut exploser
+            peutExploser = true;
         }
 
         // Si on appuie sur left shift
@@ -184,19 +186,13 @@ public class ControleJoueur : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //Lorsque le joueur atterit sur le sol
-        if(collision.gameObject.tag == "Sol" && zone.plusGrandeDistance - GetComponent<Collider>().bounds.extents.y >= 2f)
+        if((collision.gameObject.CompareTag("Sol") || collision.gameObject.CompareTag("Ennemi")) && peutExploser)
         {
-            //Jouer un son
-            GetComponent<AudioSource>().PlayOneShot(sonAtterir);
-
             //Appeler la fonction pour faire des dégâts aux ennemis
             Explosion(forceExplosion, degatsZone);
 
-            //Réinitialiser l'explosion
-            zone.plusGrandeDistance = 0;
-
-            //Désactiver les visuels de la zone
-            zone.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            //Empêcher l'explosion jusqu'à temps qu'on saute/change de niveau
+            peutExploser = false;
         }
     }
 
@@ -236,5 +232,14 @@ public class ControleJoueur : MonoBehaviour
                 ennemy.SubirExplosion(forceExplosion, new Vector3(transform.position.x, transform.position.y - GetComponent<Collider>().bounds.extents.y, transform.position.z), zone.rayonActuel / 2, degatsZone);   
             }
         }
+
+        //Jouer un son
+        GetComponent<AudioSource>().PlayOneShot(sonAtterir);
+
+        //Réinitialiser l'explosion
+        zone.plusGrandeDistance = 0;
+
+        //Désactiver les visuels de la zone
+        zone.gameObject.GetComponent<MeshRenderer>().enabled = false;
     }
 }

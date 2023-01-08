@@ -221,6 +221,9 @@ public class EnemyController : MonoBehaviour
     {
         //Se détruire
         Destroy(gameObject);
+
+        //Indiquer au spawner qu'on est plus dans la scène
+        spawner.compteur--;
     }
 
     //Fonction permettant de remettre le matériel de l'ennemi à la normale 

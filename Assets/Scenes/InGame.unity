@@ -24,8 +24,8 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 3
-  m_SubtractiveShadowColor: {r: 0.17254902, g: 0.32941177, b: 0.16862746, a: 1}
+  m_AmbientMode: 0
+  m_SubtractiveShadowColor: {r: 0, g: 0, b: 0, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 169a1b8f06c17c84e8de491f2bfef986, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -320,6 +320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabsTuiles:
   - {fileID: 3954387684920378380, guid: 24b67e6494122ea43b204f3b84a89bc9, type: 3}
+  limiteTuiles: 50
   rayonDeBase: 200
   rayon: 25
   layerMaskCheck:
@@ -327,8 +328,11 @@ MonoBehaviour:
     m_Bits: 8
   yEtages: 0
   incrementationEtages: 75
-  nombreEtages: 6
+  nombreEtages: 10
   plancherActuel: []
+  couleurNiveau:
+    serializedVersion: 2
+    rgba: 0
 --- !u!1 &608891423
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,10 +379,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetChoisi: 0
   SpawnAmount: 2
-  spawnDelay: 1
-  nombreObjetsSpawnPop: 75
-  rangeSpawn: 25
+  spawnDelay: 0.75
+  nombreObjetsSpawnPop: 65
+  rangeSpawn: 15
   rayonSpawn: 175
+  compteur: 0
+  limite: 200
   tableauObjets:
   - {fileID: 2483025033023995390, guid: 4a9d949efa478b842b311f2bf8e042f3, type: 3}
   - {fileID: 5764174327737115379, guid: 3c8511597ba8f3349ab7a72712a6c922, type: 3}
@@ -434,7 +440,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9047193952a05604ab25e43388907ba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ennemiesToKillPerStage: 3c00000046000000550000006900000082000000c8000000
+  ennemiesToKillInitially: 55
+  ennemiesToKillMultiplicateur: 5
   refSpawnEnnemi: {fileID: 608891425}
   refSpawnItem: {fileID: 1208117082}
   sonChangerEtage: {fileID: 8300000, guid: 3eb2cc92e96ea3649804c2fd359bcd9f, type: 3}
@@ -444,6 +451,8 @@ MonoBehaviour:
   bossMusic: {fileID: 8300000, guid: 8e5a84069aff59f40b4697e0a80549ba, type: 3}
   gestionPlancher: {fileID: 519285945}
   plancherInvisible: {fileID: 1671594029}
+  UIChangementNiveau: {fileID: 4629170470489330827, guid: 3e747fa67b8445646b9106c1ccdddefb,
+    type: 3}
 --- !u!82 &707658368
 AudioSource:
   m_ObjectHideFlags: 0
@@ -668,8 +677,10 @@ MonoBehaviour:
   SpawnAmount: 1
   spawnDelay: 2.5
   nombreObjetsSpawnPop: 5
-  rangeSpawn: 3
-  rayonSpawn: 175
+  rangeSpawn: 2
+  rayonSpawn: 150
+  compteur: 0
+  limite: 20
   tableauObjets:
   - {fileID: 8045336980402031600, guid: 9d4fdeb88acfd4247bb3ead6d5eeee50, type: 3}
   - {fileID: 5926759598873703389, guid: b94a3b6a16c2fab40a9fd2c87f8b0037, type: 3}

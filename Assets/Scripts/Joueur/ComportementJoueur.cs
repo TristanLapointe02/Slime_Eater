@@ -29,6 +29,9 @@ public class ComportementJoueur : MonoBehaviour
     public Slider sliderXp; //Slider de barre de vie
     public TextMeshProUGUI texteXp; //Référence au texte de vie
     public TextMeshProUGUI texteLevelActuel; //Texte du level actuel du joueur
+    [HideInInspector] public float bonusXp; //Bonus d'xp
+    [HideInInspector] public float bonusTaille; //Bonus de taille
+    [HideInInspector] public float armure; //Bonus permettant au joueur de subir moins de dégâts
 
     [Header("Autres References")]
     public bool invulnerable; //Détermine si le joueur est invulnérable ou non
@@ -43,18 +46,15 @@ public class ComportementJoueur : MonoBehaviour
     private bool fixInvulnerabilité; //Bool permettant de fix l'invulnérabilité multiple
     public TextMeshProUGUI texteStage; //Texte affichant le stage actuel
     public Image fillProgression; //Image indiquant la progression du niveau
-    public GestionSpawnPlancherV3 gestionnairePlancher; //Reference au gestionnaire de plancher
-
+    [HideInInspector] public GestionSpawnPlancherV3 gestionnairePlancher; //Reference au gestionnaire de plancher
+    public GameObject ParentLevelUI; //Parent pour l'affichage du UI (voir StageProgression)
+    public TextMeshProUGUI texteLevelUp; //Texte de proposition d'améliorations
+    public string TexteBaseLevel; //Texte de base lorsqu'on level up
 
     [Header("Couleurs d'effets")]
     public Color couleurDegats;
     public Color couleurHeal;
     public Color couleurInvincible;
-
-    [Header("Bonus d'améliorations")]
-    public float bonusXp; //Bonus d'xp
-    public float bonusTaille; //Bonus de taille
-    public float armure; //Bonus permettant au joueur de subir moins de dégâts
 
     void Start()
     {
@@ -263,6 +263,10 @@ public class ComportementJoueur : MonoBehaviour
 
             //Jouer un sound effect
             GetComponent<AudioSource>().PlayOneShot(sonLevelUp);
+
+            //Changer le texte de level up
+            texteLevelUp.text = TexteBaseLevel;
+            texteLevelUp.color = Color.white;
 
             //Proposer une amélioration
             GetComponent<ControleAmeliorations>().ActiverChoix();

@@ -15,7 +15,8 @@ public class EffetItem : MonoBehaviour
     public float duree; //Durée de l'effet
     public GameObject effetUI; //UI de l'effet
     public GameObject parentEffetUI; //Parent de la liste d'effets
-    
+    [HideInInspector] public ObjectSpawner spawner; //Référence au spawner qui l'a fait spawn
+    private GameObject joueur; //Reference au joueur
 
     void Awake()
     {
@@ -24,6 +25,30 @@ public class EffetItem : MonoBehaviour
         valeur = item.valeur;
         duree = item.duree;
         parentEffetUI = GameObject.Find("ListeEffets");
+    }
+
+    private void Start()
+    {
+        //Assigner la référence au joueur
+        joueur = SpawnJoueur.joueur;
+    }
+
+    private void Update()
+    {
+        //Si nous avions un spawner
+        if(spawner != null)
+        {
+            //Si nous sommes trop loin du joueur, se détruire
+            if ((joueur.transform.position - transform.position).magnitude >= spawner.rayonSpawn * 2f)
+            {
+                //Dire au spawner de spawn un autre item
+                spawner.canSpawn = true;
+                spawner.Spawn();
+
+                //Se detruire
+                DestroyItem();
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -109,7 +134,7 @@ public class EffetItem : MonoBehaviour
     }
 
     //Fonction qui détruit l'item
-    private void DestroyItem(AudioClip audioClip)
+    private void DestroyItem(AudioClip audioClip = null)
     {
         //Si on peut jouer un son, le faire
         if (audioClip != null)
@@ -121,6 +146,12 @@ public class EffetItem : MonoBehaviour
         if(item.nomItem != "Nuke")
         {
             Destroy(gameObject);
+
+            //Baisser le compteur de notre spawner
+            if(spawner != null)
+            {
+                spawner.compteur--;
+            }
         }
     }
 }

@@ -16,6 +16,8 @@ public class ObjectSpawner : MonoBehaviour
     public int nombreObjetsSpawnPop; //Nombre d'ennemis a spawn en même temps
     public int rangeSpawn; //Range a spawn
     public int rayonSpawn; //Positions où les objets peuvent spawn
+    [HideInInspector] public int compteur; //Nombre d'objets actifs dans la scène
+    public int limite; //Limite d'objets a spawn de ce type
     public GameObject[] tableauObjets; //Tableau des éléments
     private List<GameObject> objetsActuels = new List<GameObject>(); //Liste des objets actuels
     [HideInInspector] public bool canSpawn; //Détermine si on peut spawn ou non
@@ -147,8 +149,11 @@ public class ObjectSpawner : MonoBehaviour
     public void SpawnUnObjet(Vector3 position)
     {
         //Sinon, si la partie n'est pas finie et que nous ne sommes pas en pause
-        if(StageProgression.etageActuel - 1 < gestionnairePlancher.nombreEtages && ComportementJoueur.finJeu == false)
+        if(StageProgression.etageActuel - 1 < gestionnairePlancher.nombreEtages && ComportementJoueur.finJeu == false && compteur < limite)
         {
+            //Augmenter le compteur d'objets spawn
+            compteur++;
+
             //Determiner la position selon l'étage
             Vector3 positionSpawn = new Vector3(position.x, gestionnairePlancher.yEtages + 15, position.z);
 
@@ -159,6 +164,9 @@ public class ObjectSpawner : MonoBehaviour
             if (objetChoisi == TypesObjet.Item)
             {
                 nouvelObjet.transform.Rotate(-90, 0, 0);
+
+                //Indiquer le spawner
+                nouvelObjet.GetComponent<EffetItem>().spawner = GetComponent<ObjectSpawner>();
             }
             //Sinon, si c'était un ennemi, indiquer qu'on vient de le spawner
             else if (objetChoisi == TypesObjet.Ennemi)

@@ -57,7 +57,7 @@ public class ComportementBoss : MonoBehaviour
             distance = hit.distance;
 
             //Mettre a jour la position de la zone
-            cercleZoneExplosion.gameObject.transform.position = new Vector3(cercleZoneExplosion.transform.position.x, hit.transform.position.y + 0.55f, cercleZoneExplosion.transform.position.z);
+            cercleZoneExplosion.gameObject.transform.position = new Vector3(cercleZoneExplosion.transform.position.x, hit.transform.position.y + hit.transform.gameObject.GetComponent<Collider>().bounds.extents.y + 0.05f, cercleZoneExplosion.transform.position.z);
 
             //Mettre a jour la lus grande valeur
             if (plusGrandeDistance < hit.distance)

@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 2787591819165449872}
   - component: {fileID: 2787591819165449874}
   - component: {fileID: 2787591819165449885}
+  - component: {fileID: 628934713800663620}
+  - component: {fileID: 3285088286610550427}
   m_Layer: 5
   m_Name: AmeliorationUI
   m_TagString: Untagged
@@ -121,7 +123,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2787591819165449872}
   m_OnClick:
     m_PersistentCalls:
@@ -154,7 +156,34 @@ MonoBehaviour:
   titre: {fileID: 2787591820710451989}
   description: {fileID: 2787591819480286130}
   iconeAmelioration: {fileID: 2787591820430496427}
-  joueur: {fileID: 0}
+--- !u!111 &628934713800663620
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2787591819165449878}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: ddf070870c41e8c4a990e3b1c6243ff5, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: ddf070870c41e8c4a990e3b1c6243ff5, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!225 &3285088286610550427
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2787591819165449878}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2787591819480286128
 GameObject:
   m_ObjectHideFlags: 0

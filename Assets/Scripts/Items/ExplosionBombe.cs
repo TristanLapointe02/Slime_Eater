@@ -78,6 +78,9 @@ public class ExplosionBombe : MonoBehaviour
         //Se détruire
         Destroy(gameObject);
 
+        //Indiquer au spawner qu'on est plus dans la scène
+        GetComponent<EffetItem>().spawner.compteur--;
+
         //Pour tous les collider touchés
         foreach (var collider in hitColliders)
         {
