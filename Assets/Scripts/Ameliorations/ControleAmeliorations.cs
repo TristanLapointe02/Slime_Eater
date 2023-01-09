@@ -122,9 +122,6 @@ public class ControleAmeliorations : MonoBehaviour
     //Fonction permettant de rafraîchir le choix d'améliorations avec de nouvelles options
     public void RafraichirOptions()
     {
-        //Jouer un son de sélection
-        GetComponent<AudioSource>().PlayOneShot(sonSelection);
-
         //Pour chaque carte proposée
         foreach(Transform child in parentAmeliorations.transform)
         {
@@ -145,9 +142,6 @@ public class ControleAmeliorations : MonoBehaviour
     //Fonction permettant de tout choisir les améliorations proposées
     public void ToutChoisir()
     {
-        //Jouer un son de sélection
-        GetComponent<AudioSource>().PlayOneShot(sonSelection);
-
         //Pour chaque carte proposée
         foreach (Transform child in parentAmeliorations.transform)
         {
@@ -158,9 +152,6 @@ public class ControleAmeliorations : MonoBehaviour
     //Fonction permettant de prendre en double l'amélioration choisie, si possible
     public void ChoisirDouble()
     {
-        //Jouer un son de sélection
-        GetComponent<AudioSource>().PlayOneShot(sonSelection);
-
         //Indiquer qu'on peut choisir en double
         foreach (Transform child in parentAmeliorations.transform)
         {

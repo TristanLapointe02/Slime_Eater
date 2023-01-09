@@ -18,3 +18,5 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4280736119
   nbNiveauxRecharge: 3
+  dureeDegrade: 1.25
+  effetSonore: {fileID: 8300000, guid: 13cb8935ade1fd3408077fb9e9e2affa, type: 3}

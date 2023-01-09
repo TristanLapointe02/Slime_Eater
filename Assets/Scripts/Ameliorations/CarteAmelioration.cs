@@ -16,6 +16,7 @@ public class CarteAmelioration : MonoBehaviour
     public TextMeshProUGUI description; //Texte de description de l'amélioration
     public Image iconeAmelioration; //Icône d'amélioration
     [HideInInspector] public bool pigerDouble; //Variable indiquant si on peut piger en double
+    public AudioClip sonImposibilite; //Son d'impossibilité
 
     //Variables pour correctement afficher le texte
     private string texteValeur1; //Texte de valeur 1
@@ -24,17 +25,26 @@ public class CarteAmelioration : MonoBehaviour
     //Fonction qui enlève les améliorations
     public void FermerAmelioration()
     {
-        //Appeler la fonction d'amélioration sur le joueur
-        SpawnJoueur.joueur.GetComponent<ControleAmeliorations>().AjoutAmelioration(amelioration.nom, amelioration.valeur, amelioration.valeur2);
-
+        //Appeler la fonction d'amélioration sur le joueur, si on est pas en pige double
+        if(pigerDouble == false)
+        {
+            SpawnJoueur.joueur.GetComponent<ControleAmeliorations>().AjoutAmelioration(amelioration.nom, amelioration.valeur, amelioration.valeur2);
+        }
+        
         //Si on pouvait appeler en double, le faire
-        if (pigerDouble)
+        else if (pigerDouble && amelioration.peutRepiger)
         {
             //Indiquer qu'on ne peut plus
             pigerDouble = false;
 
-            //Reappeler la fonction
+            //Appeler la fonction 2 fois
             SpawnJoueur.joueur.GetComponent<ControleAmeliorations>().AjoutAmelioration(amelioration.nom, amelioration.valeur, amelioration.valeur2);
+            SpawnJoueur.joueur.GetComponent<ControleAmeliorations>().AjoutAmelioration(amelioration.nom, amelioration.valeur, amelioration.valeur2);
+        }
+        else
+        {
+            //Jouer un son d'impossibilité
+            SpawnJoueur.joueur.GetComponent<AudioSource>().PlayOneShot(sonImposibilite);
         }
     }
 

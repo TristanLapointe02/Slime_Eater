@@ -13,6 +13,8 @@ public class ControleBoutonAmelioration : MonoBehaviour
     private int charges; //Nombre de charges du bouton
     private GameObject joueur; //Référence au joueur
     public TextMeshProUGUI texteLevelUp; //Texte de level up
+    public GameObject ecranDegrade; //Ecran de degradé pour choix de bouton
+    public Transform parentEffetDegrade; //Parent du degrade
 
     void Start()
     {
@@ -22,16 +24,26 @@ public class ControleBoutonAmelioration : MonoBehaviour
         //Ajouter la fonction de modification au bouton
         GetComponent<Button>().onClick.AddListener(AppliquerModification);
 
-        //Ajouter une charge de départ
-        AjouterCharge();
+        //Mettre à jour le texte au départ
+        texteBouton.text = charges.ToString();
 
-        //Changer la couleur du bouton
-        GetComponent<Button>().image.color = bouton.couleurBouton;
+        //Pour tous les boutons
+        foreach (Transform child in transform.parent)
+        {
+            //Empêcher d'interagir avec les autres boutons
+            child.GetComponent<Button>().interactable = false;
+
+            //Disable leur event trigger
+            child.GetComponent<EventTrigger>().enabled = false;
+        }
     }
 
     //Fonction permettant d'appliquer une modification selon le bouton
     public void AppliquerModification()
     {
+        //Jouer un son de sélection
+        joueur.GetComponent<AudioSource>().PlayOneShot(bouton.effetSonore);
+
         //Selon le type de bouton
         switch (bouton.boutonChoisi)
         {
@@ -49,7 +61,7 @@ public class ControleBoutonAmelioration : MonoBehaviour
                 //Prendre en double un choix
                 joueur.GetComponent<ControleAmeliorations>().ChoisirDouble();
 
-                //Pour tous les autres boutons
+                //Pour tous les boutons
                 foreach(Transform child in transform.parent)
                 {
                     //Empêcher d'interagir avec les autres boutons
@@ -59,6 +71,12 @@ public class ControleBoutonAmelioration : MonoBehaviour
                     child.GetComponent<EventTrigger>().enabled = false;
                 }
                 break;
+        }
+
+        //Afficher une couleur de dégradé à l'écran
+        if (gameObject.activeInHierarchy)
+        {
+            StartCoroutine(AjoutEcranEffet(bouton.couleurBouton, bouton.dureeDegrade));
         }
 
         //Diminuer la charge
@@ -86,6 +104,9 @@ public class ControleBoutonAmelioration : MonoBehaviour
 
             //Changer la couleur du texte
             texteLevelUp.color = bouton.couleurBouton;
+
+            //Afficher une couleur de dégradé à l'écran
+            StartCoroutine(AjoutEcranEffet(bouton.couleurBouton, 1f));
         } 
     }
 
@@ -112,6 +133,12 @@ public class ControleBoutonAmelioration : MonoBehaviour
     //Fonction permettant de verifier si nous pouvons ajouter une charge
     public void VerifierCharge()
     {
+        //Clearer tous les effets du dégradé
+        foreach(Transform degrade in parentEffetDegrade.transform)
+        {
+            Destroy(degrade.gameObject);
+        }
+
         //Si nous savons pas c'est qui le joueur, le chercher
         if(joueur == null)
         {
@@ -141,5 +168,32 @@ public class ControleBoutonAmelioration : MonoBehaviour
         //Assigner la référence au joueur
         joueur = SpawnJoueur.joueur;
         texteBouton = GetComponentInChildren<TextMeshProUGUI>();
+    }
+
+    //Fonction permettant d'instancier l'effet de couleur UI
+    public IEnumerator AjoutEcranEffet(Color couleurEffet, float duree, float valeurAlpha = 1)
+    {
+        //Instancier l'élément de UI
+        GameObject nouvelEcranEffetUI = Instantiate(ecranDegrade);
+        nouvelEcranEffetUI.transform.SetParent(parentEffetDegrade, false);
+
+        //Lui donner une couleur
+        nouvelEcranEffetUI.GetComponent<Image>().color = new Color(couleurEffet.r, couleurEffet.g, couleurEffet.b, valeurAlpha);
+
+        //Storer la variable de l'image
+        Color couleurEcran = nouvelEcranEffetUI.GetComponent<Image>().color;
+
+        //Diminuer l'opacité avec le temps
+        for (float i = 0; i < 1; i += Time.deltaTime / duree)
+        {
+            //Changer l'opacité de la couleur
+            var nouvelleCouleur = new Color(couleurEcran.r, couleurEcran.g, couleurEcran.b, Mathf.Lerp(couleurEcran.a, 0, i));
+            nouvelEcranEffetUI.GetComponent<Image>().color = nouvelleCouleur;
+
+            yield return null;
+        }
+
+        //Enlever l'élément de UI
+        Destroy(nouvelEcranEffetUI);
     }
 }

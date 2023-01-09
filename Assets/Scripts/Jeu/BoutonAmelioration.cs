@@ -10,4 +10,6 @@ public class BoutonAmelioration : ScriptableObject
     public string texteDescription; //Texte de description du bouton
     public Color32 couleurBouton; //Couleur d'effet du bouton
     public int nbNiveauxRecharge; //Nombre de niveaux à prendre pour avoir une autre recharge du bouton
+    public float dureeDegrade; //Duree de l'effet de dégradé à l'écran
+    public AudioClip effetSonore; //Effet sonore de sélection
 }

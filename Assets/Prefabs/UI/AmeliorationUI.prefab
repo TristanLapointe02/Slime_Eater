@@ -156,6 +156,8 @@ MonoBehaviour:
   titre: {fileID: 2787591820710451989}
   description: {fileID: 2787591819480286130}
   iconeAmelioration: {fileID: 2787591820430496427}
+  pigerDouble: 0
+  sonImposibilite: {fileID: 8300000, guid: f437576226b29e243956ad907365e364, type: 3}
 --- !u!111 &628934713800663620
 Animation:
   m_ObjectHideFlags: 0
