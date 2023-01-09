@@ -15,7 +15,7 @@ MonoBehaviour:
   nom: Slime absorbant
   icone: {fileID: 21300000, guid: 01e90e66af69e124b97d90bb9e4d655f, type: 3}
   description1: 'Augmentez votre taille de '
-  valeur: 0.5
+  valeur: 0.25
   description2: ' de plus en absorbant du slime.'
   valeur2: 0
   description3: 

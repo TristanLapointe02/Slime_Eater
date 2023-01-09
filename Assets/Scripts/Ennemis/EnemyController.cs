@@ -178,6 +178,9 @@ public class EnemyController : MonoBehaviour
         //Changer le matériel pendant 0.15 secondes
         GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.red;
         Invoke("AppliquerMat", 0.15f);
+
+        //Faire spawn un texte de damage
+        GetComponent<BarreVieEnnemi>().SpawnTextPopup(damage);
     }
 
     //Fonction qui ralentit l'ennemi
@@ -223,7 +226,10 @@ public class EnemyController : MonoBehaviour
         Destroy(gameObject);
 
         //Indiquer au spawner qu'on est plus dans la scène
-        spawner.compteur--;
+        if(spawner!= null)
+        {
+            spawner.compteur--;
+        }
     }
 
     //Fonction permettant de remettre le matériel de l'ennemi à la normale 

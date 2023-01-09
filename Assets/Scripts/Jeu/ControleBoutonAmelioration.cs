@@ -6,6 +6,11 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
+/*
+ * Gestion des boutons de modification d'améliorations
+ * Fait par : Tristan Lapointe
+ */
+
 public class ControleBoutonAmelioration : MonoBehaviour
 {
     public BoutonAmelioration bouton; //Bouton choisi
@@ -27,14 +32,13 @@ public class ControleBoutonAmelioration : MonoBehaviour
         //Mettre à jour le texte au départ
         texteBouton.text = charges.ToString();
 
-        //Pour tous les boutons
-        foreach (Transform child in transform.parent)
-        {
-            //Empêcher d'interagir avec les autres boutons
-            child.GetComponent<Button>().interactable = false;
+        //Se disable au départ
+        ChangerEtat(false);
 
-            //Disable leur event trigger
-            child.GetComponent<EventTrigger>().enabled = false;
+        //Si on est le bouton pour rafraichir, ajouter une charge de départ
+        if(bouton.boutonChoisi == BoutonAmelioration.TypesBoutons.Rafraichir)
+        {
+            AjouterCharge();
         }
     }
 
@@ -64,11 +68,8 @@ public class ControleBoutonAmelioration : MonoBehaviour
                 //Pour tous les boutons
                 foreach(Transform child in transform.parent)
                 {
-                    //Empêcher d'interagir avec les autres boutons
-                    child.GetComponent<Button>().interactable = false;
-
-                    //Disable leur event trigger
-                    child.GetComponent<EventTrigger>().enabled = false;
+                    //Changer l'etat du bouton
+                    child.GetComponent<ControleBoutonAmelioration>().ChangerEtat(false);
                 }
                 break;
         }
@@ -88,8 +89,8 @@ public class ControleBoutonAmelioration : MonoBehaviour
         //Si nous sommes à 0 charges
         if (charges == 0)
         {
-            //Disable le bouton
-            GetComponent<Button>().interactable = false;
+            //Changer l'etat du bouton
+            ChangerEtat(false);
         }
     }
 
@@ -128,6 +129,10 @@ public class ControleBoutonAmelioration : MonoBehaviour
 
         //Mettre à jour le texte
         texteBouton.text = charges.ToString();
+
+        //Changer l'etat du bouton
+        ChangerEtat(true);
+
     }
 
     //Fonction permettant de verifier si nous pouvons ajouter une charge
@@ -144,6 +149,7 @@ public class ControleBoutonAmelioration : MonoBehaviour
         {
             TrouverReferences();
         }
+
         //Si le niveau actuel est un multiple du nombre de niveaux de recharge du bouton
         if (joueur.GetComponent<ComportementJoueur>().levelActuel % bouton.nbNiveauxRecharge == 0)
         {
@@ -154,11 +160,8 @@ public class ControleBoutonAmelioration : MonoBehaviour
         //Enable les boutons, si possible
         if(charges > 0)
         {
-            //Indiquer que le bouton est intéractif
-            GetComponent<Button>().interactable = true;
-
-            //Enable le event hover
-            GetComponent<EventTrigger>().enabled = true;
+            //Changer l'etat du bouton
+            ChangerEtat(true);
         }
     }
 
@@ -195,5 +198,15 @@ public class ControleBoutonAmelioration : MonoBehaviour
 
         //Enlever l'élément de UI
         Destroy(nouvelEcranEffetUI);
+    }
+
+    //Fonction permettant de changer l'etat du bouton
+    public void ChangerEtat(bool etat)
+    {
+        //Interactivite du bouton
+        GetComponent<Button>().interactable = etat;
+
+        //Event hover
+        GetComponent<EventTrigger>().enabled = etat;
     }
 }

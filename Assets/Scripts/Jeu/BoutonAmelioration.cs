@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Scriptable object des boutons de modification d'améliorations
+ * Fait par : Tristan Lapointe
+ */
+
 [CreateAssetMenu(menuName = "ScriptableObjects/Bouton", fileName = "Bouton")]
 public class BoutonAmelioration : ScriptableObject
 {

@@ -19,6 +19,7 @@ public class ComportementJoueur : MonoBehaviour
     public float regenVie; //Vie a regen
     public float regenTemps; //Intervalle de temps que le joueur regen de la vie
     public float vieVampire; //Vie regénérée par l'amélioration vampire
+    public Gradient gradientVie; //Gradient de la couleur de vie
 
     [Header("Xp")]
     public int levelActuel; //Référence au niveau actuel du joueur
@@ -81,6 +82,9 @@ public class ComportementJoueur : MonoBehaviour
         //Mettre a jour la valeur du slider de vie
         float fillValueHp = vieJoueur / vieMax;
         sliderVie.value = fillValueHp;
+
+        //Mettre a jour la couleur
+        sliderVie.gameObject.transform.Find("Fill Area").Find("Fill").GetComponent<Image>().color = gradientVie.Evaluate(1 - sliderVie.value);
 
         //Mettre a jour le texte de vie
         texteVie.text = Mathf.FloorToInt(vieJoueur).ToString();

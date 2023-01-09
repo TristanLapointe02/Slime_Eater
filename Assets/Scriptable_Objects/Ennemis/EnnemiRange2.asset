@@ -15,16 +15,16 @@ MonoBehaviour:
   nomEnnemi: EnemyRange2
   descriptionEnnemi: an ennemy that stays at a certain distance from the player and
     attacks with projectiles
-  vieMax: 3
-  degats: 3
-  vitesse: 4
-  tailleEnnemi: 1.5
-  valeurLoot: 0.35
+  vieMax: 10
+  degats: 6
+  vitesse: 8
+  tailleEnnemi: 2.5
+  valeurLoot: 1.25
   nombreLootSpawn: 2
   ranged: 1
   boss: 0
-  etage: 2
-  range: 25
+  etage: 5
+  range: 50
   couleur:
     serializedVersion: 2
-    rgba: 4282132523
+    rgba: 4285087831

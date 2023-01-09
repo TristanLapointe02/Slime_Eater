@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using TMPro;
+using System;
 
 /*
  * Description : Gère le display de la vie de l'ennemi
- * Fait par : Tristan Lapointe et Samuel Séguin
+ * Fait par : Tristan Lapointe
  */
 public class BarreVieEnnemi : MonoBehaviour
 {
@@ -18,6 +20,8 @@ public class BarreVieEnnemi : MonoBehaviour
     [SerializeField] private float vitesseReduction; //Vitesse de réduction de la barre de vie
     [SerializeField] private float vitesseDisparition; //Vitesse de disparition de la barre de vie
     private float target = 1; //Target de l'animation de la barre de vie
+    public Gradient gradientVie; //Gradient de la couleur de vie des ennemis
+    public GameObject textePopup; //Reference au texte de vie pop up
 
     void Start()
     {
@@ -59,15 +63,18 @@ public class BarreVieEnnemi : MonoBehaviour
         {
             VerifPositionSouris(joueur.GetComponent<GamePadCursor>().cursorTransform.position);
         }
+
+        //Mettre a jour la couleur
+        barreVie.color = gradientVie.Evaluate(1 - barreVie.fillAmount);
     }
 
     //Fonction permettant de mettre à jour la barre de vie de l'ennemi
     public void MajBarreVie(float vieActuelle, float vieMax, bool montrerBarre = true)
     {
         //Montrer la barre de vie si nous sommes pas déja au max
-        if(vieActuelle != vieMax && montrerBarre)
+        if (vieActuelle != vieMax && montrerBarre)
         {
-            canvasAlpha.alpha = 1;
+            canvasAlpha.alpha = 1;  
         }
 
         //Mettre a jour le target de la barre de vie
@@ -89,5 +96,27 @@ public class BarreVieEnnemi : MonoBehaviour
                 canvasAlpha.alpha = 1;
             }
         }
+    }
+
+    //Fonction permettant de faire spawn un texte de pop-up
+    public void SpawnTextPopup(float valeur)
+    {
+        //Instancier un texte
+        GameObject objetTextePopup = Instantiate(textePopup);
+
+        //Lui assigner une valeur
+        objetTextePopup.GetComponentInChildren<TextMeshProUGUI>().text = Math.Round(valeur, 1).ToString();
+
+        //Changer son parent
+        objetTextePopup.transform.SetParent(canvas.transform, false);
+
+        //Lui dire de regarder le joueur
+        objetTextePopup.transform.LookAt(cam.transform);
+
+        //Changer son scale selon celui de l'ennemi
+        objetTextePopup.transform.localScale = new Vector3(-GetComponent<EnemyController>().enemy.tailleEnnemi, GetComponent<EnemyController>().enemy.tailleEnnemi, GetComponent<EnemyController>().enemy.tailleEnnemi) / 2.5f;
+
+        //Lui donner une position x aléatoire
+        objetTextePopup.GetComponent<RectTransform>().position += new Vector3(UnityEngine.Random.Range(-GetComponent<EnemyController>().enemy.tailleEnnemi, GetComponent<EnemyController>().enemy.tailleEnnemi), 0, 0);
     }
 }

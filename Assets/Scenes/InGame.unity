@@ -328,7 +328,7 @@ MonoBehaviour:
     m_Bits: 8
   yEtages: 0
   incrementationEtages: 75
-  nombreEtages: 10
+  nombreEtages: 8
   plancherActuel: []
   couleurNiveau:
     serializedVersion: 2
@@ -379,7 +379,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetChoisi: 0
   SpawnAmount: 2
-  spawnDelay: 0.75
+  spawnDelay: 0.65
   nombreObjetsSpawnPop: 65
   rangeSpawn: 15
   rayonSpawn: 175
@@ -441,7 +441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ennemiesToKillInitially: 55
-  ennemiesToKillMultiplicateur: 5
+  ennemiesToKillMultiplicateur: 3
   refSpawnEnnemi: {fileID: 608891425}
   refSpawnItem: {fileID: 1208117082}
   sonChangerEtage: {fileID: 8300000, guid: 3eb2cc92e96ea3649804c2fd359bcd9f, type: 3}

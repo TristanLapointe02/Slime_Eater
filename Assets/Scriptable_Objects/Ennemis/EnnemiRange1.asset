@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3665f582a021ff4bbe41a58282c4388, type: 3}
-  m_Name: EnnemiRange4
+  m_Name: EnnemiRange1
   m_EditorClassIdentifier: 
-  nomEnnemi: EnemyRange4
+  nomEnnemi: EnemyRange1
   descriptionEnnemi: an ennemy that stays at a certain distance from the player and
     attacks with projectiles
-  vieMax: 10
-  degats: 6
-  vitesse: 8
-  tailleEnnemi: 2.5
-  valeurLoot: 1.25
+  vieMax: 3
+  degats: 3
+  vitesse: 4
+  tailleEnnemi: 1.5
+  valeurLoot: 0.35
   nombreLootSpawn: 2
   ranged: 1
   boss: 0
-  etage: 4
-  range: 50
+  etage: 2
+  range: 25
   couleur:
     serializedVersion: 2
-    rgba: 4285087831
+    rgba: 4282132523

@@ -22,7 +22,7 @@ MonoBehaviour:
   nombreLootSpawn: 35
   ranged: 1
   boss: 1
-  etage: 6
+  etage: 8
   range: 75
   couleur:
     serializedVersion: 2

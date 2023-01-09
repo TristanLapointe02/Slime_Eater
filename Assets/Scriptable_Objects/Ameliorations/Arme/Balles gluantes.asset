@@ -15,7 +15,7 @@ MonoBehaviour:
   nom: Balles gluantes
   icone: {fileID: 21300000, guid: d39431646f20a4344ad32169271a67f4, type: 3}
   description1: 'Vos balles ralentissent les ennemis de '
-  valeur: 75
+  valeur: 85
   description2: '% pendant '
   valeur2: 5
   description3: ' secondes.'

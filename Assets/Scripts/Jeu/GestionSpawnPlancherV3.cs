@@ -81,10 +81,13 @@ public class GestionSpawnPlancherV3 : MonoBehaviour
     public void ChangerCouleur()
     {
         //Piger une couleur aléatoire
-        couleurNiveau = Random.ColorHSV();
+        Color32 couleurAleatoire = Random.ColorHSV();
+
+        //La noircir, et l'assigner a la couleur de niveau
+        couleurNiveau = Color32.Lerp(couleurAleatoire, Color.black, 0.35f);
 
         //L'appliquer au matériel des tuiles
-        foreach(GameObject tuile in prefabsTuiles)
+        foreach (GameObject tuile in prefabsTuiles)
         {
             tuile.GetComponentInChildren<Renderer>().sharedMaterial.color = couleurNiveau;
         }
