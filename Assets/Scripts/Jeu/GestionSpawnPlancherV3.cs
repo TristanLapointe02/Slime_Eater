@@ -17,6 +17,12 @@ public class GestionSpawnPlancherV3 : MonoBehaviour
     public List<GameObject> plancherActuel = new List<GameObject>(); //Tableau storant toutes les tuiles du plancher de l'étage actuel
     [HideInInspector] public Color32 couleurNiveau; //Couleur aléatoire de niveau
 
+    //Coordonnees
+    int minX;
+    int maxX;
+    int minZ;
+    int maxZ;
+
     void Start()
     {
         //Assigner les références
@@ -38,14 +44,11 @@ public class GestionSpawnPlancherV3 : MonoBehaviour
     //Fonction permettant de créer le plancher dynamiquement sur des coordonnées fixes
     public void SpawnSurCoordonee()
     {
-        //Initialiser la liste
-        List<Vector3> coordinates = new List<Vector3>();
-
         //Calculer les valeurs minimum et maximum à rechercher
-        int minX = Mathf.FloorToInt(playerTransform.position.x - rayon);
-        int maxX = Mathf.CeilToInt(playerTransform.position.x + rayon);
-        int minZ = Mathf.FloorToInt(playerTransform.position.z - rayon);
-        int maxZ = Mathf.CeilToInt(playerTransform.position.z + rayon);
+        minX = Mathf.FloorToInt(playerTransform.position.x - rayon);
+        maxX = Mathf.CeilToInt(playerTransform.position.x + rayon);
+        minZ = Mathf.FloorToInt(playerTransform.position.z - rayon);
+        maxZ = Mathf.CeilToInt(playerTransform.position.z + rayon);
 
         //Itérer sur les valeurs x et z
         for (int x = minX; x <= maxX; x++)
@@ -57,16 +60,16 @@ public class GestionSpawnPlancherV3 : MonoBehaviour
                 {
                     //Calculer la distance entre la coordonnée et le joueur
                     float distance = Vector3.Distance(playerTransform.position, new Vector3(x, yEtages, z));
+                    float distance2 = (playerTransform.position.x - x) * (playerTransform.position.x - x) + (playerTransform.position.y - yEtages) * (playerTransform.position.y - yEtages) + (playerTransform.position.z - z) * (playerTransform.position.z - z);
 
-                    //Si nous sommes bel et bien dans le rayon
-                    if (distance <= rayon)
+                    //Calculer la distance entre la coordonnée et le joueur, et vérifier si elle est sous le rayon
+                    if (distance2 <= rayon*rayon)
                     {
-                        // Add the coordinate to the list
+                        //Trouver notre coordonnée sur laquelle spawn notre tuile
                         Vector3 coordonnee = new Vector3(x, yEtages, z);
-                        coordinates.Add(coordonnee);
 
                         //Si il n'y a pas de tuile où l'on veut spawn
-                        Collider[] hitColliders = Physics.OverlapBox(coordonnee, new Vector3(tailleTuile/2.05f, 1, tailleTuile/ 2.05f), Quaternion.identity, layerMaskCheck);
+                        Collider[] hitColliders = Physics.OverlapBox(coordonnee, new Vector3(tailleTuile / 2.05f, 1, tailleTuile / 2.05f), Quaternion.identity, layerMaskCheck);
                         if (hitColliders.Length == 0)
                         {
                             SpawnTuile(coordonnee);
@@ -75,6 +78,24 @@ public class GestionSpawnPlancherV3 : MonoBehaviour
                 }
             }
         }
+    }
+
+    //Fonction permettant de spawn une tuile
+    public void SpawnTuile(Vector3 position)
+    {
+        //Spawn un prefab d'une tuile
+        GameObject nouvelleTuile = Instantiate(prefabsTuiles[0], position, Quaternion.identity);
+
+        //Changer son parent
+        nouvelleTuile.transform.SetParent(transform, false);
+
+        //Ajouter cette tuile dans la liste du plancher actuel
+        plancherActuel.Add(nouvelleTuile);
+
+        //Assigner ses paramètres
+        nouvelleTuile.GetComponent<Tuile>().spawner = GetComponent<GestionSpawnPlancherV3>();
+        nouvelleTuile.GetComponent<Tuile>().rayonVerif = rayon * 2f;
+        nouvelleTuile.GetComponent<Tuile>().joueur = playerTransform;
     }
 
     //Fonction permettant de changer la couleur di niveau
@@ -97,23 +118,5 @@ public class GestionSpawnPlancherV3 : MonoBehaviour
         {
             RenderSettings.skybox.SetColor("_Tint", couleurNiveau);
         }     
-    }
-
-    //Fonction permettant de spawn une tuile
-    public void SpawnTuile(Vector3 position)
-    {
-        //Spawn un prefab d'une tuile
-        GameObject nouvelleTuile = Instantiate(prefabsTuiles[0], position, Quaternion.identity);
-
-        //Changer son parent
-        nouvelleTuile.transform.SetParent(transform, false);
-
-        //Ajouter cette tuile dans la liste du plancher actuel
-        plancherActuel.Add(nouvelleTuile);
-
-        //Assigner ses paramètres
-        nouvelleTuile.GetComponent<Tuile>().spawner = GetComponent<GestionSpawnPlancherV3>();
-        nouvelleTuile.GetComponent<Tuile>().rayonVerif = rayon * 2f;
-        nouvelleTuile.GetComponent<Tuile>().joueur = playerTransform;
     }
 }

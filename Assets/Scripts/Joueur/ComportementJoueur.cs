@@ -35,6 +35,8 @@ public class ComportementJoueur : MonoBehaviour
     [HideInInspector] public float armure; //Bonus permettant au joueur de subir moins de dégâts
 
     [Header("Autres References")]
+    public int grosseurMax; //Grosseur maximum du joueur
+    public int diviseurFallSpeed; //Multiplicateur de fall
     public bool invulnerable; //Détermine si le joueur est invulnérable ou non
     public static bool mortJoueur; //Détecte si le joueur est mort ou non
     public GameObject menuFin; //Référence au menu de fin
@@ -51,6 +53,7 @@ public class ComportementJoueur : MonoBehaviour
     public GameObject ParentLevelUI; //Parent pour l'affichage du UI (voir StageProgression)
     public TextMeshProUGUI texteLevelUp; //Texte de proposition d'améliorations
     public string TexteBaseLevel; //Texte de base lorsqu'on level up
+    [HideInInspector] public Color couleurJoueur; //Couleur initialle du joueur
 
     [Header("Couleurs d'effets")]
     public Color couleurDegats;
@@ -72,6 +75,7 @@ public class ComportementJoueur : MonoBehaviour
         ennemisTues = 0;
         finJeu = false;
         mortJoueur = false;
+        couleurJoueur = GetComponentInChildren<Renderer>().material.color;
 
         //Démarer le life regen
         StartCoroutine(RegenVie(regenVie, regenTemps));
@@ -156,6 +160,10 @@ public class ComportementJoueur : MonoBehaviour
 
             //Faire apparaître l'image de dégâts
             StartCoroutine(AjoutEcranEffet(couleurDegats, 1f, valeurAlphaEcran));
+
+            //Changer le matériel pendant 0.15 secondes
+            GetComponent<MeshRenderer>().material.color = Color32.Lerp(GetComponent<MeshRenderer>().material.color, Color.red, 0.85f); ;
+            Invoke("AppliquerMat", 0.15f);
         }
 
         //Si le joueur était pour mourir
@@ -225,9 +233,10 @@ public class ComportementJoueur : MonoBehaviour
     //Fonction permettant de grossir le joueur
     public void AugmenterGrosseur(float valeurGrosseur)
     {
-        //Augmenter la taille du joueur
-        if(transform.localScale.magnitude <= 40)
+        //Si nous sommes pas à notre traille maximale
+        if(transform.localScale.magnitude <= grosseurMax)
         {
+            //Augmenter la taille du joueur
             transform.localScale += new Vector3(valeurGrosseur + bonusTaille, valeurGrosseur + bonusTaille, valeurGrosseur + bonusTaille);
 
             //Mettre à jour la force d'explosion
@@ -235,6 +244,9 @@ public class ComportementJoueur : MonoBehaviour
 
             //Mettre a jour le rayon de spawn des tuiles
             gestionnairePlancher.rayon = gestionnairePlancher.rayonDeBase + (transform.localScale.magnitude*2);
+
+            //Augmenter le fall multiplicateur
+            GetComponent<ControleJoueur>().fallMultiplier += valeurGrosseur / diviseurFallSpeed;
         }
     }
 
@@ -376,5 +388,11 @@ public class ComportementJoueur : MonoBehaviour
 
         //Fermer le menu d'options
         GetComponent<ControleMenu>().FermerOptions();
+    }
+
+    //Fonction permettant de remettre le matériel du joueur
+    public void AppliquerMat()
+    {
+        gameObject.GetComponent<MeshRenderer>().material.color = couleurJoueur;
     }
 }

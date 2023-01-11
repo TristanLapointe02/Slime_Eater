@@ -5475,7 +5475,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 500
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -7629,9 +7629,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vitesse: 35
   dashVitesse: 2000
-  dashTimer: 0
   dashCooldown: 1.5
-  forceSaut: 1.5
+  forceSaut: 1.65
   maxJump: 1
   degatsZone: 0.75
   forceExplosionInitiale: 2000
@@ -7639,13 +7638,13 @@ MonoBehaviour:
   multiplicateurForceExplosion: 185
   tailleDash: 0
   peutExploser: 1
+  fallMultiplier: 3.5
   sonJump: {fileID: 8300000, guid: ce56c48d366bbb444ba1a423a84bf33b, type: 3}
   sonAtterir: {fileID: 8300000, guid: c68e534cb982a1e4d9fc90f48d621460, type: 3}
   sonMangerSlime: {fileID: 8300000, guid: b231e1c1eff8da84badd88c8397e0a39, type: 3}
   zone: {fileID: 4639685124192366073}
   imageAttaque: {fileID: 827097119328234425}
   imageDash: {fileID: 7874367874783717103}
-  fallMultiplier: 2.5
 --- !u!114 &4639685124394437481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7733,6 +7732,8 @@ MonoBehaviour:
   bonusXp: 0
   bonusTaille: 0
   armure: 0
+  grosseurMax: 45
+  diviseurFallSpeed: 10
   invulnerable: 0
   menuFin: {fileID: 4639685122998127054}
   sonHit: {fileID: 8300000, guid: 08892c356714f924caa000608f304dc1, type: 3}
@@ -7746,6 +7747,7 @@ MonoBehaviour:
   ParentLevelUI: {fileID: 513871975664182370}
   texteLevelUp: {fileID: 4639685123352468584}
   TexteBaseLevel: "Choisi une am\xE9lioration"
+  couleurJoueur: {r: 0, g: 0, b: 0, a: 0}
   couleurDegats: {r: 0.5188679, g: 0, b: 0, a: 1}
   couleurHeal: {r: 0.4666667, g: 0.85098046, b: 0.14901961, a: 1}
   couleurInvincible: {r: 0.80864424, g: 0.8301887, b: 0, a: 1}
@@ -8451,7 +8453,7 @@ MonoBehaviour:
     FieldOfView: 60
     OrthographicSize: 5
     NearClipPlane: 0.3
-    FarClipPlane: 1000
+    FarClipPlane: 500
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
@@ -8478,10 +8480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 4639685124394437394}
-  smoothSpeed: 0
   forceZoomOutCam: 1.35
-  vcam: {fileID: 0}
-  _transposer: {fileID: 0}
 --- !u!114 &4639685124483345000
 MonoBehaviour:
   m_ObjectHideFlags: 0

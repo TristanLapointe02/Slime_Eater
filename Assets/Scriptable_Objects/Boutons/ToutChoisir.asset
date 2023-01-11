@@ -17,6 +17,6 @@ MonoBehaviour:
   couleurBouton:
     serializedVersion: 2
     rgba: 4291310561
-  nbNiveauxRecharge: 5
+  nbNiveauxRecharge: 6
   dureeDegrade: 1.25
   effetSonore: {fileID: 8300000, guid: 292c81120d5d39f4fb915f7cc5fa1172, type: 3}

@@ -14,6 +14,7 @@ public class EnemyController : MonoBehaviour
     [HideInInspector] public Color couleurEnnemi; //Couleur de base de l'ennemi
     [HideInInspector] public float vitesse; //Vitesse de l'ennemi
     [HideInInspector] public float vie; //Vie de l'ennemi
+    [HideInInspector] public static bool bossTue; //Detecte si le boss est mort
 
     [Header("Références")]
     [HideInInspector] public ObjectSpawner spawner; //Référence au spawner qui l'a fait spawn
@@ -68,7 +69,10 @@ public class EnemyController : MonoBehaviour
         {
             //Empêcher à l'ennemi de bouger
             forceStop = true;
-        } 
+        }
+
+        //Reset les variables
+        bossTue = false;
     }
 
     private void Update()
@@ -83,8 +87,12 @@ public class EnemyController : MonoBehaviour
         //Regarder le joueur, juste en x et z
         gameObject.transform.LookAt(new Vector3(joueur.transform.position.x, transform.position.y, joueur.transform.position.z));
 
+        //Obtenir la position de notre joueur, ainsi que notre position en x et z
+        Vector3 positionJoueur = new Vector3(joueur.transform.position.x, 0, joueur.transform.position.z);
+        Vector3 positionEnnemi = new Vector3(transform.position.x, 0, transform.position.z);
+
         //Obtenir la distance et direction avec joueur
-        directionJoueur = joueur.transform.position - transform.position;
+        directionJoueur = positionJoueur - positionEnnemi;
 
         //Si l'ennemi n'attaque pas à distance
         if (enemy.ranged == false && forceStop == false)
@@ -222,6 +230,12 @@ public class EnemyController : MonoBehaviour
     //Fonction de mort de l'ennemi
     public void MortEnnemi()
     {
+        //Si on était le boss, indiquer qu'il est mort
+        if (enemy.boss)
+        {
+            bossTue = true;
+        }
+
         //Se détruire
         Destroy(gameObject);
 

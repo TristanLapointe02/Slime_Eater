@@ -14,19 +14,20 @@ public class ControleJoueur : MonoBehaviour
     [Header("Valeurs")]
     public float vitesse; //Vitesse du joueur
     public float dashVitesse; //Vitesse du dash
-    public float dashTimer; //Timer du dash
+    private float dashTimer; //Timer du dash
     public float dashCooldown; //Cooldown du dash
     public float forceSaut; //Force de saut du joueur
     int jumpCounter; //Compteur du jump
     public int maxJump; //Nombre maximum de sauts du joueur
     public float degatsZone; //Dégâts de la zone de saut
     public float forceExplosionInitiale; //Force d'explosion initiale
-    public float forceExplosion; //Force de l'explosion de zone
+    [HideInInspector] public float forceExplosion; //Force de l'explosion de zone
     public float multiplicateurForceExplosion; //Par combien multiplier la force d'explosion selon la taille du joueur
-    public float tailleDash; //Taille a regénérer pour l'amelioration de dash
+    [HideInInspector] public float tailleDash; //Taille a regénérer pour l'amelioration de dash
     float xInput; //Inputs sur l'axe des x
     float zInput; //Inputs sur l'axe des z
     [HideInInspector] public bool peutExploser = true; //Gère si l'on peut exploser ou non
+    public float fallMultiplier; //Multiplicateur de la force de gravité
 
     [Header("Sons")]
     public AudioClip sonJump; //Son lorsque le joueur saute
@@ -41,9 +42,6 @@ public class ControleJoueur : MonoBehaviour
 
     //AUTRES
     bool fixJump; //Bool permettant de fix le jump
-
-    //MEILLEURE GESTION DU SAUT
-    public float fallMultiplier; //Multiplicateur de la force de gravité
 
     void Start()
     {
@@ -64,7 +62,7 @@ public class ControleJoueur : MonoBehaviour
         //Amélioration de gravité
         if (rb.velocity.y < 0)
         {
-            rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+            rb.velocity += Vector3.up * Physics.gravity.y * fallMultiplier * Time.deltaTime;
         }
 
         //Capturer les inputs

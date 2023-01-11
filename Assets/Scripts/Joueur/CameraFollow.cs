@@ -11,11 +11,10 @@ using Cinemachine;
 public class CameraFollow : MonoBehaviour
 {
     public Transform target; //Target de la caméra
-    public float smoothSpeed; //Vitesse a laquelle la caméra smooth
     private Vector3 offset; //Offset de la caméra
     public float forceZoomOutCam; //Force a laquelle la caméra s'éloigne selon la taille du joueur
-    public CinemachineVirtualCamera vcam; //Virtual Camera reference
-    public CinemachineTransposer _transposer; //Composer
+    private CinemachineVirtualCamera vcam; //Virtual Camera reference
+    private CinemachineTransposer _transposer; //Composer
 
     void Start()
     {

@@ -80,7 +80,7 @@ public class StageProgression : MonoBehaviour
             if (etageActuel == i && ComportementJoueur.ennemisTues >= ennemiesToKill && ComportementJoueur.finJeu == false && etageActuel <= gestionPlancher.nombreEtages)
             {
                 //Si on vient de finir le jeu
-                if (etageActuel == gestionPlancher.nombreEtages)
+                if (etageActuel == gestionPlancher.nombreEtages && EnemyController.bossTue == true)
                 {
                     //Faire apparaître le menu de fin
                     joueur.GetComponent<ComportementJoueur>().FinJeu("Vous avez gagné!", sonVictoire);
