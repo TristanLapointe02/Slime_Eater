@@ -61,7 +61,7 @@ public class StageProgression : MonoBehaviour
         //Si la distance entre le joueur et le plancher invisible est trop grande, la recadrer
         if(Vector3.Distance(joueur.transform.position, plancherInvisible.transform.position) > 500)
         {
-            plancherInvisible.transform.position = joueur.transform.position;
+            plancherInvisible.transform.position = new Vector3(joueur.transform.position.x, plancherInvisible.transform.position.y, joueur.transform.position.z);
         }
 
         //TEST POUR CHANGER DE NIVEAU IMMEDIATEMENT

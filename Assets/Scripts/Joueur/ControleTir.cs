@@ -41,6 +41,9 @@ public class ControleTir : MonoBehaviour
             //Si on a assez de masse pour tirer
             if(tropPetit == false)
             {
+                //Afficher un UI nous permettant de voir le cooldown
+                StartCoroutine(GetComponent<ControleJoueur>().cooldownAction(shootCooldown, GetComponent<ControleJoueur>().imageAttaque));
+
                 //Indiquer qu'on ne peut plus tirer, et appeler une fonction
                 peutTirer = false;
                 StartCoroutine(delaiTir(shootCooldown));

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 /*
  * Description : Gestion des inputs et actions du joueur
@@ -35,6 +36,8 @@ public class ControleJoueur : MonoBehaviour
     [Header("References")]
     Rigidbody rb; //Référence au Rigidbody du joueur
     public ZoneDegats zone; //Référence à la zone de dégâts du joueur
+    public Image imageAttaque; //Reference a l'image du cooldown d'attaque
+    public Image imageDash; //Reference a l'image du cooldown de dash
 
     //AUTRES
     bool fixJump; //Bool permettant de fix le jump
@@ -139,6 +142,9 @@ public class ControleJoueur : MonoBehaviour
         // Si on appuie sur left shift
         if (Input.GetButtonDown("Fire3") && dashTimer >= dashCooldown)
         {
+            //Afficher un UI nous permettant de voir le cooldown
+            StartCoroutine(cooldownAction(dashCooldown, imageDash));
+
             //Réinitialiser le timer du dash
             dashTimer = 0;
 
@@ -194,6 +200,11 @@ public class ControleJoueur : MonoBehaviour
             //Empêcher l'explosion jusqu'à temps qu'on saute/change de niveau
             peutExploser = false;
         }
+
+        //Si le joueur touche le sol invisible, il meurt
+        else if (collision.gameObject.layer == 16){
+            GetComponent<ComportementJoueur>().FinJeu("Vous êtes sorti des limites :(", GetComponent<ComportementJoueur>().sonPartiePerdue);
+        }
     }
 
 
@@ -241,5 +252,61 @@ public class ControleJoueur : MonoBehaviour
 
         //Désactiver les visuels de la zone
         zone.gameObject.GetComponent<MeshRenderer>().enabled = false;
+    }
+
+    //Fonction permettant d'afficher un timer s'écoulant après nos actions
+    public IEnumerator cooldownAction(float cooldown, Image image)
+    {
+        //Activer notre objet UI
+        image.gameObject.SetActive(true);
+
+        //Défénir notre compteur
+        float counter = cooldown;
+
+        //Pendant qu'on est en train de s'écouler
+        while (counter >= 0)
+        {
+            //Augmenter le counter
+            counter -= Time.deltaTime;
+
+            //Mettre a jour le fill amount
+            image.fillAmount = 1 - (counter / cooldown);
+
+            //Changer la position de l'image pour suivre le curseur
+            //Si nous avons présentement un curseur souris
+            if (GetComponent<GamePadCursor>().playerInput.currentControlScheme == "Keyboard&Mouse")
+            {
+                if(image.gameObject.name == "CooldownDash")
+                {
+                    image.rectTransform.position = Mouse.current.position.ReadValue() + Vector2.down * 25f;
+                }
+                else
+                {
+                    image.rectTransform.position = Mouse.current.position.ReadValue();
+                }
+            }
+
+            //Sinon, si nous avons le curseur de gamepad
+            else if (GetComponent<GamePadCursor>().playerInput.currentControlScheme == "Gamepad")
+            {
+                if (image.gameObject.name == "CooldownDash")
+                {
+                    image.rectTransform.position = GetComponent<GamePadCursor>().cursorTransform.position + Vector3.down * 25f;
+                }
+                else
+                {
+                    image.rectTransform.position = GetComponent<GamePadCursor>().cursorTransform.position;
+                }   
+            }
+
+            //Lorsque c'est fini, sortir de la boucle
+            yield return null;
+        }
+
+        //Désacter l'image
+        if (image.gameObject.activeSelf)
+        {
+            image.gameObject.SetActive(false);
+        } 
     }
 }
