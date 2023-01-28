@@ -79,15 +79,15 @@ public class StageProgression : MonoBehaviour
             //Pour chaque étage, si le joueur tue assez d'ennemis pour passer à l'étage suivant
             if (etageActuel == i && ComportementJoueur.ennemisTues >= ennemiesToKill && ComportementJoueur.finJeu == false && etageActuel <= gestionPlancher.nombreEtages)
             {
-                //Si on vient de finir le jeu
-                if (etageActuel == gestionPlancher.nombreEtages && EnemyController.bossTue == true)
+                //Si on vient de tuer le boss
+                if (EnemyController.bossTue == true)
                 {
                     //Faire apparaître le menu de fin
                     joueur.GetComponent<ComportementJoueur>().FinJeu("Vous avez gagné!", sonVictoire);
                 }
 
                 //Sinon, pour le restant des étages
-                else
+                else if (etageActuel < gestionPlancher.nombreEtages)
                 {
                     //Changer de niveau
                     ChangerNiveau();

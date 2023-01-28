@@ -176,7 +176,7 @@ public class ComportementJoueur : MonoBehaviour
             vieJoueur = 0;
 
             //Appeler une fonction affichant le menu de fin
-            FinJeu("Vous êtes mort.", sonPartiePerdue);
+            FinJeu("Vous êtes mort", sonPartiePerdue);
         }
     }
 

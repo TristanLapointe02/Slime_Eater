@@ -114,7 +114,7 @@ public class BarreVieEnnemi : MonoBehaviour
         objetTextePopup.transform.LookAt(cam.transform);
 
         //Changer son scale selon celui de l'ennemi
-        objetTextePopup.transform.localScale = new Vector3(-GetComponent<EnemyController>().enemy.tailleEnnemi, GetComponent<EnemyController>().enemy.tailleEnnemi, GetComponent<EnemyController>().enemy.tailleEnnemi) / 2.5f;
+        objetTextePopup.transform.localScale = (new Vector3(-GetComponent<EnemyController>().enemy.tailleEnnemi, GetComponent<EnemyController>().enemy.tailleEnnemi, GetComponent<EnemyController>().enemy.tailleEnnemi) / 15f) + new Vector3(-0.5f,0.5f,0.5f);
 
         //Lui donner une position x aléatoire
         objetTextePopup.GetComponent<RectTransform>().position += new Vector3(UnityEngine.Random.Range(-GetComponent<EnemyController>().enemy.tailleEnnemi, GetComponent<EnemyController>().enemy.tailleEnnemi), 0, 0);

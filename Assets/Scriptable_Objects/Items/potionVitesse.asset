@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: potionVitesse
   m_EditorClassIdentifier: 
   nomItem: Vitesse+
-  duree: 6
-  valeur: 25
+  duree: 5
+  valeur: 20
   etage: 1
   sonItem: {fileID: 8300000, guid: 77ac016dd10f40442ab9a8e98d755b28, type: 3}
   icone: {fileID: 21300000, guid: 580e529425f3b1c4baff661ebab2d3fe, type: 3}

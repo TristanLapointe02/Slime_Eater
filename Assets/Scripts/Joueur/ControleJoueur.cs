@@ -201,7 +201,7 @@ public class ControleJoueur : MonoBehaviour
 
         //Si le joueur touche le sol invisible, il meurt
         else if (collision.gameObject.layer == 16){
-            GetComponent<ComportementJoueur>().FinJeu("Vous êtes sorti des limites :(", GetComponent<ComportementJoueur>().sonPartiePerdue);
+            //GetComponent<ComportementJoueur>().FinJeu("Vous êtes sorti des limites", GetComponent<ComportementJoueur>().sonPartiePerdue);
         }
     }
 
