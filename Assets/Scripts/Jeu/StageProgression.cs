@@ -65,10 +65,10 @@ public class StageProgression : MonoBehaviour
         }
 
         //TEST POUR CHANGER DE NIVEAU IMMEDIATEMENT
-        if (Input.GetKeyDown(KeyCode.B) && etageActuel < gestionPlancher.nombreEtages && ComportementJoueur.finJeu == false)
+        /*if (Input.GetKeyDown(KeyCode.B) && etageActuel < gestionPlancher.nombreEtages && ComportementJoueur.finJeu == false)
         {
             ComportementJoueur.ennemisTues = ennemiesToKill;
-        }
+        }*/
     }
 
     //Fonction permettant de vérifier si un étage est terminé

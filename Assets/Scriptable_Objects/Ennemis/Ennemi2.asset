@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Ennemi2
   m_EditorClassIdentifier: 
   nomEnnemi: EnemyMelee
-  descriptionEnnemi: an enemy that moves towards the player and attacks him with
-    melee attacks
+  descriptionEnnemi: Slime rose
   vieMax: 6
   degats: 4
   vitesse: 8

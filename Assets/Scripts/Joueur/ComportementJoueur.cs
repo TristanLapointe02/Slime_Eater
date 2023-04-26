@@ -105,7 +105,7 @@ public class ComportementJoueur : MonoBehaviour
         texteStage.text = StageProgression.etageActuel.ToString();
 
         //TEST, PRENDRE DEGATS
-        if (Input.GetKeyDown(KeyCode.K))
+        /*if (Input.GetKeyDown(KeyCode.K))
         {
             TakeDamage(10f);
         }
@@ -125,6 +125,13 @@ public class ComportementJoueur : MonoBehaviour
         {
             AugmenterGrosseur(5);
         }
+
+        //TEST, AUGMENTER VIE
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            vieMax += 50;
+            vieJoueur += 50;
+        }*/
     }
 
     //Fonction permettant de regen de la vie

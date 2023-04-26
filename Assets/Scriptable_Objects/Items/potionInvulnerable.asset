@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: potionInvulnerable
   m_EditorClassIdentifier: 
   nomItem: "Invulnerabilit\xE9"
-  duree: 8
+  duree: 7
   valeur: 0
   etage: 4
   sonItem: {fileID: 8300000, guid: 77ac016dd10f40442ab9a8e98d755b28, type: 3}

@@ -35,6 +35,9 @@ public class ComportementBoss : MonoBehaviour
 
         //Ignorer les collisions avec les autres ennemis
         Physics.IgnoreLayerCollision(9, 9);
+
+        //Ignorer les collisions avec le joueur
+        Physics.IgnoreCollision(GetComponent<Collider>(), GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>(), true);
     }
 
     void Update()

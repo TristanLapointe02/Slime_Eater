@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: Ennemi4
   m_EditorClassIdentifier: 
   nomEnnemi: EnemyMelee
-  descriptionEnnemi: an enemy that moves towards the player and attacks him with
-    melee attacks
-  vieMax: 16
+  descriptionEnnemi: Yeti
+  vieMax: 18
   degats: 10
   vitesse: 6
   tailleEnnemi: 3

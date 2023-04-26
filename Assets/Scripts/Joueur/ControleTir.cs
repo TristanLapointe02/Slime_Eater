@@ -29,6 +29,7 @@ public class ControleTir : MonoBehaviour
 
     [Header("Autres références")]
     public AudioClip sonTir; //Son de tir
+    //public AudioClip[] sonsTir; //Tableau des sons de tir
     public AudioClip sonTirImpossible; //Son indiquant qu'on ne peut pas tirer
     public GameObject gun; //Position du "gun"
     bool tropPetit; //Variable indiquant que nous somme trop petit ou non

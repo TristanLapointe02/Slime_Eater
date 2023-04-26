@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Ennemi1
   m_EditorClassIdentifier: 
   nomEnnemi: EnemyMelee
-  descriptionEnnemi: an enemy that moves towards the player and attacks him with
-    melee attacks
+  descriptionEnnemi: Ennemi de base
   vieMax: 2
   degats: 3
   vitesse: 5

@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nomEnnemi: EnemyBoss
   descriptionEnnemi: A boss that attacks from far away
-  vieMax: 250
-  degats: 8
-  vitesse: 8
+  vieMax: 350
+  degats: 7
+  vitesse: 16
   tailleEnnemi: 10
   valeurLoot: 0.2
   nombreLootSpawn: 35
